@@ -1,0 +1,22 @@
+# apiVersion para objetos do tipo Service.
+apiVersion: v1
+# kind especifica que estamos criando um Service.
+kind: Service
+metadata:
+  # O nome do nosso Service.
+  name: transfer-pass-service
+  annotations:
+    # Conecta o Service ao BackendConfig para usar configurações do Load Balancer.
+    cloud.google.com/backend-config: '{"default": "transfer-pass-backendconfig"}'
+spec:
+  # O tipo de Service foi alterado para ClusterIP.
+  type: ClusterIP
+  selector:
+    # Este seletor deve corresponder às labels dos Pods.
+    app: transfer-pass
+  ports:
+    # A porta na qual o Service estará disponível.
+    - port: 80
+      # A porta no contêiner para a qual o tráfego será encaminhado.
+      targetPort: 3000
+      protocol: TCP

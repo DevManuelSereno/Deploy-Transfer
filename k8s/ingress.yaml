@@ -1,0 +1,24 @@
+# apiVersion para objetos do tipo Ingress.
+apiVersion: networking.k8s.io/v1
+# kind especifica que estamos a criar um Ingress.
+kind: Ingress
+metadata:
+  name: transfer-pass-ingress
+  annotations:
+    # Aponta para o certificado SSL pré-criado (valor fixo).
+    ingress.gcp.kubernetes.io/pre-shared-cert: "pass-business-certificate"
+    # Especifica o nome do IP estático reservado (valor fixo).
+    kubernetes.io/ingress.global-static-ip-name: "website-pass-business-ip"
+spec:
+  rules:
+    - host: transfer.pass.business
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                # Aponta para o serviço correspondente.
+                name: transfer-pass-service
+                port:
+                  number: 80

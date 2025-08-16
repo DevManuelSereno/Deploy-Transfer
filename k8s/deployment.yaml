@@ -1,0 +1,40 @@
+# apiVersion define a versão da API do Kubernetes que estamos usando para criar este objeto.
+apiVersion: apps/v1
+# kind especifica o tipo de objeto que queremos criar, neste caso, um Deployment.
+kind: Deployment
+metadata:
+  # O nome do nosso Deployment.
+  name: transfer-pass-deployment
+spec:
+  # O número de Pods (instâncias da aplicação) que o Kubernetes deve manter rodando.
+  replicas: 2
+  selector:
+    # Este seletor ajuda o Deployment a encontrar quais Pods ele deve gerenciar.
+    # Corresponde às labels definidas no template do Pod.
+    matchLabels:
+      app: transfer-pass
+  template:
+    metadata:
+      # As labels aplicadas a cada Pod criado por este Deployment.
+      # O Service e o Ingress usarão esta label para rotear o tráfego.
+      labels:
+        app: transfer-pass
+    spec:
+      containers:
+        # O nome do contêiner dentro do Pod.
+        - name: transfer-pass-container
+          # A imagem Docker a ser usada. '__IMAGE__' é um placeholder que será
+          # substituído pelo Cloud Build durante o processo de CI/CD.
+          image: __IMAGE__
+          ports:
+            # A porta que o contêiner expõe.
+            - containerPort: 3000
+          resources:
+            # Define os recursos mínimos que o contêiner precisa.
+            requests:
+              memory: "256Mi" # 256 Megabytes de memória
+              cpu: "100m" # 10% de uma vCPU
+            # Define os recursos máximos que o contêiner pode usar.
+            limits:
+              memory: "512Mi" # 512 Megabytes de memória
+              cpu: "500m" # 50% de uma vCPU

@@ -1,0 +1,14 @@
+# apiVersion para recursos customizados do Google Cloud.
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  # Nome do BackendConfig.
+  name: transfer-pass-backendconfig
+spec:
+  healthCheck:
+    # O caminho que o Load Balancer do Google usará para verificar a saúde da aplicação.
+    requestPath: /
+    # A porta no contêiner onde o health check será feito.
+    port: 3000
+    # O tipo de verificação.
+    type: HTTP

@@ -1,0 +1,37 @@
+steps:
+  # Passo 1: Constrói a imagem Docker.
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - "build"
+      - "-t"
+      - "gcr.io/pass-core/transfer-pass-app:$SHORT_SHA"
+      - "."
+
+  # Passo 2: Envia a imagem para o Google Container Registry (GCR).
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/pass-core/transfer-pass-app:$SHORT_SHA"]
+
+  # Passo 3: Substitui o placeholder da imagem no arquivo de deployment.
+  - name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        sed -i "s|__IMAGE__|gcr.io/pass-core/transfer-pass-app:$SHORT_SHA|g" k8s/deployment.yaml
+
+  # Passo 4: Aplica as configurações ao cluster GKE.
+  - name: "gcr.io/cloud-builders/gke-deploy"
+    args:
+      - "run"
+      - "--filename=k8s/"
+      - "--location=us-central1"
+      - "--cluster=pass-cluster"
+      - "--project=pass-core"
+
+# Define quais imagens devem ser enviadas para o GCR.
+images:
+  - "gcr.io/pass-core/transfer-pass-app:$SHORT_SHA"
+
+# Opções de configuração do build.
+options:
+  logging: CLOUD_LOGGING_ONLY
