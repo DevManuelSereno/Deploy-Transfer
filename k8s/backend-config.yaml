@@ -9,6 +9,6 @@ spec:
     # O caminho que o Load Balancer do Google usará para verificar a saúde da aplicação.
     requestPath: /
     # A porta no contêiner onde o health check será feito.
-    port: 3000
+    port: 80
     # O tipo de verificação.
     type: HTTP

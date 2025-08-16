@@ -28,7 +28,7 @@ spec:
           image: __IMAGE__
           ports:
             # A porta que o contêiner expõe.
-            - containerPort: 3000
+            - containerPort: 80
           resources:
             # Define os recursos mínimos que o contêiner precisa.
             requests:
