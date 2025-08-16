@@ -18,5 +18,5 @@ spec:
     # A porta na qual o Service estará disponível.
     - port: 80
       # A porta no contêiner para a qual o tráfego será encaminhado.
-      targetPort: 3000
+      targetPort: 80
       protocol: TCP
