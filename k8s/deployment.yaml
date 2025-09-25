@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # O nome do nosso Deployment.
-  name: transfer-pass-deployment
+  name: transfer-pass-business
 spec:
   # O número de Pods (instâncias da aplicação) que o Kubernetes deve manter rodando.
   replicas: 2
