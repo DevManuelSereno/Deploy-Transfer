@@ -7,7 +7,7 @@ metadata:
   name: transfer-pass-business
 spec:
   # O número de Pods (instâncias da aplicação) que o Kubernetes deve manter rodando.
-  replicas: 2
+  replicas: 1
   selector:
     # Este seletor ajuda o Deployment a encontrar quais Pods ele deve gerenciar.
     # Corresponde às labels definidas no template do Pod.
