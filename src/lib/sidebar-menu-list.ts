@@ -1,23 +1,18 @@
 import {
-	Activity,
+	AlertTriangle,
 	AudioWaveform,
-	BedDouble,
 	Building2,
 	BusFront,
-	CalendarDays,
-	Camera,
+	Calendar,
 	Command,
-	DollarSign,
-	FileText,
-	GalleryVerticalEnd,
+	Fuel,
+	Home,
 	LayoutDashboard,
-	Map as MapIcon,
-	MapPin,
-	Package,
-	Puzzle,
+	Plane,
 	Settings,
-	Star,
-	Ticket,
+	User,
+	Wallet,
+	Wrench,
 } from "lucide-react";
 
 export const navbarItems = {
@@ -47,82 +42,58 @@ export const navbarItems = {
 			icon: LayoutDashboard,
 		},
 		{
-			name: "Atividade",
+			name: "Serviços",
 			url: "#",
-			icon: Activity,
+			icon: Home,
+		},
+		{
+			name: "Viagens",
+			url: "#",
+			icon: Plane,
+		},
+		{
+			name: "Agenda",
+			url: "#",
+			icon: Calendar,
 		},
 	],
-	services: [
+	frota: [
 		{
-			name: "Transfer",
+			name: "Veículos",
 			url: "#",
 			icon: BusFront,
 		},
 		{
-			name: "Combo",
+			name: "Abastecimento",
 			url: "#",
-			icon: Package,
+			icon: Fuel,
 		},
 		{
-			name: "Hospedagem",
+			name: "Ocorrências",
 			url: "#",
-			icon: BedDouble,
+			icon: AlertTriangle,
 		},
 		{
-			name: "Ingresso",
+			name: "Despesas",
 			url: "#",
-			icon: Ticket,
+			icon: Wallet,
 		},
 		{
-			name: "Passeio",
+			name: "Manutenções",
 			url: "#",
-			icon: Camera,
+			icon: Wrench,
 		},
 		{
-			name: "Experiência",
+			name: "Marcas",
 			url: "#",
-			icon: Star,
-		},
-		{
-			name: "Circuito",
-			url: "#",
-			icon: MapIcon,
-		},
-	],
-	comercial: [
-		{
-			name: "Tarifário",
-			url: "#",
-			icon: DollarSign,
-		},
-		{
-			name: "Disponibilidade",
-			url: "#",
-			icon: CalendarDays,
-		},
-	],
-	compliments: [
-		{
-			name: "Slots",
-			url: "#",
-			icon: Puzzle,
-		},
-		{
-			name: "Perímetros",
-			url: "#",
-			icon: MapPin,
-		},
-		{
-			name: "Diretrizes",
-			url: "#",
-			icon: FileText,
+			icon: Building2,
 		},
 	],
 	organization: [
 		{
-			name: "Configurações",
+			name: "Usuário",
 			url: "#",
-			icon: Settings,
+			icon: User,
 		},
 	],
 };
