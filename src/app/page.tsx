@@ -1,7 +1,9 @@
-"use client";
-import { useTranslations } from "use-intl";
+import TableVehicle from "@/app/components/table/table-vehicle";
 
-export default function Home() {
-	const t = useTranslations("HomePage");
-	return <h1>{t("title")}</h1>;
+export default async function Home() {
+	return (
+		<div className="flex flex-1 flex-col gap-6">
+			<TableVehicle />
+		</div>
+	);
 }

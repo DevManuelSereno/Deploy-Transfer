@@ -2,7 +2,7 @@
 
 import { Upload } from "lucide-react";
 import * as React from "react";
-import type { ImageValue } from "@/app/transfer/types/types-vehicle";
+import type { ImageValue } from "@/app/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
