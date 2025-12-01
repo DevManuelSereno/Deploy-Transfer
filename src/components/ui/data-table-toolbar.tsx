@@ -2,6 +2,7 @@
 
 import type { Table } from "@tanstack/react-table";
 import { Bot, Search } from "lucide-react";
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter";
 import {
@@ -16,7 +17,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { OpenAIOutlinedIcon } from "./icons/ant-design-open-a-i-outlined";
 
 interface DataTableToolbarProps<TData> {
 	table: Table<TData>;
@@ -63,7 +63,7 @@ export function DataTableToolbar<TData>({
 				>
 					<div className="flex items-start gap-4">
 						<div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white">
-							<OpenAIOutlinedIcon size={24} />
+							<Icons.openAIblack size={24} />
 						</div>
 						<div className="space-y-1 font-normal">
 							<p className="font-medium text-sm">@passAI</p>
