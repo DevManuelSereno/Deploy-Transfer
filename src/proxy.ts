@@ -1,10 +1,9 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./src/i18n/routing";
+import { routing } from "./i18n/routing";
 
 export default createMiddleware({
 	...routing,
-	// Sempre usar pt-br como padrão, ignorando preferências do navegador
-	localeDetection: false,
+	localeDetection: true,
 });
 
 export const config = {
