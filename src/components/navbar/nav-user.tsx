@@ -1,6 +1,7 @@
 "use client";
 
 import { BadgeCheck, CreditCard, LogOut } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ export function NavUser({
 		avatar: string;
 	};
 }) {
+	const t = useTranslations("UserMenu");
 	const [open, setOpen] = React.useState(false);
 
 	return (
@@ -58,7 +60,7 @@ export function NavUser({
 										</Button>
 									</TooltipTrigger>
 									<TooltipContent hasArrow className="font-normal text-sm">
-										Perfil
+										{t("profile")}
 									</TooltipContent>
 								</Tooltip>
 							) : (
@@ -107,11 +109,11 @@ export function NavUser({
 						<DropdownMenuGroup>
 							<DropdownMenuItem className="h-9 px-2.5">
 								<BadgeCheck />
-								Conta
+								{t("account")}
 							</DropdownMenuItem>
 							<DropdownMenuItem className="h-9 px-2.5">
 								<CreditCard />
-								Configuração
+								{t("settings")}
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 
@@ -119,7 +121,7 @@ export function NavUser({
 
 						<DropdownMenuItem variant="destructive" className="h-9 px-2.5">
 							<LogOut />
-							Log out
+							{t("logout")}
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

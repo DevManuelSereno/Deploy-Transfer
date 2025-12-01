@@ -10,16 +10,16 @@ import {
 import { navbarItems, teamsItems } from "@/lib/sidebar-menu-list";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-	return (
-		<Sidebar collapsible="icon" {...props}>
-			<SidebarHeader>
-				<TeamSwitcher teams={teamsItems} />
-			</SidebarHeader>
-			<SidebarContent>
-				<NavItems data={navbarItems.principal} groupLabel="Principal" />
-				<NavItems data={navbarItems.frota} groupLabel="Frota" />
-				<NavItems data={navbarItems.organization} groupLabel="Organização" />
-			</SidebarContent>
-		</Sidebar>
-	);
+		return (
+			<Sidebar collapsible="icon" {...props}>
+				<SidebarHeader>
+					<TeamSwitcher teams={teamsItems} />
+				</SidebarHeader>
+				<SidebarContent>
+					<NavItems data={navbarItems.principal} groupKey="principal" />
+					<NavItems data={navbarItems.frota} groupKey="frota" />
+					<NavItems data={navbarItems.organization} groupKey="organization" />
+				</SidebarContent>
+			</Sidebar>
+		);
 }

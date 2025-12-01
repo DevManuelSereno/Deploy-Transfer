@@ -1,0 +1,50 @@
+{
+	"Sidebar": {
+		"groups": {
+			"principal": "Main",
+			"frota": "Fleet",
+			"organization": "Organization"
+		},
+		"items": {
+			"dashboard": "Dashboard",
+			"services": "Services",
+			"trips": "Trips",
+			"schedule": "Schedule",
+			"vehicles": "Vehicles",
+			"refueling": "Refueling",
+			"incidents": "Incidents",
+			"expenses": "Expenses",
+			"maintenance": "Maintenance",
+			"brands": "Brands",
+			"user": "User"
+		}
+	},
+	"Navbar": {
+		"defaultTitle": "Transfer",
+		"dashboard": "Dashboard",
+		"services": "Services",
+		"trips": "Trips",
+		"schedule": "Schedule",
+		"vehicles": "Vehicles",
+		"refueling": "Refueling",
+		"incidents": "Incidents",
+		"expenses": "Expenses",
+		"maintenance": "Maintenance",
+		"brands": "Brands",
+		"user": "User"
+	},
+	"HomePage": {
+		"title": "Dashboard"
+	},
+	"LanguageToggle": {
+		"portuguese": "Portuguese",
+		"english": "English",
+		"spanish": "Spanish"
+	},
+	"UserMenu": {
+		"profile": "Profile",
+		"account": "Account",
+		"settings": "Settings",
+		"logout": "Log out"
+	}
+}

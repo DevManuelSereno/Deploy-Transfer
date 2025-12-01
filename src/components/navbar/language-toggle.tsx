@@ -1,42 +1,48 @@
 "use client";
 
-import { Globe, Moon, Search, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import * as React from "react";
-import { Button } from "@/components/ui/button";
+import { Globe } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
-	SelectValue,
 } from "@/components/ui/select";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 export function LanguageToggle() {
-	const [selectedLanguage, setSelectedLanguage] =
-		React.useState<string>("portuguese");
+	const locale = useLocale();
+	const router = useRouter();
+	const pathname = usePathname();
+	const t = useTranslations("LanguageToggle");
 
-	const handleLanguageChange = (language: string) => {
-		setSelectedLanguage(language);
+	const handleLanguageChange = (newLocale: string) => {
+		router.replace(pathname, { locale: newLocale });
+	};
+
+	const getLanguageLabel = (locale: string) => {
+		switch (locale) {
+			case "pt-br":
+				return t("portuguese");
+			case "en-us":
+				return t("english");
+			case "es-es":
+				return t("spanish");
+			default:
+				return t("portuguese");
+		}
 	};
 
 	return (
-		<Select value={selectedLanguage} onValueChange={handleLanguageChange}>
+		<Select value={locale} onValueChange={handleLanguageChange}>
 			<SelectTrigger className="w-fit rounded-full border-none hover:bg-input/30">
 				<Globe />
-				{selectedLanguage === "portuguese" ? "Português" : null}
-				{selectedLanguage === "english" ? "Inglês" : null}
-				{selectedLanguage === "spanish" ? "Espanhol" : null}
+				{getLanguageLabel(locale)}
 			</SelectTrigger>
 			<SelectContent className="bg-background">
-				<SelectItem value="portuguese">Português</SelectItem>
-				<SelectItem value="english">Inglês</SelectItem>
-				<SelectItem value="spanish">Espanhol</SelectItem>
+				<SelectItem value="pt-br">{t("portuguese")}</SelectItem>
+				<SelectItem value="en-us">{t("english")}</SelectItem>
+				<SelectItem value="es-es">{t("spanish")}</SelectItem>
 			</SelectContent>
 		</Select>
 	);

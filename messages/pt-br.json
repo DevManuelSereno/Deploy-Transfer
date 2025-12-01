@@ -1,0 +1,50 @@
+{
+	"Sidebar": {
+		"groups": {
+			"principal": "Principal",
+			"frota": "Frota",
+			"organization": "Organização"
+		},
+		"items": {
+			"dashboard": "Painel",
+			"services": "Serviços",
+			"trips": "Viagens",
+			"schedule": "Agenda",
+			"vehicles": "Veículos",
+			"refueling": "Abastecimento",
+			"incidents": "Ocorrências",
+			"expenses": "Despesas",
+			"maintenance": "Manutenções",
+			"brands": "Marcas",
+			"user": "Usuário"
+		}
+	},
+	"Navbar": {
+		"defaultTitle": "Transfer",
+		"dashboard": "Painel",
+		"services": "Serviços",
+		"trips": "Viagens",
+		"schedule": "Agenda",
+		"vehicles": "Veículos",
+		"refueling": "Abastecimento",
+		"incidents": "Ocorrências",
+		"expenses": "Despesas",
+		"maintenance": "Manutenções",
+		"brands": "Marcas",
+		"user": "Usuário"
+	},
+	"HomePage": {
+		"title": "Dashboard"
+	},
+	"LanguageToggle": {
+		"portuguese": "Português",
+		"english": "Inglês",
+		"spanish": "Espanhol"
+	},
+	"UserMenu": {
+		"profile": "Perfil",
+		"account": "Conta",
+		"settings": "Configuração",
+		"logout": "Encerrar Sessão"
+	}
+}

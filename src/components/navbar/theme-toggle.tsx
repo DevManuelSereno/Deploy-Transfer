@@ -10,11 +10,90 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+// Extensão do Document para incluir a API View Transitions
+interface ViewTransition {
+	finished: Promise<void>;
+	ready: Promise<void>;
+	updateCallbackDone: Promise<void>;
+	skipTransition: () => void;
+}
+
+declare global {
+	interface Document {
+		startViewTransition?: (callback: () => void | Promise<void>) => ViewTransition;
+	}
+}
+
 export function ThemeToggle() {
 	const { theme, setTheme } = useTheme();
+	const [mounted, setMounted] = React.useState(false);
 
-	function toggleTheme() {
-		setTheme(theme === "dark" ? "light" : "dark");
+	React.useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	async function toggleTheme() {
+		const newTheme = theme === "dark" ? "light" : "dark";
+
+		// Verificação de suporte (Feature Detection)
+		if (!document.startViewTransition) {
+			// Fallback: Se não suportar, apenas troca o tema instantaneamente
+			setTheme(newTheme);
+			document.documentElement.classList.toggle("dark", newTheme === "dark");
+			return;
+		}
+
+		const x = 40;
+		const y = 28;
+
+
+		const endRadius = Math.hypot(
+			window.innerWidth,
+			window.innerHeight
+		);
+
+		// Captura do estado (Snapshot) e aplicação das mudanças
+		const transition = document.startViewTransition(() => {
+			setTheme(newTheme);
+			document.documentElement.classList.toggle("dark", newTheme === "dark");
+		});
+
+		// Animação customizada (Manipulação do DOM)
+		try {
+			await transition.ready;
+
+			// Anima o pseudo-elemento ::view-transition-new(root)
+			document.documentElement.animate(
+				{
+					clipPath: [
+						`circle(0px at ${x}px ${y}px)`,
+						`circle(${endRadius}px at ${x}px ${y}px)`,
+					],
+				},
+				{
+					duration: 700,
+					easing: "ease-in-out",
+					pseudoElement: "::view-transition-new(root)",
+				}
+			);
+		} catch (error) {
+			// Em caso de erro, não faz nada - a transição padrão será aplicada
+			console.error("Erro na animação de transição:", error);
+		}
+	}
+
+	if (!mounted) {
+		return (
+			<Button
+				variant="ghost"
+				className="rounded-full [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground"
+				size="icon"
+				disabled
+			>
+				<Sun className="h-[1.2rem] w-[1.2rem]" />
+				<span className="sr-only">Alternar tema</span>
+			</Button>
+		);
 	}
 
 	return (

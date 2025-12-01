@@ -2,7 +2,7 @@
 
 import { Trash } from "lucide-react";
 import * as React from "react";
-import type { FileValue } from "@/app/vehicle/types/types-documentation";
+import type { FileValue } from "@/app/[locale]/vehicle/types/types-documentation";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

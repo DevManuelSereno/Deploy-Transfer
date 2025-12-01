@@ -1,6 +1,7 @@
 "use client";
 import { UserIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 import { LanguageToggle } from "@/components/navbar/language-toggle";
 import { NavUser } from "@/components/navbar/nav-user";
 import { PassApps } from "@/components/navbar/pass-apps";
@@ -18,20 +19,21 @@ import { navbarItems } from "@/lib/sidebar-menu-list";
 
 export function AppNavbar() {
 	const pathname = usePathname();
+	const t = useTranslations("Navbar");
 
 	function getLabelByPathname(pathname: string) {
-		let label: string | undefined;
+		let key: string | undefined;
 		const allItems = Object.values(navbarItems).flat();
 
 		for (const category of allItems) {
-			if (`/${category.url}` === pathname) {
-				label = category.name;
+			if (category.url === pathname) {
+				key = category.key;
 				break;
 			}
 		}
-		if (label) return label;
+		if (key) return t(key);
 
-		return "Transfer";
+		return t("defaultTitle");
 	}
 
 	return (

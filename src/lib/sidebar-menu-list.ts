@@ -33,61 +33,61 @@ export const teamsItems = [
 export const navbarItems = {
 	principal: [
 		{
-			name: "Painel",
-			url: "#",
+			key: "dashboard",
+			url: "/",
 			icon: LayoutDashboard,
 		},
 		{
-			name: "Serviços",
+			key: "services",
 			url: "#",
 			icon: Home,
 		},
 		{
-			name: "Viagens",
+			key: "trips",
 			url: "#",
 			icon: Plane,
 		},
 		{
-			name: "Agenda",
+			key: "schedule",
 			url: "#",
 			icon: Calendar,
 		},
 	],
 	frota: [
 		{
-			name: "Veículos",
-			url: "vehicle",
+			key: "vehicles",
+			url: "/vehicle",
 			icon: BusFront,
 		},
 		{
-			name: "Abastecimento",
+			key: "refueling",
 			url: "#",
 			icon: Fuel,
 		},
 		{
-			name: "Ocorrências",
+			key: "incidents",
 			url: "#",
 			icon: AlertTriangle,
 		},
 		{
-			name: "Despesas",
+			key: "expenses",
 			url: "#",
 			icon: Wallet,
 		},
 		{
-			name: "Manutenções",
+			key: "maintenance",
 			url: "#",
 			icon: Wrench,
 		},
 		{
-			name: "Marcas",
-			url: "brand",
+			key: "brands",
+			url: "/brand",
 			icon: Building2,
 		},
 	],
 	organization: [
 		{
-			name: "Usuário",
+			key: "user",
 			url: "#",
 			icon: User,
 		},

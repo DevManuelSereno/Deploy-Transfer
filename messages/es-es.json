@@ -1,0 +1,50 @@
+{
+	"Sidebar": {
+		"groups": {
+			"principal": "Principal",
+			"frota": "Flota",
+			"organization": "Organización"
+		},
+		"items": {
+			"dashboard": "Panel",
+			"services": "Servicios",
+			"trips": "Viajes",
+			"schedule": "Agenda",
+			"vehicles": "Vehículos",
+			"refueling": "Repostaje",
+			"incidents": "Incidencias",
+			"expenses": "Gastos",
+			"maintenance": "Mantenimiento",
+			"brands": "Marcas",
+			"user": "Usuario"
+		}
+	},
+	"Navbar": {
+		"defaultTitle": "Transfer",
+		"dashboard": "Panel",
+		"services": "Servicios",
+		"trips": "Viajes",
+		"schedule": "Agenda",
+		"vehicles": "Vehículos",
+		"refueling": "Repostaje",
+		"incidents": "Incidencias",
+		"expenses": "Gastos",
+		"maintenance": "Mantenimiento",
+		"brands": "Marcas",
+		"user": "Usuario"
+	},
+	"HomePage": {
+		"title": "Panel de Control"
+	},
+	"LanguageToggle": {
+		"portuguese": "Portugués",
+		"english": "Inglés",
+		"spanish": "Español"
+	},
+	"UserMenu": {
+		"profile": "Perfil",
+		"account": "Cuenta",
+		"settings": "Configuración",
+		"logout": "Cerrar sesión"
+	}
+}
