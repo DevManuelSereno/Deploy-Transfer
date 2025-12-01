@@ -10,20 +10,6 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-// Extensão do Document para incluir a API View Transitions
-interface ViewTransition {
-	finished: Promise<void>;
-	ready: Promise<void>;
-	updateCallbackDone: Promise<void>;
-	skipTransition: () => void;
-}
-
-declare global {
-	interface Document {
-		startViewTransition?: (callback: () => void | Promise<void>) => ViewTransition;
-	}
-}
-
 export function ThemeToggle() {
 	const { theme, setTheme } = useTheme();
 	const [mounted, setMounted] = React.useState(false);
@@ -46,11 +32,7 @@ export function ThemeToggle() {
 		const x = 40;
 		const y = 28;
 
-
-		const endRadius = Math.hypot(
-			window.innerWidth,
-			window.innerHeight
-		);
+		const endRadius = Math.hypot(window.innerWidth, window.innerHeight);
 
 		// Captura do estado (Snapshot) e aplicação das mudanças
 		const transition = document.startViewTransition(() => {
@@ -74,7 +56,7 @@ export function ThemeToggle() {
 					duration: 700,
 					easing: "ease-in-out",
 					pseudoElement: "::view-transition-new(root)",
-				}
+				},
 			);
 		} catch (error) {
 			// Em caso de erro, não faz nada - a transição padrão será aplicada
@@ -114,7 +96,7 @@ export function ThemeToggle() {
 					<span className="sr-only">Alternar tema</span>
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent hasArrow className="font-normal text-sm">
+			<TooltipContent className="font-normal text-sm">
 				Alternar tema
 			</TooltipContent>
 		</Tooltip>

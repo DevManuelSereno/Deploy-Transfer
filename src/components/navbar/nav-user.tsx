@@ -59,7 +59,7 @@ export function NavUser({
 											</Avatar>
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent hasArrow className="font-normal text-sm">
+									<TooltipContent className="font-normal text-sm">
 										{t("profile")}
 									</TooltipContent>
 								</Tooltip>
