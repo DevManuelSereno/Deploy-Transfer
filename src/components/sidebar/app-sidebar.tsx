@@ -7,13 +7,13 @@ import {
 	SidebarContent,
 	SidebarHeader,
 } from "@/components/ui/sidebar";
-import { navbarItems } from "@/lib/sidebar-menu-list";
+import { navbarItems, teamsItems } from "@/lib/sidebar-menu-list";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
-				<TeamSwitcher teams={navbarItems.teams} />
+				<TeamSwitcher teams={teamsItems} />
 			</SidebarHeader>
 			<SidebarContent>
 				<NavItems data={navbarItems.principal} groupLabel="Principal" />

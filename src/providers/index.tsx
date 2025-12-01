@@ -1,5 +1,4 @@
 "use client";
-import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { QueryClientProvider } from "./query-client-provider";
 

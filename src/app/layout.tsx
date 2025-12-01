@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
-import { cookies } from "next/headers";
-import { Providers } from "@/providers";
 import { AppNavbar } from "@/components/navbar/app-navbar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { DocumentationFormProvider } from "@/app/context/documentation-context";
-import { GasSupplyFormProvider } from "@/app/context/gas-supply-context";
-import { ModalProvider } from "@/app/context/modal-context";
-import { OccurrenceFormProvider } from "@/app/context/occurrence-context";
-import { VehicleFormProvider } from "@/app/context/vehicle-context";
+import { Providers } from "@/providers";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -52,20 +48,11 @@ export default async function RootLayout({
 									>
 										<AppNavbar />
 									</header>
-									<VehicleFormProvider>
-										<DocumentationFormProvider>
-											<OccurrenceFormProvider>
-												<GasSupplyFormProvider>
-													<ModalProvider>
-														<div className="flex flex-col p-6">{children}</div>
-													</ModalProvider>
-												</GasSupplyFormProvider>
-											</OccurrenceFormProvider>
-										</DocumentationFormProvider>
-									</VehicleFormProvider>
+									<div className="flex flex-col p-6">{children}</div>
 								</div>
 							</SidebarInset>
 						</SidebarProvider>
+						<Toaster />
 					</Providers>
 				</NextIntlClientProvider>
 			</body>
