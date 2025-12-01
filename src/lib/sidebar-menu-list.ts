@@ -15,26 +15,22 @@ import {
 	Wrench,
 } from "lucide-react";
 
-export const navbarItems = {
-	user: {
-		name: "shadcn",
-		email: "m@example.com",
-		avatar: "/avatars/shadcn.jpg",
+export const teamsItems = [
+	{
+		name: "Pass",
+		logo: Building2,
 	},
-	teams: [
-		{
-			name: "Pass",
-			logo: Building2,
-		},
-		{
-			name: "Acme Corp.",
-			logo: AudioWaveform,
-		},
-		{
-			name: "Evil Corp.",
-			logo: Command,
-		},
-	],
+	{
+		name: "Acme Corp.",
+		logo: AudioWaveform,
+	},
+	{
+		name: "Evil Corp.",
+		logo: Command,
+	},
+];
+
+export const navbarItems = {
 	principal: [
 		{
 			name: "Painel",
@@ -60,7 +56,7 @@ export const navbarItems = {
 	frota: [
 		{
 			name: "Veículos",
-			url: "#",
+			url: "vehicle",
 			icon: BusFront,
 		},
 		{
@@ -85,7 +81,7 @@ export const navbarItems = {
 		},
 		{
 			name: "Marcas",
-			url: "#",
+			url: "brand",
 			icon: Building2,
 		},
 	],

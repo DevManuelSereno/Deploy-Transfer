@@ -1,4 +1,6 @@
+"use client";
 import { UserIcon } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { LanguageToggle } from "@/components/navbar/language-toggle";
 import { NavUser } from "@/components/navbar/nav-user";
 import { PassApps } from "@/components/navbar/pass-apps";
@@ -12,8 +14,26 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { navbarItems } from "@/lib/sidebar-menu-list";
 
 export function AppNavbar() {
+	const pathname = usePathname();
+
+	function getLabelByPathname(pathname: string) {
+		let label: string | undefined;
+		const allItems = Object.values(navbarItems).flat();
+
+		for (const category of allItems) {
+			if (`/${category.url}` === pathname) {
+				label = category.name;
+				break;
+			}
+		}
+		if (label) return label;
+
+		return "Transfer";
+	}
+
 	return (
 		<div className="flex w-full items-center justify-between px-4 @4xl/main:px-6">
 			<div className="flex items-center gap-1">
@@ -25,7 +45,7 @@ export function AppNavbar() {
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem>
-							<BreadcrumbPage>Transfer</BreadcrumbPage>
+							<BreadcrumbPage>{getLabelByPathname(pathname)}</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
