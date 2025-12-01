@@ -1,16 +1,25 @@
 "use client";
 
 import { Grip } from "lucide-react";
-import Image, { type ImageProps } from "next/image";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 import React from "react";
-import balanceImg from "@/assets/images/balance.webp";
-import channelImg from "@/assets/images/channel.webp";
-import connectImg from "@/assets/images/connect.webp";
-import flowImg from "@/assets/images/flow.webp";
-import marketplaceImg from "@/assets/images/marketplace.webp";
-import officeImg from "@/assets/images/office.webp";
-import transferImg from "@/assets/images/transfer.webp";
-import workspaceImg from "@/assets/images/workspace.webp";
+import balanceImgDark from "@/assets/icons/dark/balance.png";
+import channelImgDark from "@/assets/icons/dark/channel.png";
+import connectImgDark from "@/assets/icons/dark/connect.png";
+import flowImgDark from "@/assets/icons/dark/flow.png";
+import marketplaceImgDark from "@/assets/icons/dark/marketplace.png";
+import officeImgDark from "@/assets/icons/dark/office.png";
+import transferImgDark from "@/assets/icons/dark/transfer.png";
+import workspaceImgDark from "@/assets/icons/dark/workspace.png";
+import balanceImgLight from "@/assets/icons/light/balance.png";
+import channelImgLight from "@/assets/icons/light/channel.png";
+import connectImgLight from "@/assets/icons/light/connect.png";
+import flowImgLight from "@/assets/icons/light/flow.png";
+import marketplaceImgLight from "@/assets/icons/light/marketplace.png";
+import officeImgLight from "@/assets/icons/light/office.png";
+import transferImgLight from "@/assets/icons/light/transfer.png";
+import workspaceImgLight from "@/assets/icons/light/workspace.png";
 import { Button } from "@/components/ui/button";
 import {
 	Popover,
@@ -38,16 +47,35 @@ const AppItem = ({ src, label }: { src: any; label: string }) => (
 
 export function PassApps() {
 	const [open, setOpen] = React.useState(false);
+	const { theme } = useTheme();
 
 	const apps = [
-		{ src: workspaceImg, label: "Workspace" },
-		{ src: transferImg, label: "Transfer" },
-		{ src: marketplaceImg, label: "Marketplace" },
-		{ src: flowImg, label: "Flow" },
-		{ src: balanceImg, label: "Balance" },
-		{ src: officeImg, label: "Office" },
-		{ src: channelImg, label: "Channel" },
-		{ src: connectImg, label: "Connect" },
+		{
+			src: theme === "dark" ? workspaceImgDark : workspaceImgLight,
+			label: "Workspace",
+		},
+		{
+			src: theme === "dark" ? transferImgDark : transferImgLight,
+			label: "Transfer",
+		},
+		{
+			src: theme === "dark" ? marketplaceImgDark : marketplaceImgLight,
+			label: "Marketplace",
+		},
+		{ src: theme === "dark" ? flowImgDark : flowImgLight, label: "Flow" },
+		{
+			src: theme === "dark" ? balanceImgDark : balanceImgLight,
+			label: "Balance",
+		},
+		{ src: theme === "dark" ? officeImgDark : officeImgLight, label: "Office" },
+		{
+			src: theme === "dark" ? channelImgDark : channelImgLight,
+			label: "Channel",
+		},
+		{
+			src: theme === "dark" ? connectImgDark : connectImgLight,
+			label: "Connect",
+		},
 	];
 
 	return (
@@ -67,7 +95,7 @@ export function PassApps() {
 								</Button>
 							</PopoverTrigger>
 						</TooltipTrigger>
-						<TooltipContent hasArrow>Pass Apps</TooltipContent>
+						<TooltipContent>Pass Apps</TooltipContent>
 					</Tooltip>
 				) : (
 					<PopoverTrigger asChild>
