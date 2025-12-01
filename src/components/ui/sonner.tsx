@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, CircleCheck, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useTheme } from "next-themes";
 import type { ReactNode } from "react";
 import {

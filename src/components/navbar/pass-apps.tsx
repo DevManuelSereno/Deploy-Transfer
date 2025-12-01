@@ -1,7 +1,7 @@
 "use client";
 
 import { Grip } from "lucide-react";
-import Image from "next/image";
+import Image, { ImageProps, type StaticImageData } from "next/image";
 import { useTheme } from "next-themes";
 import React from "react";
 import balanceImgDark from "@/assets/icons/dark/balance.png";
@@ -33,7 +33,13 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-const AppItem = ({ src, label }: { src: any; label: string }) => (
+const AppItem = ({
+	src,
+	label,
+}: {
+	src: string | StaticImageData;
+	label: string;
+}) => (
 	<li className="relative size-[96px]">
 		<a
 			href="https://pass.ai/dashboard"
