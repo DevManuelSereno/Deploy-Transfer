@@ -32,6 +32,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useThemeToggle } from "@/hooks/use-theme-toggle";
 
 const AppItem = ({
 	src,
@@ -53,33 +54,33 @@ const AppItem = ({
 
 export function PassApps() {
 	const [open, setOpen] = React.useState(false);
-	const { theme } = useTheme();
+	const { isDark } = useThemeToggle();
 
 	const apps = [
 		{
-			src: theme === "dark" ? workspaceImgDark : workspaceImgLight,
+			src: isDark ? workspaceImgDark : workspaceImgLight,
 			label: "Workspace",
 		},
 		{
-			src: theme === "dark" ? transferImgDark : transferImgLight,
+			src: isDark ? transferImgDark : transferImgLight,
 			label: "Transfer",
 		},
 		{
-			src: theme === "dark" ? marketplaceImgDark : marketplaceImgLight,
+			src: isDark ? marketplaceImgDark : marketplaceImgLight,
 			label: "Marketplace",
 		},
-		{ src: theme === "dark" ? flowImgDark : flowImgLight, label: "Flow" },
+		{ src: isDark ? flowImgDark : flowImgLight, label: "Flow" },
 		{
-			src: theme === "dark" ? balanceImgDark : balanceImgLight,
+			src: isDark ? balanceImgDark : balanceImgLight,
 			label: "Balance",
 		},
-		{ src: theme === "dark" ? officeImgDark : officeImgLight, label: "Office" },
+		{ src: isDark ? officeImgDark : officeImgLight, label: "Office" },
 		{
-			src: theme === "dark" ? channelImgDark : channelImgLight,
+			src: isDark ? channelImgDark : channelImgLight,
 			label: "Channel",
 		},
 		{
-			src: theme === "dark" ? connectImgDark : connectImgLight,
+			src: isDark ? connectImgDark : connectImgLight,
 			label: "Connect",
 		},
 	];
