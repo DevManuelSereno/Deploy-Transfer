@@ -2,7 +2,6 @@
 
 import { Grip } from "lucide-react";
 import Image, { type StaticImageData } from "next/image";
-import { useTheme } from "next-themes";
 import React from "react";
 import balanceImgDark from "@/assets/icons/dark/balance.png";
 import channelImgDark from "@/assets/icons/dark/channel.png";
