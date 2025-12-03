@@ -36,6 +36,15 @@
 	"HomePage": {
 		"title": "Dashboard"
 	},
+	"VehiclePage": {
+		"title": "Veículos",
+		"Table": {
+			"Filters": {
+				"status": "Status",
+				"company": "Empresa"
+			}
+		}
+	},
 	"LanguageToggle": {
 		"portuguese": "Português",
 		"english": "Inglês",
@@ -53,6 +62,12 @@
 			"filterPlaceholder": "Filtrar {title}...",
 			"noResults": "Nenhum resultado encontrado.",
 			"clearFilters": "Limpar filtros"
+		},
+		"DataTableUpdate": {
+			"update": "Atualizar"
+		},
+		"DataTableExport": {
+			"export": "Exportar"
 		}
 	}
 }

@@ -15,6 +15,8 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
+import { LucidePlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ModalDeleteVehicle } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle";
 import { ModalTableVehicle } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle";
@@ -23,10 +25,14 @@ import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehi
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { DataTable } from "@/components/data-table";
+import { DataTableExport } from "@/components/data-table/data-table-export";
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
+import { DataTableUpdate } from "@/components/data-table/data-table-update";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
+import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
@@ -38,6 +44,7 @@ import {
 } from "../columns/columns-table-vehicle";
 
 export default function TableVehicle() {
+	const tFilters = useTranslations("VehiclePage.Table.Filters");
 	const { setEditingVehicle } = useVehicleFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
 		useModalContext();
@@ -180,13 +187,25 @@ export default function TableVehicle() {
 						<DataTableFacetedFilter
 							options={statusColumnOptions}
 							column={statusColumn}
-							title="Status"
+							title={tFilters("status")}
 						/>
 						<DataTableFacetedFilter
 							options={companyColumnOptions}
 							column={companyColumn}
-							title="Compania"
+							title={tFilters("company")}
 						/>
+					</div>
+					<div className="flex items-center gap-2">
+						<DataTableUpdate />
+						<DataTableExport />
+						<Separator
+							orientation="vertical"
+							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+						/>
+						<Button onClick={() => setIsModalEditOpen(true)}>
+							<LucidePlus />
+							Adicionar
+						</Button>
 					</div>
 				</div>
 				<DataTableProvider recordCount={20} table={table}>

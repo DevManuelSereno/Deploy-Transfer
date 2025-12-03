@@ -36,6 +36,15 @@
 	"HomePage": {
 		"title": "Panel de Control"
 	},
+	"VehiclePage": {
+		"title": "Vehículos",
+		"Table": {
+			"Filters": {
+				"status": "Estado",
+				"company": "Compañía"
+			}
+		}
+	},
 	"LanguageToggle": {
 		"portuguese": "Portugués",
 		"english": "Inglés",
@@ -53,6 +62,12 @@
 			"filterPlaceholder": "Filtrar {title}...",
 			"noResults": "No se encontraron resultados.",
 			"clearFilters": "Limpiar filtros"
+		},
+		"DataTableUpdate": {
+			"update": "Actualizar"
+		},
+		"DataTableExport": {
+			"export": "Exportar"
 		}
 	}
 }
