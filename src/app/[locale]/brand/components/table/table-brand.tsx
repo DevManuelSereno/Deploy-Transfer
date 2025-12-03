@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
 import { DataTable } from "@/components/ui/data-table";
-import { DataTableToolbar } from "@/components/ui/data-table-toolbar";
+import { DataTableToolbar } from "@/components/ui/data-table/data-table-toolbar";
 import { Separator } from "@/components/ui/separator";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";

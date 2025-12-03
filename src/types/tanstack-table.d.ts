@@ -6,5 +6,6 @@ declare module "@tanstack/react-table" {
 		headerText?: string;
 		filterable?: boolean;
 		filterTitle?: string;
+		getFilterValue?: (value: unknown) => string;
 	}
 }

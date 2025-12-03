@@ -4,7 +4,7 @@ import type { Table } from "@tanstack/react-table";
 import { Bot, Search } from "lucide-react";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter";
+import { DataTableFacetedFilter } from "@/components/ui/data-table/data-table-faceted-filter";
 import {
 	InputGroup,
 	InputGroupAddon,

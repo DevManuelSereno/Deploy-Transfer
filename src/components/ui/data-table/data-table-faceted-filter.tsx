@@ -2,7 +2,7 @@
 
 import type { Column } from "@tanstack/react-table";
 import { CheckIcon, FilterIcon } from "lucide-react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,9 +37,24 @@ export function DataTableFacetedFilter<TData, TValue>({
 		[column],
 	);
 
-	const options = Array.from(facets.entries())
+	const getFilterValue = column.columnDef.meta?.getFilterValue;
+
+	const optionsMap = new Map<string, number>();
+
+	Array.from(facets.entries()).forEach(([value, count]) => {
+		const displayValue = getFilterValue
+			? getFilterValue(value as TValue)
+			: String(value);
+
+		if (!displayValue) return;
+
+		const currentCount = optionsMap.get(displayValue) ?? 0;
+		optionsMap.set(displayValue, currentCount + count);
+	});
+
+	const options = Array.from(optionsMap.entries())
 		.map(([value, count]) => ({
-			value: String(value),
+			value,
 			count,
 		}))
 		.sort((a, b) => b.count - a.count);

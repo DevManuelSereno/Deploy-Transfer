@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { DataTablePagination } from "@/components/ui/data-table/data-table-pagination";
 import {
 	Pagination,
 	PaginationContent,
@@ -69,14 +70,11 @@ export function DataTable<TData, TValue>({
 	topRightActions,
 	loading = false,
 }: DataTableProps<TData, TValue>) {
-	const initialRowsPerPage = paginationProps?.initialRowsPerPage ?? 10;
-	const rowsPerPage = paginationProps?.rowsPerPage ?? [5, 10, 15, 20];
-
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
-		pageSize: initialRowsPerPage,
+		pageSize: paginationProps?.initialRowsPerPage ?? 10,
 	});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
@@ -113,7 +111,7 @@ export function DataTable<TData, TValue>({
 		[loading, columns],
 	);
 
-	const table = useReactTable({
+	const table = useReactTable<TData>({
 		data: tableData,
 		columns: tableColumns,
 		getCoreRowModel: getCoreRowModel(),
@@ -279,95 +277,10 @@ export function DataTable<TData, TValue>({
 					)}
 				</TableBody>
 			</Table>
-			<div className="flex flex-col md:flex-row items-center justify-between flex-1 gap-2.5 border-t px-5 py-4">
-				<div className="text-muted-foreground text-sm">
-					{table.getSelectedRowModel().rows.length} de{" "}
-					{table.getRowCount().toString()} linha(s) selecionadas.
-				</div>
-				<Select
-					value={table.getState().pagination.pageSize.toString()}
-					onValueChange={(value) => {
-						table.setPageSize(Number(value));
-					}}
-				>
-					<SelectTrigger size="sm">
-						<SelectValue placeholder="Select number of results" />
-					</SelectTrigger>
-					<SelectContent className="[&_*[role=option]]:pr-8 [&_*[role=option]]:pl-2 [&_*[role=option]>span]:right-2 [&_*[role=option]>span]:left-auto">
-						{rowsPerPage.map((pageSize) => (
-							<SelectItem key={pageSize} value={pageSize.toString()}>
-								{pageSize} / página
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-
-				<div className="flex items-center gap-4">
-					<div className="flex grow justify-end text-sm whitespace-nowrap">
-						<p className="font-medium">
-							Página {table.getState().pagination.pageIndex + 1} de{" "}
-							{Math.floor(
-								table.getRowCount() / table.getState().pagination.pageSize,
-							) + 1}
-						</p>
-					</div>
-					<Pagination>
-						<PaginationContent>
-							<PaginationItem>
-								<Button
-									size="icon"
-									variant="outline"
-									className="disabled:pointer-events-none disabled:opacity-50"
-									onClick={() => table.firstPage()}
-									disabled={!table.getCanPreviousPage()}
-									aria-label="Ir para a primeira página"
-								>
-									<ChevronFirstIcon size={16} aria-hidden="true" />
-								</Button>
-							</PaginationItem>
-
-							<PaginationItem>
-								<Button
-									size="icon"
-									variant="outline"
-									className="disabled:pointer-events-none disabled:opacity-50"
-									onClick={() => table.previousPage()}
-									disabled={!table.getCanPreviousPage()}
-									aria-label="Go to previous page"
-								>
-									<ChevronLeftIcon size={16} aria-hidden="true" />
-								</Button>
-							</PaginationItem>
-
-							<PaginationItem>
-								<Button
-									size="icon"
-									variant="outline"
-									className="disabled:pointer-events-none disabled:opacity-50"
-									onClick={() => table.nextPage()}
-									disabled={!table.getCanNextPage()}
-									aria-label="Go to next page"
-								>
-									<ChevronRightIcon size={16} aria-hidden="true" />
-								</Button>
-							</PaginationItem>
-
-							<PaginationItem>
-								<Button
-									size="icon"
-									variant="outline"
-									className="disabled:pointer-events-none disabled:opacity-50"
-									onClick={() => table.lastPage()}
-									disabled={!table.getCanNextPage()}
-									aria-label="Go to last page"
-								>
-									<ChevronLastIcon size={16} aria-hidden="true" />
-								</Button>
-							</PaginationItem>
-						</PaginationContent>
-					</Pagination>
-				</div>
-			</div>
+			<DataTablePagination
+				table={table}
+				paginationProps={{ rowsPerPage: paginationProps?.rowsPerPage }}
+			/>
 		</>
 	);
 }

@@ -133,6 +133,19 @@ export const getVehicleColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as BrandType)?.name,
 		enableColumnFilter: true,
+		filterFn: (row, id, filterValue: string[]) => {
+			const brand = row.getValue(id) as BrandType | null | undefined;
+			if (!brand?.name) return false;
+			return filterValue.includes(brand.name);
+		},
+		meta: {
+			filterable: true,
+			filterTitle: "Marca",
+			getFilterValue: (value: unknown) => {
+				const brand = value as BrandType | null | undefined;
+				return brand?.name ?? "";
+			},
+		},
 	},
 	{
 		accessorKey: "capacity",
@@ -206,7 +219,19 @@ export const getVehicleColumns = (
 			);
 		},
 		cell: ({ cell }) => (cell.getValue() as StatusType)?.name,
-		enableColumnFilter: true,
+		filterFn: (row, id, filterValue: string[]) => {
+			const status = row.getValue(id) as StatusType | null | undefined;
+			if (!status?.name) return false;
+			return filterValue.includes(status.name);
+		},
+		meta: {
+			filterable: true,
+			filterTitle: "Status",
+			getFilterValue: (value: unknown) => {
+				const status = value as StatusType | null | undefined;
+				return status?.name ?? "";
+			},
+		},
 	},
 	{
 		id: "actions",
