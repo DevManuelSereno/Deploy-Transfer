@@ -46,5 +46,13 @@
 		"account": "Conta",
 		"settings": "Configuração",
 		"logout": "Encerrar Sessão"
+	},
+	"DataTable": {
+		"DataTableFacetedFilter": {
+			"selectedCount": "{count} selecionado(s)",
+			"filterPlaceholder": "Filtrar {title}...",
+			"noResults": "Nenhum resultado encontrado.",
+			"clearFilters": "Limpar filtros"
+		}
 	}
 }

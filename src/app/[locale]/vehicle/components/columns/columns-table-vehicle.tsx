@@ -6,6 +6,7 @@ import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import type { BrandType, CompanyType, StatusType } from "@/types/models";
 
 export interface VehicleColumnActions {
@@ -50,7 +51,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Identificador
+						ID
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -58,36 +59,6 @@ export const getVehicleColumns = (
 		},
 		enableColumnFilter: true,
 		size: 65,
-	},
-	{
-		accessorKey: "createdAt",
-		cell: ({ cell }) => {
-			if (!cell.getValue()) return "-";
-			if (typeof cell.getValue() === "string")
-				return new Date(cell.getValue() as string).toLocaleDateString("pt-BR", {
-					day: "2-digit",
-					month: "2-digit",
-					year: "numeric",
-					hour: "2-digit",
-					minute: "2-digit",
-					second: "2-digit",
-				});
-		},
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						Criado em
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		enableColumnFilter: true,
 	},
 	{
 		accessorKey: "model",
@@ -114,6 +85,7 @@ export const getVehicleColumns = (
 			</div>
 		),
 		enableColumnFilter: true,
+		size: 300,
 	},
 	{
 		accessorKey: "brand",
@@ -131,21 +103,8 @@ export const getVehicleColumns = (
 				</div>
 			);
 		},
-		cell: ({ cell }) => (cell.getValue() as BrandType)?.name,
 		enableColumnFilter: true,
-		filterFn: (row, id, filterValue: string[]) => {
-			const brand = row.getValue(id) as BrandType | null | undefined;
-			if (!brand?.name) return false;
-			return filterValue.includes(brand.name);
-		},
-		meta: {
-			filterable: true,
-			filterTitle: "Marca",
-			getFilterValue: (value: unknown) => {
-				const brand = value as BrandType | null | undefined;
-				return brand?.name ?? "";
-			},
-		},
+		size: 200,
 	},
 	{
 		accessorKey: "capacity",
@@ -199,8 +158,16 @@ export const getVehicleColumns = (
 				</div>
 			);
 		},
-		cell: ({ cell }) => (cell.getValue() as CompanyType)?.name,
 		enableColumnFilter: true,
+		filterFn: (row, columnId, filterValue: unknown) => {
+			if (!filterValue) return true;
+			const values = Array.isArray(filterValue)
+				? filterValue
+				: [String(filterValue)];
+			const rowValue = String(row.getValue(columnId) ?? "");
+			return values.includes(rowValue);
+		},
+		size: 230,
 	},
 	{
 		accessorKey: "status",
@@ -218,20 +185,88 @@ export const getVehicleColumns = (
 				</div>
 			);
 		},
-		cell: ({ cell }) => (cell.getValue() as StatusType)?.name,
-		filterFn: (row, id, filterValue: string[]) => {
-			const status = row.getValue(id) as StatusType | null | undefined;
-			if (!status?.name) return false;
-			return filterValue.includes(status.name);
+		cell: ({ cell }) => {
+			const status = cell.getValue();
+			return (
+				<div className="flex items-center gap-2">
+					<span
+						className={cn(
+							"h-1.5 w-1.5 rounded-full ring-2",
+							status === "Liberado" && "bg-emerald-600/70 ring-emerald-600/10",
+							status === "Manutenção" && "bg-orange-600/70 ring-orange-600/10",
+							status === "Inativo" && "bg-gray-600/70 ring-gray-600/10",
+						)}
+					/>
+					<span className="font-medium text-sm text-muted-foreground leading-0">
+						{String(status)}
+					</span>
+				</div>
+			);
 		},
-		meta: {
-			filterable: true,
-			filterTitle: "Status",
-			getFilterValue: (value: unknown) => {
-				const status = value as StatusType | null | undefined;
-				return status?.name ?? "";
-			},
+		filterFn: (row, columnId, filterValue: unknown) => {
+			if (!filterValue) return true;
+			const values = Array.isArray(filterValue)
+				? filterValue
+				: [String(filterValue)];
+			const rowValue = String(row.getValue(columnId) ?? "");
+			return values.includes(rowValue);
 		},
+	},
+	{
+		accessorKey: "createdAt",
+		cell: ({ cell }) => {
+			if (!cell.getValue()) return "-";
+			if (typeof cell.getValue() === "string")
+				return new Date(cell.getValue() as string).toLocaleDateString("pt-BR", {
+					day: "2-digit",
+					month: "2-digit",
+					year: "numeric",
+				});
+		},
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						Criado em
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		enableColumnFilter: true,
+		size: 200,
+	},
+	{
+		accessorKey: "updatedAt",
+		cell: ({ cell }) => {
+			if (!cell.getValue()) return "-";
+			if (typeof cell.getValue() === "string")
+				return new Date(cell.getValue() as string).toLocaleDateString("pt-BR", {
+					day: "2-digit",
+					month: "2-digit",
+					year: "numeric",
+				});
+		},
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						Última atualização
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		enableColumnFilter: true,
+		size: 200,
 	},
 	{
 		id: "actions",

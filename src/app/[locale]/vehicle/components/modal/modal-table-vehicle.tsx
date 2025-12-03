@@ -18,12 +18,12 @@ type ModalFormProps = {
 export function ModalTableVehicle({ open, setOpen, children }: ModalFormProps) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button>
-					<LucidePlus />
-					Adicionar
-				</Button>
-			</DialogTrigger>
+			{/*<DialogTrigger asChild>*/}
+			{/*	<Button>*/}
+			{/*		<LucidePlus />*/}
+			{/*		Adicionar*/}
+			{/*	</Button>*/}
+			{/*</DialogTrigger>*/}
 			<DialogContent
 				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-4xl
         flex flex-col max-h-[90vh]"

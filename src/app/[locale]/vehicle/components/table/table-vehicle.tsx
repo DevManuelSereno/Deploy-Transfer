@@ -1,22 +1,37 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, CloudDownload, RotateCw } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import {
+	Column,
+	type ColumnFiltersState,
+	type ColumnPinningState,
+	getCoreRowModel,
+	getFacetedRowModel,
+	getFacetedUniqueValues,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	type PaginationState,
+	type SortingState,
+	useReactTable,
+} from "@tanstack/react-table";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ModalDeleteVehicle } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle";
 import { ModalTableVehicle } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle";
 import TabsVehicle from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { DataTable } from "@/components/data-table";
+import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
+import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
 import { Card } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
-import { DataTableToolbar } from "@/components/ui/data-table/data-table-toolbar";
-import { Separator } from "@/components/ui/separator";
+import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
+import { DataTableProvider } from "@/providers/data-table-provider";
+import type { StatusType } from "@/types/models";
 import {
 	getVehicleColumns,
 	type VehicleColumnActions,
@@ -26,6 +41,17 @@ export default function TableVehicle() {
 	const { setEditingVehicle } = useVehicleFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
 		useModalContext();
+
+	const [globalFilter, setGlobalFilter] = useState("");
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 10,
+	});
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+		right: ["actions"],
+	});
 
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -66,7 +92,75 @@ export default function TableVehicle() {
 					"include.classification=true&include.category=true" +
 					"&&include.brand=true&&include.company&&include.status=true",
 			}),
+		select: (vehicleData) =>
+			vehicleData.map((vehicle) => ({
+				...vehicle,
+				status: vehicle.status.name,
+				company: vehicle.company.name,
+				brand: vehicle.brand.name,
+			})),
 	});
+
+	const tableData = useMemo(
+		() => (isLoading ? Array(30).fill({}) : (dataVehicle ?? [])),
+		[isLoading, dataVehicle],
+	);
+	const tableColumns = useMemo(
+		() =>
+			isLoading
+				? columns.map((column) => ({
+						...column,
+						cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
+					}))
+				: columns,
+		[isLoading, columns],
+	);
+
+	const table = useReactTable<VehicleData>({
+		data: tableData,
+		columns: tableColumns,
+		getCoreRowModel: getCoreRowModel(),
+		onSortingChange: setSorting,
+		getSortedRowModel: getSortedRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		getFilteredRowModel: getFilteredRowModel(),
+		getFacetedRowModel: getFacetedRowModel(),
+		getFacetedUniqueValues: getFacetedUniqueValues(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onPaginationChange: setPagination,
+		onColumnPinningChange: setColumnPinning,
+		onGlobalFilterChange: setGlobalFilter,
+		state: {
+			sorting,
+			columnFilters,
+			pagination,
+			columnPinning,
+			globalFilter,
+		},
+	});
+
+	const statusColumn = table.getColumn("status");
+
+	const statusColumnOptions = useMemo(() => {
+		const uniqueStatus = [...new Set(dataVehicle?.map((v) => v.status))];
+
+		return uniqueStatus.map((status) => ({
+			label: status,
+			value: status,
+		}));
+	}, [dataVehicle]);
+
+	const companyColumn = table.getColumn("company");
+
+	const companyColumnOptions = useMemo(() => {
+		const uniqueCompanies = [...new Set(dataVehicle?.map((v) => v.company))];
+
+		return uniqueCompanies.map((company) => ({
+			label: company,
+			value: company,
+		}));
+	}, [dataVehicle]);
+
 	return (
 		<div className="flex flex-1 flex-col gap-6">
 			<Card
@@ -76,39 +170,31 @@ export default function TableVehicle() {
 					"min-[56rem]:max-h-[calc(100dvh-var(--header-height)-4rem)] dark:shadow-none",
 				)}
 			>
-				<DataTable
-					columns={columns}
-					loading={isLoading}
-					data={dataVehicle ?? []}
-					topLeftActions={(table) => <DataTableToolbar table={table} />}
-					topRightActions={
-						<div className="flex items-center gap-2">
-							<Button variant="outline">
-								<RotateCw />
-								Atualizar
-							</Button>
-							<ButtonGroup>
-								<Button variant="outline">
-									<CloudDownload />
-									Export
-								</Button>
-								<Button variant="outline" size="icon">
-									<ChevronDown />
-								</Button>
-							</ButtonGroup>
-							<Separator
-								orientation="vertical"
-								className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-							/>
-							<ModalTableVehicle
-								open={isModalEditOpen}
-								setOpen={setIsModalEditOpen}
-							>
-								<TabsVehicle />
-							</ModalTableVehicle>
-						</div>
-					}
-				/>
+				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
+					<div className="flex items-center gap-2">
+						<OpenAiToolbar />
+						<DataTableSearchInput
+							value={globalFilter}
+							onChangeValue={(filter) => setGlobalFilter(filter)}
+						/>
+						<DataTableFacetedFilter
+							options={statusColumnOptions}
+							column={statusColumn}
+							title="Status"
+						/>
+						<DataTableFacetedFilter
+							options={companyColumnOptions}
+							column={companyColumn}
+							title="Compania"
+						/>
+					</div>
+				</div>
+				<DataTableProvider recordCount={20} table={table}>
+					<DataTable />
+				</DataTableProvider>
+				<ModalTableVehicle open={isModalEditOpen} setOpen={setIsModalEditOpen}>
+					<TabsVehicle />
+				</ModalTableVehicle>
 				<ModalDeleteVehicle
 					open={isModalDeleteOpen}
 					setOpen={setIsModalDeleteOpen}
