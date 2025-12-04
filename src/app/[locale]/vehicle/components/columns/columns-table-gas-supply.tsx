@@ -5,8 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-gas-supply";
 import { Button } from "@/components/ui/button";
-import type { BrandType, GasStationType, GasType } from "@/types/models";
-import type { FileType } from "@/types/models/File.schema";
+import type { GasStationType, GasType } from "@/types/models";
 
 export interface GasSupplyColumnActions {
 	onEdit: (document: GasSupplyData) => void;
@@ -41,6 +40,7 @@ export const getGasSupplyColumns = (
 			);
 		},
 		enableColumnFilter: true,
+		size: 190,
 	},
 	{
 		accessorKey: "gasStation",
@@ -60,6 +60,7 @@ export const getGasSupplyColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as GasStationType)?.name,
 		enableColumnFilter: true,
+		size: 110,
 	},
 	{
 		accessorKey: "gas",
@@ -79,6 +80,7 @@ export const getGasSupplyColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as GasType)?.type,
 		enableColumnFilter: true,
+		size: 150,
 	},
 	{
 		accessorKey: "quantity",
@@ -99,6 +101,7 @@ export const getGasSupplyColumns = (
 		cell: ({ cell }) =>
 			`${Number(cell.getValue()).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}L`,
 		enableColumnFilter: true,
+		size: 110,
 	},
 	{
 		accessorKey: "totalPrice",
@@ -123,6 +126,7 @@ export const getGasSupplyColumns = (
 				maximumFractionDigits: 2,
 			}),
 		enableColumnFilter: true,
+		size: 180,
 	},
 	{
 		id: "actions",

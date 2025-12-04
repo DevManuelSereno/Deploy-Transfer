@@ -40,6 +40,7 @@ export const getOccurrenceColumns = (
 					year: "numeric",
 				});
 		},
+		size: 280,
 	},
 	{
 		accessorKey: "classification",
@@ -59,6 +60,7 @@ export const getOccurrenceColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as ClassificationType).description,
 		enableColumnFilter: true,
+		size: 200,
 	},
 	{
 		accessorKey: "seriousness",
@@ -78,6 +80,7 @@ export const getOccurrenceColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as SeriousnessType).level,
 		enableColumnFilter: true,
+		size: 200,
 	},
 	{
 		id: "actions",

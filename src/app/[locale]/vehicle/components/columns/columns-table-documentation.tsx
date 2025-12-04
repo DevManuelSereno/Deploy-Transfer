@@ -33,7 +33,7 @@ export const getDocumentationColumns = (
 		enableColumnFilter: true,
 		cell: ({ cell }) =>
 			(cell.getValue() as FileType | undefined | null)?.mimeType,
-		size: 65,
+		size: 200,
 	},
 	{
 		accessorKey: "type",
@@ -52,6 +52,7 @@ export const getDocumentationColumns = (
 			);
 		},
 		enableColumnFilter: true,
+		size: 230,
 	},
 	{
 		accessorKey: "days",
@@ -73,6 +74,7 @@ export const getDocumentationColumns = (
 			(cell.getValue() as string[]).length >= 0
 				? (cell.getValue() as string[]).join(", ")
 				: "-",
+		size: 150,
 	},
 	{
 		accessorKey: "expiryAt",
@@ -100,6 +102,7 @@ export const getDocumentationColumns = (
 			);
 		},
 		enableColumnFilter: true,
+		size: 150,
 	},
 	{
 		id: "actions",
