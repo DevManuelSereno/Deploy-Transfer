@@ -24,7 +24,7 @@ export default async function LocaleLayout({
 	const { locale } = await params;
 
 	// Validate that the incoming `locale` parameter is valid
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	// biome-ignore lint/suspicious/noExplicitAny: <any>
 	if (!routing.locales.includes(locale as any)) {
 		notFound();
 	}

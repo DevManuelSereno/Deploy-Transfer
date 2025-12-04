@@ -14,7 +14,6 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { useCallback, useMemo, useState } from "react";
-import { getDocumentationColumns } from "@/app/[locale]/vehicle/components/columns/columns-table-documentation";
 import {
 	type GasSupplyColumnActions,
 	getGasSupplyColumns,
@@ -24,7 +23,6 @@ import { ModalFormGasSupply } from "@/app/[locale]/vehicle/components/modal/moda
 import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/gas-supply-context";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import type { DocumentationData } from "@/app/[locale]/vehicle/types/types-documentation";
 import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-gas-supply";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
