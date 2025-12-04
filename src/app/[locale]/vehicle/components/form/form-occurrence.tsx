@@ -23,7 +23,6 @@ import { ModalFormOccurrence } from "@/app/[locale]/vehicle/components/modal/mod
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/occurrence-context";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import type { DocumentationData } from "@/app/[locale]/vehicle/types/types-documentation";
 import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-occurrence";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
