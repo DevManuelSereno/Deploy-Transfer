@@ -56,7 +56,7 @@ export const getBrandColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 65,
+		size: 1500,
 	},
 	{
 		id: "actions",

@@ -1,14 +1,14 @@
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
 import { AppNavbar } from "@/components/navbar/app-navbar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/providers";
-import { Toaster } from "@/components/ui/sonner";
 
 export function generateStaticParams() {
 	return routing.locales.map((locale) => ({ locale }));
@@ -50,7 +50,7 @@ export default async function LocaleLayout({
 							>
 								<AppNavbar />
 							</header>
-							<div className="flex flex-col p-6">{children}</div>
+							<div className="flex flex-1 flex-col">{children}</div>
 						</div>
 					</SidebarInset>
 				</SidebarProvider>

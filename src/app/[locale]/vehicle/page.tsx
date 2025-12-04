@@ -10,7 +10,7 @@ export default async function VehiclePage({
 	setRequestLocale(locale);
 
 	return (
-		<div className="flex flex-1 flex-col gap-6">
+		<div className="flex flex-col p-6">
 			<TableVehicle />
 		</div>
 	);

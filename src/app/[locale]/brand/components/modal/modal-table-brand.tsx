@@ -1,12 +1,10 @@
-import { Building2, BusFront, LucidePlus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building2 } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 
 type ModalFormProps = {
@@ -18,12 +16,6 @@ type ModalFormProps = {
 export function ModalTableBrand({ open, setOpen, children }: ModalFormProps) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
-				<Button>
-					<LucidePlus />
-					Adicionar
-				</Button>
-			</DialogTrigger>
 			<DialogContent
 				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-4xl
         flex flex-col max-h-[90vh]"

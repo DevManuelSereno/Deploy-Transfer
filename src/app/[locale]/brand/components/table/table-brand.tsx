@@ -1,7 +1,20 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, CloudDownload, RotateCw } from "lucide-react";
+import {
+	type ColumnFiltersState,
+	type ColumnPinningState,
+	getCoreRowModel,
+	getFacetedRowModel,
+	getFacetedUniqueValues,
+	getFilteredRowModel,
+	getPaginationRowModel,
+	getSortedRowModel,
+	type PaginationState,
+	type SortingState,
+	useReactTable,
+} from "@tanstack/react-table";
+import { LucidePlus } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { FormBrand } from "@/app/[locale]/brand/components/form/form-brand";
 import { ModalDeleteBrand } from "@/app/[locale]/brand/components/modal/modal-delete-brand";
@@ -9,14 +22,18 @@ import { ModalTableBrand } from "@/app/[locale]/brand/components/modal/modal-tab
 import { useBrandFormContext } from "@/app/[locale]/brand/context/brand-context";
 import { useModalContext } from "@/app/[locale]/brand/context/modal-table-brand";
 import type { BrandData } from "@/app/[locale]/brand/types/types-brand";
+import { DataTable } from "@/components/data-table";
+import { DataTableExport } from "@/components/data-table/data-table-export";
+import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
+import { DataTableUpdate } from "@/components/data-table/data-table-update";
 import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import { Card } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
-import { DataTableToolbar } from "@/components/ui/data-table/data-table-toolbar";
+import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
+import { DataTableProvider } from "@/providers/data-table-provider";
 import {
 	type BrandColumnActions,
 	getBrandColumns,
@@ -25,6 +42,17 @@ import {
 export default function TableBrand() {
 	const { setEditingBrand } = useBrandFormContext();
 	const { isModalEditOpen, setIsModalEditOpen } = useModalContext();
+
+	const [globalFilter, setGlobalFilter] = useState("");
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [pagination, setPagination] = useState<PaginationState>({
+		pageIndex: 0,
+		pageSize: 10,
+	});
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [columnPinning, setColumnPinning] = useState<ColumnPinningState>({
+		right: ["actions"],
+	});
 
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
@@ -62,6 +90,44 @@ export default function TableBrand() {
 				signal,
 			}),
 	});
+
+	const tableData = useMemo(
+		() => (isLoading ? Array(30).fill({}) : (dataBrand ?? [])),
+		[isLoading, dataBrand],
+	);
+	const tableColumns = useMemo(
+		() =>
+			isLoading
+				? columns.map((column) => ({
+						...column,
+						cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
+					}))
+				: columns,
+		[isLoading, columns],
+	);
+
+	const table = useReactTable<BrandData>({
+		data: tableData,
+		columns: tableColumns,
+		getCoreRowModel: getCoreRowModel(),
+		onSortingChange: setSorting,
+		getSortedRowModel: getSortedRowModel(),
+		onColumnFiltersChange: setColumnFilters,
+		getFilteredRowModel: getFilteredRowModel(),
+		getFacetedRowModel: getFacetedRowModel(),
+		getFacetedUniqueValues: getFacetedUniqueValues(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onPaginationChange: setPagination,
+		onColumnPinningChange: setColumnPinning,
+		onGlobalFilterChange: setGlobalFilter,
+		state: {
+			sorting,
+			columnFilters,
+			pagination,
+			columnPinning,
+			globalFilter,
+		},
+	});
 	return (
 		<div className="flex flex-1 flex-col gap-6">
 			<Card
@@ -71,39 +137,33 @@ export default function TableBrand() {
 					"min-[56rem]:max-h-[calc(100dvh-var(--header-height)-4rem)] dark:shadow-none",
 				)}
 			>
-				<DataTable
-					columns={columns}
-					loading={isLoading}
-					data={dataBrand ?? []}
-					topLeftActions={(table) => <DataTableToolbar table={table} />}
-					topRightActions={
-						<div className="flex items-center gap-2">
-							<Button variant="outline">
-								<RotateCw />
-								Atualizar
-							</Button>
-							<ButtonGroup>
-								<Button variant="outline">
-									<CloudDownload />
-									Export
-								</Button>
-								<Button variant="outline" size="icon">
-									<ChevronDown />
-								</Button>
-							</ButtonGroup>
-							<Separator
-								orientation="vertical"
-								className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-							/>
-							<ModalTableBrand
-								open={isModalEditOpen}
-								setOpen={setIsModalEditOpen}
-							>
-								<FormBrand />
-							</ModalTableBrand>
-						</div>
-					}
-				/>
+				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
+					<div className="flex items-center gap-2">
+						<OpenAiToolbar />
+						<DataTableSearchInput
+							value={globalFilter}
+							onChangeValue={(filter) => setGlobalFilter(filter)}
+						/>
+					</div>
+					<div className="flex items-center gap-2">
+						<DataTableUpdate />
+						<DataTableExport />
+						<Separator
+							orientation="vertical"
+							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+						/>
+						<Button onClick={() => setIsModalEditOpen(true)}>
+							<LucidePlus />
+							Adicionar
+						</Button>
+					</div>
+				</div>
+				<DataTableProvider recordCount={20} table={table}>
+					<DataTable />
+				</DataTableProvider>
+				<ModalTableBrand open={isModalEditOpen} setOpen={setIsModalEditOpen}>
+					<FormBrand />
+				</ModalTableBrand>
 				<ModalDeleteBrand
 					open={isModalDeleteOpen}
 					setOpen={setIsModalDeleteOpen}
