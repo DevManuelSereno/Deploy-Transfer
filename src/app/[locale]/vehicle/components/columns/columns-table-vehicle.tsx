@@ -7,7 +7,6 @@ import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import type { BrandType, CompanyType, StatusType } from "@/types/models";
 
 export interface VehicleColumnActions {
 	onEdit: (vehicle: VehicleData) => void;

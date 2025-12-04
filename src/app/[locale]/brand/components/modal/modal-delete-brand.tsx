@@ -41,6 +41,7 @@ export function ModalDeleteBrand({ open, setOpen }: ModalFormProps) {
 			toast.success("Marca deletada com sucesso");
 			await queryClient.invalidateQueries({ queryKey: ["brand-get"] });
 			setOpen(false);
+			// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		} catch (error: any) {
 			toastErrorsApi(error);
 		}

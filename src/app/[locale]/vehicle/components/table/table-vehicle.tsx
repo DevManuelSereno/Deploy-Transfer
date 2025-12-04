@@ -2,7 +2,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 import {
-	Column,
 	type ColumnFiltersState,
 	type ColumnPinningState,
 	getCoreRowModel,
@@ -17,7 +16,7 @@ import {
 } from "@tanstack/react-table";
 import { LucidePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ModalDeleteVehicle } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle";
 import { ModalTableVehicle } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle";
 import TabsVehicle from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle";
@@ -37,7 +36,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
-import type { StatusType } from "@/types/models";
 import {
 	getVehicleColumns,
 	type VehicleColumnActions,
