@@ -85,7 +85,11 @@ export const getVehicleColumns = (
 			</div>
 		),
 		enableColumnFilter: true,
-		size: 300,
+		size: 250,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "brand",
@@ -104,7 +108,11 @@ export const getVehicleColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 200,
+		size: 160,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "capacity",
@@ -123,6 +131,11 @@ export const getVehicleColumns = (
 			);
 		},
 		enableColumnFilter: true,
+		size: 80,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "plate",
@@ -141,6 +154,10 @@ export const getVehicleColumns = (
 			);
 		},
 		enableColumnFilter: true,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "company",
@@ -168,6 +185,10 @@ export const getVehicleColumns = (
 			return values.includes(rowValue);
 		},
 		size: 230,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "status",
@@ -211,6 +232,10 @@ export const getVehicleColumns = (
 			const rowValue = String(row.getValue(columnId) ?? "");
 			return values.includes(rowValue);
 		},
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "createdAt",
@@ -238,7 +263,11 @@ export const getVehicleColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 200,
+		size: 160,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "updatedAt",
@@ -266,12 +295,20 @@ export const getVehicleColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 200,
+		size: 160,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
+		meta: {
+			headerClassName: "data-pinned:-ml-[96px]",
+			cellClassName: "data-pinned:-ml-[96px]",
+		},
 		cell: ({ row }) => {
 			const vehicle = row.original;
 

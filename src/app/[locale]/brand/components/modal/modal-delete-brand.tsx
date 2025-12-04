@@ -38,7 +38,7 @@ export function ModalDeleteBrand({ open, setOpen }: ModalFormProps) {
 				url: "/brand",
 				id: editingBrand?.id,
 			});
-			toast.success("Veículo deletado com sucesso");
+			toast.success("Marca deletada com sucesso");
 			await queryClient.invalidateQueries({ queryKey: ["brand-get"] });
 			setOpen(false);
 		} catch (error: any) {

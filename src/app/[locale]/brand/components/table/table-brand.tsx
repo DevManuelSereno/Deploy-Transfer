@@ -158,7 +158,11 @@ export default function TableBrand() {
 						</Button>
 					</div>
 				</div>
-				<DataTableProvider recordCount={20} table={table}>
+				<DataTableProvider
+					recordCount={tableData.length}
+					table={table}
+					isLoading={isLoading}
+				>
 					<DataTable />
 				</DataTableProvider>
 				<ModalTableBrand open={isModalEditOpen} setOpen={setIsModalEditOpen}>

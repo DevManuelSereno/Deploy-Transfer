@@ -55,13 +55,21 @@ export const getBrandColumns = (
 				</div>
 			);
 		},
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 		enableColumnFilter: true,
-		size: 1500,
+		size: 900,
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
+		meta: {
+			headerClassName: "data-pinned:-ml-[96px]",
+			cellClassName: "data-pinned:-ml-[96px]",
+		},
 		cell: ({ row }) => {
 			const brand = row.original;
 

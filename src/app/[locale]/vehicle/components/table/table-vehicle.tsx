@@ -208,7 +208,11 @@ export default function TableVehicle() {
 						</Button>
 					</div>
 				</div>
-				<DataTableProvider recordCount={20} table={table}>
+				<DataTableProvider
+					recordCount={tableData.length}
+					table={table}
+					isLoading={isLoading}
+				>
 					<DataTable />
 				</DataTableProvider>
 				<ModalTableVehicle open={isModalEditOpen} setOpen={setIsModalEditOpen}>

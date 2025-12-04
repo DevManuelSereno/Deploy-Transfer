@@ -18,7 +18,7 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html suppressHydrationWarning>
+		<html suppressHydrationWarning lang="pt-BR">
 			<body className={`${geistSans.className}  antialiased font-medium`}>
 				{children}
 			</body>
