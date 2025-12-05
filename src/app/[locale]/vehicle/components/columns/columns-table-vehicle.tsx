@@ -14,7 +14,7 @@ export interface VehicleColumnActions {
 }
 export const getVehicleColumns = (
 	actions: VehicleColumnActions,
-	t: (key: string) => string,
+	t: (key: any) => string,
 ): ColumnDef<VehicleData>[] => [
 	{
 		id: "select",
