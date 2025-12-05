@@ -1,0 +1,316 @@
+{
+	"Sidebar": {
+		"groups": {
+			"principal": "Main",
+			"frota": "Fleet",
+			"organization": "Organization"
+		},
+		"items": {
+			"dashboard": "Dashboard",
+			"services": "Services",
+			"trips": "Trips",
+			"schedule": "Schedule",
+			"vehicles": "Vehicles",
+			"refueling": "Refueling",
+			"incidents": "Incidents",
+			"expenses": "Expenses",
+			"maintenance": "Maintenance",
+			"brands": "Brands",
+			"user": "User"
+		}
+	},
+	"Navbar": {
+		"defaultTitle": "Transfer",
+		"dashboard": "Dashboard",
+		"services": "Services",
+		"trips": "Trips",
+		"schedule": "Schedule",
+		"vehicles": "Vehicles",
+		"refueling": "Refueling",
+		"incidents": "Incidents",
+		"expenses": "Expenses",
+		"maintenance": "Maintenance",
+		"brands": "Brands",
+		"user": "User"
+	},
+	"HomePage": {
+		"title": "Dashboard"
+	},
+	"VehiclePage": {
+		"title": "Vehicles",
+		"Tabs": {
+			"generalData": "General data",
+			"documentation": "Documentation",
+			"gasSupply": "Fuel supply",
+			"occurrence": "Occurrence",
+			"addDataFirstMessage": "Add the vehicle's general data before continuing."
+		},
+		"Documentation": {
+			"addButton": "Add documentation",
+			"delete": {
+				"title": "Are you sure?",
+				"description": "This action cannot be undone. This will permanently delete the vehicle from our servers.",
+				"infoTitle": "Vehicle information:",
+				"type": "Type",
+				"expiration": "Expiration",
+				"cancel": "Cancel",
+				"delete": "Delete",
+				"successMessage": "Document deleted successfully"
+			},
+			"back": "Back",
+			"continue": "Continue",
+			"emptyState": "No records found",
+			"columns": {
+				"document": "Document",
+				"type": "Type",
+				"days": "Days",
+				"expiration": "Expiration"
+			},
+			"modal": {
+				"title": "Add document",
+				"description": "Fill in the fields below to register a new document.",
+				"daysLabel": "Days",
+				"typeLabel": "Type",
+				"typePlaceholder": "Select a type...",
+				"expirationLabel": "Expiration",
+				"anticipateLabel": "Anticipate renewal?",
+				"documentLabel": "Document",
+				"cancel": "Cancel",
+				"save": "Save",
+				"errorMessage": "Please correct the errors in the form.",
+				"successCreate": "Document created successfully",
+				"successUpdate": "Document updated successfully"
+			}
+		},
+		"GasSupply": {
+			"addButton": "Add fuel supply",
+			"delete": {
+				"title": "Are you sure?",
+				"description": "This action cannot be undone. This will permanently delete the vehicle from our servers.",
+				"infoTitle": "Fuel supply information:",
+				"supplyDate": "Supply date",
+				"station": "Station",
+				"fuel": "Fuel",
+				"cancel": "Cancel",
+				"delete": "Delete",
+				"successMessage": "Fuel supply deleted successfully"
+			},
+			"back": "Back",
+			"continue": "Continue",
+			"emptyState": "No records found",
+			"columns": {
+				"supplyDate": "Supply date",
+				"supplier": "Supplier",
+				"fuel": "Fuel",
+				"liters": "Liters",
+				"value": "Value"
+			},
+			"modal": {
+				"title": "Add fuel supply",
+				"description": "Fill in the fields below to register a new fuel supply.",
+				"stationLabel": "Gas station",
+				"stationPlaceholder": "Select a station...",
+				"kmToReviewLabel": "Km to review",
+				"kmToStopLabel": "Stop km",
+				"fuelLabel": "Fuel",
+				"fuelPlaceholder": "Select a fuel...",
+				"quantityLabel": "Liters quantity",
+				"supplyDateLabel": "Supply record",
+				"totalPriceLabel": "Total value",
+				"receiptLabel": "Receipt",
+				"cancel": "Cancel",
+				"save": "Save",
+				"errorMessage": "Please correct the errors in the form.",
+				"successCreate": "Fuel supply created successfully",
+				"successUpdate": "Fuel supply updated successfully"
+			}
+		},
+		"Occurrence": {
+			"addButton": "Add occurrence",
+			"back": "Back",
+			"emptyState": "No records found",
+			"columns": {
+				"occurrenceDate": "Occurrence date",
+				"classification": "Classification",
+				"seriousness": "Seriousness"
+			},
+			"modal": {
+				"title": "Add occurrence",
+				"description": "Fill in the fields below to register a new occurrence.",
+				"seriousnessLabel": "Seriousness",
+				"classificationLabel": "Classification",
+				"occurrenceDateLabel": "Occurrence Date",
+				"registrationDateLabel": "Occurrence Record",
+				"descriptionLabel": "Description",
+				"attachmentLabel": "Attachment",
+				"dragDropText": "Drag and drop files here, or",
+				"selectFilesButton": "Select files",
+				"filesCount": "0/1 files",
+				"allowedTypes": "Allowed types: .jpg, .jpeg, .png, .gif, .bmp, .webp, .svg, .pdf, .doc, .docx, .txt",
+				"cancel": "Cancel",
+				"save": "Save",
+				"errorMessage": "Please correct the errors in the form.",
+				"successCreate": "Occurrence created successfully",
+				"successUpdate": "Occurrence updated successfully"
+			},
+			"delete": {
+				"title": "Are you sure?",
+				"description": "This action cannot be undone. This will permanently delete the occurrence from our servers.",
+				"infoTitle": "Occurrence information:",
+				"occurrenceDate": "Occurrence date",
+				"classification": "Classification",
+				"seriousness": "Seriousness",
+				"cancel": "Cancel",
+				"delete": "Delete",
+				"successMessage": "Occurrence deleted successfully"
+			}
+		},
+		"Modal": {
+			"title": "New vehicle",
+			"description": "Fill in the fields below to register a new vehicle."
+		},
+		"Delete": {
+			"title": "Are you sure?",
+			"description": "This action cannot be undone. This will permanently delete the vehicle from our servers.",
+			"vehicleInfo": "Vehicle information:",
+			"model": "Model",
+			"plate": "Plate",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"successMessage": "Vehicle deleted successfully"
+		},
+		"Form": {
+			"identifier": "Identifier",
+			"company": "Company",
+			"status": "Status",
+			"model": "Model",
+			"year": "Year",
+			"brand": "Brand",
+			"capacity": "Capacity",
+			"doors": "Doors",
+			"category": "Category",
+			"classification": "Classification",
+			"uf": "State",
+			"review": "Review",
+			"fuel": "Fuel",
+			"plateType": "Plate Type",
+			"plate": "Plate",
+			"renavam": "Renavam",
+			"chassi": "Chassis",
+			"description": "Description",
+			"images": "Images",
+			"selectCompany": "Select a company...",
+			"selectStatus": "Select a status...",
+			"selectBrand": "Select a brand...",
+			"selectCategory": "Select a category...",
+			"selectClassification": "Select a classification...",
+			"selectFuel": "Select a fuel...",
+			"selectPlateType": "Select a type...",
+			"errorMessage": "Please correct the errors in the form.",
+			"successCreate": "Vehicle created successfully",
+			"successUpdate": "Vehicle updated successfully",
+			"cancel": "Cancel",
+			"continue": "Continue"
+		},
+		"Table": {
+			"Filters": {
+				"status": "Status",
+				"company": "Company"
+			},
+			"Columns": {
+				"id": "ID",
+				"title": "Title",
+				"brand": "Brand",
+				"capacity": "Capacity",
+				"plate": "Plate",
+				"company": "Company",
+				"status": "Status",
+				"createdAt": "Created at",
+				"updatedAt": "Last update"
+			},
+			"Status": {
+				"Liberado": "Available",
+				"Manutenção": "Maintenance",
+				"Inativo": "Inactive"
+			}
+		}
+	},
+	"LanguageToggle": {
+		"portuguese": "Portuguese",
+		"english": "English",
+		"spanish": "Spanish"
+	},
+	"UserMenu": {
+		"profile": "Profile",
+		"account": "Account",
+		"settings": "Settings",
+		"logout": "Log out"
+	},
+	"Search": {
+		"placeholder": "Search...",
+		"tooltip": "Search",
+		"commandPlaceholder": "Type a command to search...",
+		"noResults": "No results."
+	},
+	"DataTable": {
+		"DataTableFacetedFilter": {
+			"selectedCount": "{count} selected",
+			"filterPlaceholder": "Filter {title}...",
+			"noResults": "No results found.",
+			"clearFilters": "Clear filters"
+		},
+		"DataTablePagination": {
+			"selectedRows": "{count} of {total} row(s) selected.",
+			"rowsPerPage": "{count} / page",
+			"page": "Page {current} of {total}",
+			"firstPage": "Go to first page",
+			"previousPage": "Go to previous page",
+			"nextPage": "Go to next page",
+			"lastPage": "Go to last page"
+		},
+		"DataTableUpdate": {
+			"update": "Update"
+		},
+		"DataTableExport": {
+			"export": "Export"
+		},
+		"addButton": "Add"
+	},
+	"OpenAiToolbar": {
+		"title": "@passAI",
+		"description": "Use the AI assistant to generate reports directly from your dashboard.",
+		"footer": "Powered by PASS — © 2025"
+	},
+	"BrandPage": {
+		"title": "Brands",
+		"Modal": {
+			"title": "New brand",
+			"description": "Fill in the fields below to register a new brand."
+		},
+		"Delete": {
+			"title": "Are you sure?",
+			"description": "This action cannot be undone. This will permanently delete the brand from our servers.",
+			"brandInfo": "Brand information:",
+			"name": "Name",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"successMessage": "Brand deleted successfully"
+		},
+		"Form": {
+			"title": "New brand",
+			"description": "Fill in the fields below to register a new brand.",
+			"name": "Name",
+			"namePlaceholder": "Scania",
+			"cancel": "Cancel",
+			"save": "Save",
+			"errorMessage": "Please correct the errors in the form.",
+			"successCreate": "Brand created successfully",
+			"successUpdate": "Brand updated successfully"
+		},
+		"Table": {
+			"Columns": {
+				"name": "Name"
+			}
+		}
+	}
+}
