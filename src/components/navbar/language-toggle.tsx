@@ -1,14 +1,14 @@
 "use client";
 
 import { Globe } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { type Locale, useLocale, useTranslations } from "next-intl";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 } from "@/components/ui/select";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export function LanguageToggle() {
 	const locale = useLocale();
@@ -16,11 +16,11 @@ export function LanguageToggle() {
 	const pathname = usePathname();
 	const t = useTranslations("LanguageToggle");
 
-	const handleLanguageChange = (newLocale: string) => {
+	const handleLanguageChange = (newLocale: Locale) => {
 		router.replace(pathname, { locale: newLocale });
 	};
 
-	const getLanguageLabel = (locale: string) => {
+	const getLanguageLabel = (locale: Locale) => {
 		switch (locale) {
 			case "pt-br":
 				return t("portuguese");

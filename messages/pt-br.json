@@ -259,6 +259,15 @@
 			"noResults": "Nenhum resultado encontrado.",
 			"clearFilters": "Limpar filtros"
 		},
+		"DataTablePagination": {
+			"selectedRows": "{count} de {total} linhas(s) selecionadas.",
+			"rowsPerPage": "{count} / página",
+			"page": "Página {current} de {total}",
+			"firstPage": "Ir para a primeira página",
+			"previousPage": "Ir para a página anterior",
+			"nextPage": "Ir para a próxima página",
+			"lastPage": "Ir para a última página"
+		},
 		"DataTableUpdate": {
 			"update": "Atualizar"
 		},

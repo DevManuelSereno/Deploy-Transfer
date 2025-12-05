@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
@@ -22,7 +22,24 @@
 		"rules": {
 			"recommended": true,
 			"suspicious": {
-				"noExplicitAny": "warn"
+				"noUnknownAtRules": "off",
+				"noArrayIndexKey": "off",
+				"useIterableCallbackReturn": "off",
+				"noControlCharactersInRegex": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "info",
+				"useUniqueElementIds": "off",
+				"noUnknownPseudoClass": "warn"
+			},
+			"a11y": {
+				"useFocusableInteractive": "warn",
+				"useSemanticElements": "warn",
+				"noNoninteractiveTabindex": "off",
+				"noStaticElementInteractions": "off",
+				"noLabelWithoutControl": "off",
+				"noSvgWithoutTitle": "off",
+				"useKeyWithClickEvents": "off"
 			}
 		}
 	},

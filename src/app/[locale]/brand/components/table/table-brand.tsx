@@ -83,7 +83,10 @@ export default function TableBrand() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getBrandColumns(actions, tColumns), [actions, tColumns]);
+	const columns = useMemo(
+		() => getBrandColumns(actions, tColumns as any),
+		[actions, tColumns],
+	);
 
 	const { data: dataBrand, isLoading } = useQuery({
 		queryKey: ["brand-get"],

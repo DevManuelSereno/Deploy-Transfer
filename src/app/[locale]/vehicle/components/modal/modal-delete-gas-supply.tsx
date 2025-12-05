@@ -68,18 +68,14 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">
 					<p className="mb-2 font-medium">{t("infoTitle")}</p>
 					<div className="grid gap-2">
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">
-								{t("supplyDate")}
-							</p>
+							<p className="mb-0.5 text-muted-foreground">{t("supplyDate")}</p>
 							<span className="text-foreground">
 								{editingGasSupply
 									? new Date(editingGasSupply?.supplyAt).toLocaleDateString(

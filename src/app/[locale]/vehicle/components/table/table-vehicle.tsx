@@ -89,7 +89,7 @@ export default function TableVehicle() {
 	);
 
 	const columns = useMemo(
-		() => getVehicleColumns(actions, tColumns, tStatus),
+		() => getVehicleColumns(actions, tColumns as any, tStatus as any),
 		[actions, tColumns, tStatus],
 	);
 

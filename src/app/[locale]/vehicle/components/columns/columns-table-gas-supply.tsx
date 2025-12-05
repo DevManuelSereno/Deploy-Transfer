@@ -29,14 +29,14 @@ export const getGasSupplyColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("supplyDate")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("supplyDate")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -48,14 +48,14 @@ export const getGasSupplyColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("supplier")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("supplier")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -68,14 +68,14 @@ export const getGasSupplyColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("fuel")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("fuel")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -88,14 +88,14 @@ export const getGasSupplyColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("liters")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("liters")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -109,14 +109,14 @@ export const getGasSupplyColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("value")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("value")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},

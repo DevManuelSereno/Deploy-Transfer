@@ -1,6 +1,5 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -14,6 +13,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import {
 	type GasSupplyColumnActions,
@@ -95,7 +95,10 @@ export function FormGasSupply() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getGasSupplyColumns(actions, tColumns), [actions, tColumns]);
+	const columns = useMemo(
+		() => getGasSupplyColumns(actions, tColumns as any),
+		[actions, tColumns],
+	);
 
 	const tableData = useMemo(
 		() => (isLoading ? Array(10).fill({}) : (dataGasSupply ?? [])),

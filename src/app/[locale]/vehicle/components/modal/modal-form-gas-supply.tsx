@@ -198,11 +198,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 					queryKey: ["gas-supply-get", editingVehicle?.id],
 				});
 			reset();
-			toast.success(
-				editingGasSupply
-					? t("successUpdate")
-					: t("successCreate"),
-			);
+			toast.success(editingGasSupply ? t("successUpdate") : t("successCreate"));
 			setOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);
@@ -225,9 +221,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 					</div>
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 
@@ -299,7 +293,9 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-8" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>{t("kmToStopLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("kmToStopLabel")}
+										</FieldLabel>
 										<InputNumber
 											{...field}
 											aria-invalid={fieldState.invalid}
@@ -322,7 +318,9 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>{t("fuelLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("fuelLabel")}
+										</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -405,7 +403,9 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-8" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>{t("totalPriceLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("totalPriceLabel")}
+										</FieldLabel>
 										<InputNumber
 											{...field}
 											aria-invalid={fieldState.invalid}
@@ -436,7 +436,9 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>{t("receiptLabel")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("receiptLabel")}
+									</FieldLabel>
 
 									<InputFile
 										id={field.name}

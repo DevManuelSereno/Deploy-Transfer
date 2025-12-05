@@ -69,9 +69,7 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">
@@ -84,7 +82,9 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 							</span>
 						</div>
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">{t("occurrenceDate")}</p>
+							<p className="mb-0.5 text-muted-foreground">
+								{t("occurrenceDate")}
+							</p>
 							<span className="text-foreground">
 								{editingOccurrence
 									? new Date(

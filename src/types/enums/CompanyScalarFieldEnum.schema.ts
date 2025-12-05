@@ -1,5 +1,13 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const CompanyScalarFieldEnumSchema = z.enum(['id', 'name', 'cnpj', 'createdAt', 'updatedAt'])
+export const CompanyScalarFieldEnumSchema = z.enum([
+	"id",
+	"name",
+	"cnpj",
+	"createdAt",
+	"updatedAt",
+]);
 
-export type CompanyScalarFieldEnum = z.infer<typeof CompanyScalarFieldEnumSchema>;
+export type CompanyScalarFieldEnum = z.infer<
+	typeof CompanyScalarFieldEnumSchema
+>;

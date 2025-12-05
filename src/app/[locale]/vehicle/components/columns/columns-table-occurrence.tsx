@@ -20,14 +20,14 @@ export const getOccurrenceColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("occurrenceDate")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("occurrenceDate")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -48,14 +48,14 @@ export const getOccurrenceColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("classification")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("classification")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},
@@ -68,14 +68,14 @@ export const getOccurrenceColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-				<Button
-					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-				>
-					{t("seriousness")}
-					<ChevronsUpDown className="size-3" />
-				</Button>
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("seriousness")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
 				</div>
 			);
 		},

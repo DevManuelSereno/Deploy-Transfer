@@ -26,7 +26,7 @@ export function NavItems({
 	const pathname = usePathname();
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel>{t(`groups.${groupKey}`)}</SidebarGroupLabel>
+			<SidebarGroupLabel>{t(`groups.${groupKey}` as any)}</SidebarGroupLabel>
 			<SidebarMenu className="gap-0.5">
 				{data.map((item) => {
 					const isActive = pathname === item.url;
@@ -39,7 +39,7 @@ export function NavItems({
 							>
 								<Link href={item.url}>
 									<item.icon />
-									<span>{t(`items.${item.key}`)}</span>
+									<span>{t(`items.${item.key}` as any)}</span>
 								</Link>
 							</SidebarMenuButton>
 						</SidebarMenuItem>

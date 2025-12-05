@@ -37,9 +37,7 @@ export function ModalTableVehicle({ open, setOpen, children }: ModalFormProps) {
 					</div>
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 				{children}

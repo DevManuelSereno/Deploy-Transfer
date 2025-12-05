@@ -205,9 +205,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 				});
 			reset();
 			toast.success(
-				editingOccurrence
-					? t("successUpdate")
-					: t("successCreate"),
+				editingOccurrence ? t("successUpdate") : t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -231,9 +229,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 					</div>
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 
@@ -251,7 +247,9 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>{t("seriousnessLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("seriousnessLabel")}
+										</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -278,7 +276,9 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>{t("classificationLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("classificationLabel")}
+										</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -364,7 +364,9 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>{t("descriptionLabel")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("descriptionLabel")}
+									</FieldLabel>
 									<Textarea
 										{...field}
 										placeholder="Houve uma tentativa de roubo"
@@ -394,7 +396,9 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>{t("attachmentLabel")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("attachmentLabel")}
+									</FieldLabel>
 
 									<InputFile
 										id={field.name}
