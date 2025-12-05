@@ -45,7 +45,6 @@ export default function TableVehicle() {
 	const tFilters = useTranslations("VehiclePage.Table.Filters");
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("VehiclePage.Table.Columns");
-	const tStatus = useTranslations("VehiclePage.Table.Status");
 	const { setEditingVehicle } = useVehicleFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
 		useModalContext();
@@ -90,8 +89,8 @@ export default function TableVehicle() {
 	);
 
 	const columns = useMemo(
-		() => getVehicleColumns(actions, tColumns, tStatus),
-		[actions, tColumns, tStatus],
+		() => getVehicleColumns(actions, tColumns),
+		[actions, tColumns],
 	);
 
 	const { data: dataVehicle, isLoading } = useQuery({

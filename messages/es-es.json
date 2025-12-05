@@ -227,11 +227,6 @@
 				"status": "Estado",
 				"createdAt": "Creado en",
 				"updatedAt": "Última actualización"
-			},
-			"Status": {
-				"Liberado": "Disponible",
-				"Manutenção": "Mantenimiento",
-				"Inativo": "Inactivo"
 			}
 		}
 	},
