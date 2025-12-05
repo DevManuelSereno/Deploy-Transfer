@@ -5,8 +5,6 @@ steps:
       - "build"
       - "-t"
       - "gcr.io/pass-core/transfer-pass-app:$SHORT_SHA"
-      -
-      "NEXT_PUBLIC_PUBLIC_KEY="
       - "."
 
   # Passo 2: Envia a imagem para o Google Container Registry (GCR).
