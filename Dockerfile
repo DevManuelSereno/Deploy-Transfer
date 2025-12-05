@@ -1,31 +1,35 @@
+FROM node:20-alpine AS builder
 
-# Estágio 1: Build da aplicação React
-# Usamos uma imagem Node.js com Alpine Linux para um tamanho menor
-FROM node:18-alpine as builder
-
-# Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copia os arquivos de definição de pacotes e instala as dependências
-# Isso aproveita o cache de camadas do Docker
-COPY package*.json ./
-RUN npm install
+COPY package.json package-lock.json* ./
 
-# Copia o resto dos arquivos do projeto
+RUN npm ci
+
 COPY . .
 
-# Executa o script de build para gerar os arquivos estáticos
+ARG  NEXT_PUBLIC_API_URL
+
+ENV  NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 RUN npm run build
 
-# Estágio 2: Servir a aplicação com Nginx
-# Usamos uma imagem Nginx leve
-FROM nginx:1.23-alpine
+FROM node:20-alpine AS runner
+WORKDIR /app
 
-# Copia os arquivos estáticos gerados no estágio de build para o diretório do Nginx
-COPY --from=builder /app/build /usr/share/nginx/html
+ENV NODE_ENV=production
 
-# Expõe a porta 80, que é a porta padrão do Nginx
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+USER nextjs
+
 EXPOSE 80
 
-# Comando para iniciar o Nginx em modo 'foreground' quando o contêiner for executado
-CMD ["nginx", "-g", "daemon off;"]
+ENV PORT=80
+
+CMD ["node", "server.js"]
