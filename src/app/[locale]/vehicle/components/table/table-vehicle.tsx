@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -49,6 +49,7 @@ export default function TableVehicle() {
 	const { setEditingVehicle } = useVehicleFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
 		useModalContext();
+	const queryClient = useQueryClient();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -172,6 +173,11 @@ export default function TableVehicle() {
 		}));
 	}, [dataVehicle]);
 
+	const handleUpdate = () =>
+		queryClient.invalidateQueries({
+			queryKey: ["vehicle-get"],
+		});
+
 	return (
 		<div className="flex flex-1 flex-col gap-6">
 			<Card
@@ -200,7 +206,7 @@ export default function TableVehicle() {
 						/>
 					</div>
 					<div className="flex items-center gap-2">
-						<DataTableUpdate />
+						<DataTableUpdate handleUpdate={handleUpdate} />
 						<DataTableExport />
 						<Separator
 							orientation="vertical"
