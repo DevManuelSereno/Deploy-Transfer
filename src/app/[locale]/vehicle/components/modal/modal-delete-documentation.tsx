@@ -69,9 +69,7 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">

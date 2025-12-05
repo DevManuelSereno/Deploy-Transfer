@@ -1,7 +1,6 @@
 "use client";
 import { UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
 import { LanguageToggle } from "@/components/navbar/language-toggle";
 import { NavUser } from "@/components/navbar/nav-user";
 import { PassApps } from "@/components/navbar/pass-apps";
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { usePathname } from "@/i18n/navigation";
 import { navbarItems } from "@/lib/sidebar-menu-list";
 
 export function AppNavbar() {
@@ -31,7 +31,7 @@ export function AppNavbar() {
 				break;
 			}
 		}
-		if (key) return t(key);
+		if (key) return t(key as any);
 
 		return t("defaultTitle");
 	}

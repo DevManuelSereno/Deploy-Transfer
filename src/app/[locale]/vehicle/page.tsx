@@ -1,14 +1,15 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import TableVehicle from "@/app/[locale]/vehicle/components/table/table-vehicle";
 
-export default async function VehiclePage({
-	params,
-}: {
-	params: Promise<{ locale: string }>;
-}) {
-	const { locale } = await params;
-	setRequestLocale(locale);
+export async function generateMetadata() {
+	const t = await getTranslations("Sidebar");
 
+	return {
+		title: t("items.vehicles"),
+	};
+}
+
+export default async function VehiclePage() {
 	return (
 		<div className="flex flex-col p-6">
 			<TableVehicle />

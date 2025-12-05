@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export function DataTableUpdate({
 	handleUpdate,
 }: {
-	handleUpdate: () => void;
+	handleUpdate?: () => void;
 }) {
 	const t = useTranslations("DataTable.DataTableUpdate");
 

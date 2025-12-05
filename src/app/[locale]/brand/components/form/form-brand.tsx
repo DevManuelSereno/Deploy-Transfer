@@ -97,9 +97,7 @@ export function FormBrand() {
 			const normalized = buildDefaultValues(savedBrand as any);
 
 			reset(normalized);
-			toast.success(
-				editingBrand ? t("successUpdate") : t("successCreate"),
-			);
+			toast.success(editingBrand ? t("successUpdate") : t("successCreate"));
 			setIsModalEditOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);

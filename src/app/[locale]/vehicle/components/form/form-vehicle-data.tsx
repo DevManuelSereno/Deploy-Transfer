@@ -207,11 +207,7 @@ export function FormVehicleData() {
 			const normalized = buildDefaultValues(savedVehicle as any);
 
 			reset(normalized);
-			toast.success(
-				editingVehicle
-					? t("successUpdate")
-					: t("successCreate"),
-			);
+			toast.success(editingVehicle ? t("successUpdate") : t("successCreate"));
 			setTabPanel("tab-documentation");
 			// const tabElement = document.getElementById("documentation");
 			// if (tabElement) {
@@ -236,7 +232,9 @@ export function FormVehicleData() {
 									data-invalid={fieldState.invalid}
 									className="lg:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>{t("identifier")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("identifier")}
+									</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -466,7 +464,9 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>{t("classification")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("classification")}
+									</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}

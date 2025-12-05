@@ -1,5 +1,12 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const GasStationScalarFieldEnumSchema = z.enum(['id', 'name', 'createdAt', 'updatedAt'])
+export const GasStationScalarFieldEnumSchema = z.enum([
+	"id",
+	"name",
+	"createdAt",
+	"updatedAt",
+]);
 
-export type GasStationScalarFieldEnum = z.infer<typeof GasStationScalarFieldEnumSchema>;
+export type GasStationScalarFieldEnum = z.infer<
+	typeof GasStationScalarFieldEnumSchema
+>;

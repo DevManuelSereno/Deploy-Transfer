@@ -214,9 +214,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 				});
 			reset();
 			toast.success(
-				editingDocumentation
-					? t("successUpdate")
-					: t("successCreate"),
+				editingDocumentation ? t("successUpdate") : t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -240,9 +238,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 					</div>
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 
@@ -263,7 +259,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3"
 									>
-										<FieldLabel htmlFor={field.name}>{t("daysLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("daysLabel")}
+										</FieldLabel>
 										<FormToggleGroup
 											id={field.name}
 											value={field.value}
@@ -293,7 +291,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3 lg:col-span-2"
 									>
-										<FieldLabel htmlFor={field.name}>{t("typeLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("typeLabel")}
+										</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -324,7 +324,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3"
 									>
-										<FieldLabel htmlFor={field.name}>{t("expirationLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("expirationLabel")}
+										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
 											value={field.value ?? ""}
@@ -354,7 +356,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										// orientation="horizontal"
 										data-invalid={fieldState.invalid}
 									>
-										<FieldLabel htmlFor={field.name}>{t("anticipateLabel")}</FieldLabel>
+										<FieldLabel htmlFor={field.name}>
+											{t("anticipateLabel")}
+										</FieldLabel>
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
@@ -395,7 +399,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>{t("documentLabel")}</FieldLabel>
+									<FieldLabel htmlFor={field.name}>
+										{t("documentLabel")}
+									</FieldLabel>
 
 									<InputFile
 										id={field.name}

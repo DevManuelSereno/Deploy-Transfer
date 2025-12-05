@@ -1,5 +1,12 @@
-import * as z from 'zod';
+import * as z from "zod";
 
-export const CategoryScalarFieldEnumSchema = z.enum(['id', 'name', 'createdAt', 'updatedAt'])
+export const CategoryScalarFieldEnumSchema = z.enum([
+	"id",
+	"name",
+	"createdAt",
+	"updatedAt",
+]);
 
-export type CategoryScalarFieldEnum = z.infer<typeof CategoryScalarFieldEnumSchema>;
+export type CategoryScalarFieldEnum = z.infer<
+	typeof CategoryScalarFieldEnumSchema
+>;
