@@ -15,7 +15,6 @@ export interface VehicleColumnActions {
 export const getVehicleColumns = (
 	actions: VehicleColumnActions,
 	t: (key: string) => string,
-	tStatus: (key: string) => string,
 ): ColumnDef<VehicleData>[] => [
 	{
 		id: "select",
@@ -209,7 +208,6 @@ export const getVehicleColumns = (
 		},
 		cell: ({ cell }) => {
 			const status = String(cell.getValue());
-			const translatedStatus = tStatus(status);
 			return (
 				<div className="flex items-center gap-2">
 					<span
@@ -221,7 +219,7 @@ export const getVehicleColumns = (
 						)}
 					/>
 					<span className="font-medium text-sm text-muted-foreground leading-0">
-						{translatedStatus}
+						{status}
 					</span>
 				</div>
 			);
