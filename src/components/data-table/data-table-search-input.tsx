@@ -1,6 +1,7 @@
 "use client"
 
 import { Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
@@ -14,14 +15,17 @@ export function DataTableSearchInput({
   value,
   onChangeValue,
   className,
-  placeholder = "Buscar...",
+  placeholder,
   ...props
 }: DataTableSearchInputProps) {
+  const t = useTranslations("Search");
+  const defaultPlaceholder = placeholder ?? t("placeholder");
+
   return (
     <div className="relative w-fit">
       <Search className="size-4 text-muted-foreground absolute start-3 top-1/2 -translate-y-1/2" />
       <Input
-        placeholder={placeholder}
+        placeholder={defaultPlaceholder}
         value={value}
         onChange={(e) => onChangeValue(e.target.value)}
         className={cn("ps-9 w-60", className)}

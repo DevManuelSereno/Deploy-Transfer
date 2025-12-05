@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookmarkIcon, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { Controller, FieldValue, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -56,6 +57,7 @@ type ModalFormProps = {
 };
 
 export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Occurrence.modal");
 	const { editingOccurrence, setEditingOccurrence } =
 		useOccurrenceFormContext();
 
@@ -140,7 +142,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 		isLoadingPostOccurrence || isLoadingPutOccurrence || isLoadingOptions;
 
 	const onErrors = (err: any) => {
-		toast.error("Por favor, corrija os erros no formulário.");
+		toast.error(t("errorMessage"));
 	};
 
 	const onSubmit = async (data: OccurrenceForm) => {
@@ -204,8 +206,8 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 			reset();
 			toast.success(
 				editingOccurrence
-					? "Ocorrência atualizada com sucesso"
-					: "Ocorrência cadastrada com sucesso",
+					? t("successUpdate")
+					: t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -228,9 +230,9 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 						<FileText />
 					</div>
 					<DialogHeader>
-						<DialogTitle>Adicionar ocorrência</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Preencha os campos abaixo para cadastrar uma nova ocorrência.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>
@@ -249,7 +251,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>Seriedade</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("seriousnessLabel")}</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -257,7 +259,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
 											options={seriousnessOptions}
-											placeholder="Selecione um combustível..."
+											placeholder={t("seriousnessLabel")}
 											className="w-full"
 											name={field.name}
 										/>
@@ -276,7 +278,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>Classificação</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("classificationLabel")}</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -284,7 +286,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
 											options={classificationOptions}
-											placeholder="Selecione um combustível..."
+											placeholder={t("classificationLabel")}
 											className="w-full"
 											name={field.name}
 										/>
@@ -304,7 +306,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 								) : (
 									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											Data de Ocorrência
+											{t("occurrenceDateLabel")}
 										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
@@ -333,7 +335,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 								) : (
 									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											Registro da Ocorrência
+											{t("registrationDateLabel")}
 										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
@@ -362,7 +364,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Descrição</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("descriptionLabel")}</FieldLabel>
 									<Textarea
 										{...field}
 										placeholder="Houve uma tentativa de roubo"
@@ -392,7 +394,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Anexo</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("attachmentLabel")}</FieldLabel>
 
 									<InputFile
 										id={field.name}
@@ -435,12 +437,12 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 					/>
 					<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl py-4">
 						<DialogClose asChild>
-							<Button variant="outline">Cancelar</Button>
+							<Button variant="outline">{t("cancel")}</Button>
 						</DialogClose>
 						{loading ? (
 							<Skeleton className="rounded-md w-full h-8" />
 						) : (
-							<Button type="submit">Salvar</Button>
+							<Button type="submit">{t("save")}</Button>
 						)}
 					</DialogFooter>
 				</form>

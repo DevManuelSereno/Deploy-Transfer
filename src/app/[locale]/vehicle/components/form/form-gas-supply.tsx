@@ -1,5 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -31,6 +32,8 @@ import { getData } from "@/lib/functions.api";
 import { DataTableProvider } from "@/providers/data-table-provider";
 
 export function FormGasSupply() {
+	const t = useTranslations("VehiclePage.GasSupply");
+	const tColumns = useTranslations("VehiclePage.GasSupply.columns");
 	const { setEditingGasSupply } = useGasSupplyFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 
@@ -92,7 +95,7 @@ export function FormGasSupply() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getGasSupplyColumns(actions), [actions]);
+	const columns = useMemo(() => getGasSupplyColumns(actions, tColumns), [actions, tColumns]);
 
 	const tableData = useMemo(
 		() => (isLoading ? Array(10).fill({}) : (dataGasSupply ?? [])),
@@ -145,7 +148,7 @@ export function FormGasSupply() {
 						setIsModalFormOpen(true);
 					}}
 				>
-					Adicionar abastecimento
+					{t("addButton")}
 				</Button>
 
 				<ModalFormGasSupply
@@ -160,7 +163,7 @@ export function FormGasSupply() {
 			</div>
 			<div className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 				<Button variant="outline" onClick={handleBack}>
-					Voltar
+					{t("back")}
 				</Button>
 
 				<Button
@@ -168,7 +171,7 @@ export function FormGasSupply() {
 					onClick={handleForward}
 					disabled={!editingVehicle?.id}
 				>
-					Continuar
+					{t("continue")}
 				</Button>
 			</div>
 		</>

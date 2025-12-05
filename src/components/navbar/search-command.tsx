@@ -9,6 +9,7 @@ import {
 	Smile,
 	User,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +34,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export function SearchCommand() {
+	const t = useTranslations("Search");
 	const [open, setOpen] = React.useState(false);
 
 	React.useEffect(() => {
@@ -61,7 +63,7 @@ export function SearchCommand() {
 					<span className="flex grow items-center">
 						<Search className="size-4 text-muted-foreground/80 group-hover:text-foreground @4xl/main:-ms-1 @4xl/main:me-3" />
 						<span className="hidden @4xl/main:block text-muted-foreground/70 font-normal">
-							Buscar...
+							{t("placeholder")}
 						</span>
 					</span>
 					<kbd className="hidden bg-background text-muted-foreground/70 ms-12 -me-1 @4xl/main:inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] leading-0 font-medium">
@@ -77,13 +79,13 @@ export function SearchCommand() {
 					{/*	</InputGroupAddon>*/}
 					{/*</InputGroup>*/}
 				</TooltipTrigger>
-				<TooltipContent>Buscar</TooltipContent>
+				<TooltipContent>{t("tooltip")}</TooltipContent>
 			</Tooltip>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Digite um comando para buscar..." />
+				<CommandInput placeholder={t("commandPlaceholder")} />
 				<CommandList>
-					<CommandEmpty>Nenhum resultado.</CommandEmpty>
+					<CommandEmpty>{t("noResults")}</CommandEmpty>
 					<CommandGroup heading="Suggestions">
 						<CommandItem>
 							<Calendar />

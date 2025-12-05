@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/gas-supply-context";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
@@ -22,6 +23,7 @@ type ModalFormProps = {
 };
 
 export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.GasSupply.delete");
 	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 	const queryClient = useQueryClient();
@@ -48,7 +50,7 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 				});
 
 			setEditingGasSupply(undefined);
-			toast.success("Abastecimento deletado com sucesso");
+			toast.success(t("successMessage"));
 			setOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);
@@ -65,19 +67,18 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 			>
 				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
 					<DialogHeader>
-						<DialogTitle>Tem certeza</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Essa ação não pode ser desfeita. Isso excluirá permanentemente o
-							veículo de nossos servidores.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">
-					<p className="mb-2 font-medium">Informações do abastecimento:</p>
+					<p className="mb-2 font-medium">{t("infoTitle")}</p>
 					<div className="grid gap-2">
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">
-								Data do abastecimento
+								{t("supplyDate")}
 							</p>
 							<span className="text-foreground">
 								{editingGasSupply
@@ -93,13 +94,13 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 							</span>
 						</div>
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">Posto</p>
+							<p className="mb-0.5 text-muted-foreground">{t("station")}</p>
 							<span className="text-foreground">
 								{editingGasSupply?.gasStation?.name || "-"}
 							</span>
 						</div>
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">Combustível</p>
+							<p className="mb-0.5 text-muted-foreground">{t("fuel")}</p>
 							<span className="text-foreground">
 								{editingGasSupply?.gas?.type || "-"}
 							</span>
@@ -108,7 +109,7 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 				</div>
 				<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 					<DialogClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">{t("cancel")}</Button>
 					</DialogClose>
 					{isLoadingDeleteGasSupply ? (
 						<Skeleton className="rounded-md w-full h-8" />
@@ -118,7 +119,7 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 							type="button"
 							onClick={handleDeleteGasSupply}
 						>
-							Excluir
+							{t("delete")}
 						</Button>
 					)}
 				</DialogFooter>

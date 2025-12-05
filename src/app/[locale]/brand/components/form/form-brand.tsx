@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useBrandFormContext } from "@/app/[locale]/brand/context/brand-context";
@@ -29,6 +30,7 @@ import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { BrandType, PostData, PutData } from "@/types/models";
 
 export function FormBrand() {
+	const t = useTranslations("BrandPage.Form");
 	const { editingBrand, setEditingBrand } = useBrandFormContext();
 
 	const { setIsModalEditOpen } = useModalContext();
@@ -67,7 +69,7 @@ export function FormBrand() {
 	const loading = isLoadingPostBrand || isLoadingPutBrand;
 
 	const onErrors = () => {
-		toast.error("Por favor, corrija os erros no formulário.");
+		toast.error(t("errorMessage"));
 	};
 
 	const onSubmit = async (data: BrandForm) => {
@@ -96,9 +98,7 @@ export function FormBrand() {
 
 			reset(normalized);
 			toast.success(
-				editingBrand
-					? "Marca atualizada com sucesso"
-					: "Marca cadastrada com sucesso",
+				editingBrand ? t("successUpdate") : t("successCreate"),
 			);
 			setIsModalEditOpen(false);
 		} catch (error: any) {
@@ -119,11 +119,11 @@ export function FormBrand() {
 								data-invalid={fieldState.invalid}
 								className="lg:col-span-2"
 							>
-								<FieldLabel htmlFor={field.name}>Nome</FieldLabel>
+								<FieldLabel htmlFor={field.name}>{t("name")}</FieldLabel>
 								<Input
 									{...field}
 									aria-invalid={fieldState.invalid}
-									placeholder="Scania"
+									placeholder={t("namePlaceholder")}
 								/>
 								{fieldState.invalid && (
 									<FieldError errors={[fieldState.error]} />
@@ -135,12 +135,12 @@ export function FormBrand() {
 			</div>
 			<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 				<DialogClose asChild>
-					<Button variant="outline">Cancelar</Button>
+					<Button variant="outline">{t("cancel")}</Button>
 				</DialogClose>
 				{loading ? (
 					<Skeleton className="rounded-md w-full h-8" />
 				) : (
-					<Button type="submit">Salvar</Button>
+					<Button type="submit">{t("save")}</Button>
 				)}
 			</DialogFooter>
 		</form>

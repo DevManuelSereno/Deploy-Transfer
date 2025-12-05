@@ -43,6 +43,9 @@ import {
 
 export default function TableVehicle() {
 	const tFilters = useTranslations("VehiclePage.Table.Filters");
+	const tTable = useTranslations("DataTable");
+	const tColumns = useTranslations("VehiclePage.Table.Columns");
+	const tStatus = useTranslations("VehiclePage.Table.Status");
 	const { setEditingVehicle } = useVehicleFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
 		useModalContext();
@@ -85,7 +88,10 @@ export default function TableVehicle() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getVehicleColumns(actions), [actions]);
+	const columns = useMemo(
+		() => getVehicleColumns(actions, tColumns, tStatus),
+		[actions, tColumns, tStatus],
+	);
 
 	const { data: dataVehicle, isLoading } = useQuery({
 		queryKey: ["vehicle-get"],
@@ -202,7 +208,7 @@ export default function TableVehicle() {
 						/>
 						<Button onClick={() => setIsModalEditOpen(true)}>
 							<LucidePlus />
-							Adicionar
+							{tTable("addButton")}
 						</Button>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -31,6 +32,8 @@ import { getData } from "@/lib/functions.api";
 import { DataTableProvider } from "@/providers/data-table-provider";
 
 export function FormDocumentation() {
+	const t = useTranslations("VehiclePage.Documentation");
+	const tColumns = useTranslations("VehiclePage.Documentation.columns");
 	const { setEditingDocumentation } = useDocumentationFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 
@@ -90,7 +93,7 @@ export function FormDocumentation() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getDocumentationColumns(actions), [actions]);
+	const columns = useMemo(() => getDocumentationColumns(actions, tColumns), [actions, tColumns]);
 
 	const tableData = useMemo(
 		() => (isLoading ? Array(10).fill({}) : (dataDocumentation ?? [])),
@@ -143,7 +146,7 @@ export function FormDocumentation() {
 						setIsModalFormOpen(true);
 					}}
 				>
-					Adicionar documentação
+					{t("addButton")}
 				</Button>
 
 				<ModalFormDocumentation
@@ -158,14 +161,14 @@ export function FormDocumentation() {
 			</div>
 			<div className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 				<Button variant="outline" onClick={handleBack}>
-					Voltar
+					{t("back")}
 				</Button>
 				<Button
 					type="button"
 					onClick={handleForward}
 					disabled={!editingVehicle?.id}
 				>
-					Continuar
+					{t("continue")}
 				</Button>
 			</div>
 		</>

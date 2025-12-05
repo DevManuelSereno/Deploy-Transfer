@@ -13,20 +13,21 @@ export interface DocumentationColumnActions {
 }
 export const getDocumentationColumns = (
 	actions: DocumentationColumnActions,
+	t: (key: string) => string,
 ): ColumnDef<DocumentationData>[] => [
 	{
 		accessorKey: "file",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						Documento
-						<ChevronsUpDown className="size-3" />
-					</Button>
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+				>
+					{t("document")}
+					<ChevronsUpDown className="size-3" />
+				</Button>
 				</div>
 			);
 		},
@@ -40,14 +41,14 @@ export const getDocumentationColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						Tipo
-						<ChevronsUpDown className="size-3" />
-					</Button>
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+				>
+					{t("type")}
+					<ChevronsUpDown className="size-3" />
+				</Button>
 				</div>
 			);
 		},
@@ -59,14 +60,14 @@ export const getDocumentationColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						Dias
-						<ChevronsUpDown className="size-3" />
-					</Button>
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+				>
+					{t("days")}
+					<ChevronsUpDown className="size-3" />
+				</Button>
 				</div>
 			);
 		},
@@ -90,14 +91,14 @@ export const getDocumentationColumns = (
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						Vencimento
-						<ChevronsUpDown className="size-3" />
-					</Button>
+				<Button
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+				>
+					{t("expiration")}
+					<ChevronsUpDown className="size-3" />
+				</Button>
 				</div>
 			);
 		},

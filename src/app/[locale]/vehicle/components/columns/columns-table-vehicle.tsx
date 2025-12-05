@@ -14,6 +14,8 @@ export interface VehicleColumnActions {
 }
 export const getVehicleColumns = (
 	actions: VehicleColumnActions,
+	t: (key: string) => string,
+	tStatus: (key: string) => string,
 ): ColumnDef<VehicleData>[] => [
 	{
 		id: "select",
@@ -50,7 +52,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						ID
+						{t("id")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -69,7 +71,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Título
+						{t("title")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -100,7 +102,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Marca
+						{t("brand")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -123,7 +125,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Capacidade
+						{t("capacity")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -146,7 +148,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Placa
+						{t("plate")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -168,7 +170,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Companhia
+						{t("company")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -199,14 +201,15 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Status
+						{t("status")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
 		cell: ({ cell }) => {
-			const status = cell.getValue();
+			const status = String(cell.getValue());
+			const translatedStatus = tStatus(status);
 			return (
 				<div className="flex items-center gap-2">
 					<span
@@ -218,7 +221,7 @@ export const getVehicleColumns = (
 						)}
 					/>
 					<span className="font-medium text-sm text-muted-foreground leading-0">
-						{String(status)}
+						{translatedStatus}
 					</span>
 				</div>
 			);
@@ -255,7 +258,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Criado em
+						{t("createdAt")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -287,7 +290,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Última atualização
+						{t("updatedAt")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>

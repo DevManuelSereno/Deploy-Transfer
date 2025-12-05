@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -52,6 +53,7 @@ type ModalFormProps = {
 };
 
 export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.GasSupply.modal");
 	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
 
 	const { editingVehicle } = useVehicleFormContext();
@@ -135,7 +137,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 		isLoadingPostGasSupply || isLoadingPutGasSupply || isLoadingOptions;
 
 	const onErrors = (err: any) => {
-		toast.error("Por favor, corrija os erros no formulário.");
+		toast.error(t("errorMessage"));
 	};
 
 	const onSubmit = async (data: GasSupplyForm) => {
@@ -198,8 +200,8 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 			reset();
 			toast.success(
 				editingGasSupply
-					? "Abastecimento atualizado com sucesso"
-					: "Abastecimento cadastrado com sucesso",
+					? t("successUpdate")
+					: t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -222,9 +224,9 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 						<FileText />
 					</div>
 					<DialogHeader>
-						<DialogTitle>Adicionar abastecimento</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Preencha os campos abaixo para cadastrar um novo abastecimento.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>
@@ -243,7 +245,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 							) : (
 								<Field data-invalid={fieldState.invalid}>
 									<FieldLabel htmlFor={field.name}>
-										Posto de combustível
+										{t("stationLabel")}
 									</FieldLabel>
 									<FormSelect
 										id={field.name}
@@ -252,7 +254,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={gasStationOptions}
-										placeholder="Selecione um posto..."
+										placeholder={t("stationPlaceholder")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -273,7 +275,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 								) : (
 									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											Km para revisão
+											{t("kmToReviewLabel")}
 										</FieldLabel>
 										<InputNumber
 											{...field}
@@ -297,7 +299,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-8" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>Km de parada</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("kmToStopLabel")}</FieldLabel>
 										<InputNumber
 											{...field}
 											aria-invalid={fieldState.invalid}
@@ -320,7 +322,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>Combustível</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("fuelLabel")}</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -328,7 +330,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
 											options={gasOptions}
-											placeholder="Selecione um combustível..."
+											placeholder={t("fuelPlaceholder")}
 											className="w-full"
 											name={field.name}
 										/>
@@ -348,7 +350,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 								) : (
 									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											Quantidade de litros
+											{t("quantityLabel")}
 										</FieldLabel>
 										<InputNumber
 											{...field}
@@ -375,7 +377,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 								) : (
 									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											Registro da Abastecimento
+											{t("supplyDateLabel")}
 										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
@@ -403,7 +405,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									<Skeleton className="rounded-md w-full h-8" />
 								) : (
 									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>Valor total</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("totalPriceLabel")}</FieldLabel>
 										<InputNumber
 											{...field}
 											aria-invalid={fieldState.invalid}
@@ -434,7 +436,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Comprovante</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("receiptLabel")}</FieldLabel>
 
 									<InputFile
 										id={field.name}
@@ -476,12 +478,12 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 					/>
 					<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl py-4">
 						<DialogClose asChild>
-							<Button variant="outline">Cancelar</Button>
+							<Button variant="outline">{t("cancel")}</Button>
 						</DialogClose>
 						{loading ? (
 							<Skeleton className="rounded-md w-full h-8" />
 						) : (
-							<Button type="submit">Salvar</Button>
+							<Button type="submit">{t("save")}</Button>
 						)}
 					</DialogFooter>
 				</form>

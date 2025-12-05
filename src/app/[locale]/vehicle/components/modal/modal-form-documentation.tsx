@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BookmarkIcon, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { Controller, FieldValue, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -54,6 +55,7 @@ type ModalFormProps = {
 };
 
 export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Documentation.modal");
 	const { editingDocumentation, setEditingDocumentation } =
 		useDocumentationFormContext();
 
@@ -150,7 +152,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 	const loading = isLoadingPostDocumentation || isLoadingPutDocumentation;
 
 	const onErrors = (err: any) => {
-		toast.error("Por favor, corrija os erros no formulário.");
+		toast.error(t("errorMessage"));
 	};
 
 	const onSubmit = async (data: DocumentationForm) => {
@@ -213,8 +215,8 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 			reset();
 			toast.success(
 				editingDocumentation
-					? "Documento atualizado com sucesso"
-					: "Documento cadastrado com sucesso",
+					? t("successUpdate")
+					: t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -237,9 +239,9 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 						<FileText />
 					</div>
 					<DialogHeader>
-						<DialogTitle>Adicionar documento</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Preencha os campos abaixo para cadastrar um novo documento.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>
@@ -261,7 +263,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3"
 									>
-										<FieldLabel htmlFor={field.name}>Dias</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("daysLabel")}</FieldLabel>
 										<FormToggleGroup
 											id={field.name}
 											value={field.value}
@@ -291,7 +293,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3 lg:col-span-2"
 									>
-										<FieldLabel htmlFor={field.name}>Tipo</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("typeLabel")}</FieldLabel>
 										<FormSelect
 											id={field.name}
 											value={field.value ?? ""}
@@ -299,7 +301,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
 											options={typeOptions}
-											placeholder="Selecione um tipo..."
+											placeholder={t("typePlaceholder")}
 											className="w-full"
 											name={field.name}
 										/>
@@ -322,7 +324,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										data-invalid={fieldState.invalid}
 										className="col-span-3"
 									>
-										<FieldLabel htmlFor={field.name}>Vencimento</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("expirationLabel")}</FieldLabel>
 										<FormDatePicker
 											id={field.name}
 											value={field.value ?? ""}
@@ -352,7 +354,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										// orientation="horizontal"
 										data-invalid={fieldState.invalid}
 									>
-										<FieldLabel htmlFor={field.name}>Antecipação</FieldLabel>
+										<FieldLabel htmlFor={field.name}>{t("anticipateLabel")}</FieldLabel>
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
@@ -393,7 +395,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 									data-invalid={fieldState.invalid}
 									className="md:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Documento</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("documentLabel")}</FieldLabel>
 
 									<InputFile
 										id={field.name}
@@ -436,12 +438,12 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 					/>
 					<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl py-4">
 						<DialogClose asChild>
-							<Button variant="outline">Cancelar</Button>
+							<Button variant="outline">{t("cancel")}</Button>
 						</DialogClose>
 						{loading ? (
 							<Skeleton className="rounded-md w-full h-8" />
 						) : (
-							<Button type="submit">Salvar</Button>
+							<Button type="submit">{t("save")}</Button>
 						)}
 					</DialogFooter>
 				</form>

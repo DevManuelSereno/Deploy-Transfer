@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
@@ -41,6 +42,7 @@ import {
 import type { PostData, PutData, VehicleType } from "@/types/models";
 
 export function FormVehicleData() {
+	const t = useTranslations("VehiclePage.Form");
 	const { editingVehicle, setEditingVehicle } = useVehicleFormContext();
 
 	const { setTabPanel } = useModalContext();
@@ -151,7 +153,7 @@ export function FormVehicleData() {
 	// const loading = true;
 
 	const onErrors = () => {
-		toast.error("Por favor, corrija os erros no formulário.");
+		toast.error(t("errorMessage"));
 	};
 
 	const onSubmit = async (data: VehicleForm) => {
@@ -207,8 +209,8 @@ export function FormVehicleData() {
 			reset(normalized);
 			toast.success(
 				editingVehicle
-					? "Veículo atualizado com sucesso"
-					: "Veículo cadastrado com sucesso",
+					? t("successUpdate")
+					: t("successCreate"),
 			);
 			setTabPanel("tab-documentation");
 			// const tabElement = document.getElementById("documentation");
@@ -234,7 +236,7 @@ export function FormVehicleData() {
 									data-invalid={fieldState.invalid}
 									className="lg:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Identificador</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("identifier")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -255,7 +257,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Companhia</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("company")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -263,7 +265,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={companyOptions}
-										placeholder="Selecione uma companhia..."
+										placeholder={t("selectCompany")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -283,7 +285,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Status</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("status")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -291,7 +293,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={statusOptions}
-										placeholder="Selecione um status..."
+										placeholder={t("selectStatus")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -316,7 +318,7 @@ export function FormVehicleData() {
 									data-invalid={fieldState.invalid}
 									className="lg:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Modelo</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("model")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -337,7 +339,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Ano</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("year")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -360,7 +362,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Marca</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("brand")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -368,7 +370,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={brandOptions}
-										placeholder="Selecione uma marca..."
+										placeholder={t("selectBrand")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -390,7 +392,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Capacidade</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("capacity")}</FieldLabel>
 									<InputNumber
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -413,7 +415,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Portas</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("doors")}</FieldLabel>
 									<InputNumber
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -436,7 +438,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Categoria</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("category")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -444,7 +446,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={categoryOptions}
-										placeholder="Selecione uma categoria..."
+										placeholder={t("selectCategory")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -464,7 +466,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Classificação</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("classification")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -472,7 +474,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={classificationOptions}
-										placeholder="Selecione uma classificação..."
+										placeholder={t("selectClassification")}
 										className="w-full "
 										name={field.name}
 									/>
@@ -494,7 +496,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>UF</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("uf")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -517,7 +519,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Revisão</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("review")}</FieldLabel>
 									<InputNumber
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -541,7 +543,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Combustível</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("fuel")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -549,7 +551,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={gasOptions}
-										placeholder="Selecione um combustível..."
+										placeholder={t("selectFuel")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -568,7 +570,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-10" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Tipo de Placa</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("plateType")}</FieldLabel>
 									<FormSelect
 										id={field.name}
 										value={field.value ?? ""}
@@ -576,7 +578,7 @@ export function FormVehicleData() {
 										onBlur={field.onBlur}
 										aria-invalid={fieldState.invalid}
 										options={plateTypeOptions}
-										placeholder="Selecione um tipo..."
+										placeholder={t("selectPlateType")}
 										className="w-full"
 										name={field.name}
 									/>
@@ -597,7 +599,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Placa</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("plate")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -620,7 +622,7 @@ export function FormVehicleData() {
 								<Skeleton className="rounded-md w-full h-8" />
 							) : (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>Renavam</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("renavam")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -646,7 +648,7 @@ export function FormVehicleData() {
 									data-invalid={fieldState.invalid}
 									className="lg:col-span-2"
 								>
-									<FieldLabel htmlFor={field.name}>Chassi</FieldLabel>
+									<FieldLabel htmlFor={field.name}>{t("chassi")}</FieldLabel>
 									<Input
 										{...field}
 										aria-invalid={fieldState.invalid}
@@ -668,7 +670,7 @@ export function FormVehicleData() {
 							<Skeleton className="rounded-md w-full h-8" />
 						) : (
 							<Field data-invalid={fieldState.invalid}>
-								<FieldLabel htmlFor={field.name}>Descrição</FieldLabel>
+								<FieldLabel htmlFor={field.name}>{t("description")}</FieldLabel>
 								<Textarea
 									{...field}
 									placeholder="316"
@@ -695,7 +697,7 @@ export function FormVehicleData() {
 								data-invalid={fieldState.invalid}
 								className="lg:col-span-2"
 							>
-								<FieldLabel htmlFor={field.name}>Imagens</FieldLabel>
+								<FieldLabel htmlFor={field.name}>{t("images")}</FieldLabel>
 
 								<InputImage
 									id={field.name}
@@ -726,12 +728,12 @@ export function FormVehicleData() {
 			</div>
 			<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 				<DialogClose asChild>
-					<Button variant="outline">Cancelar</Button>
+					<Button variant="outline">{t("cancel")}</Button>
 				</DialogClose>
 				{loading ? (
 					<Skeleton className="rounded-md w-full h-8" />
 				) : (
-					<Button type="submit">Continuar</Button>
+					<Button type="submit">{t("continue")}</Button>
 				)}
 			</DialogFooter>
 		</form>

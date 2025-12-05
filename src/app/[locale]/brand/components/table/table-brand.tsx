@@ -15,6 +15,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { LucidePlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { FormBrand } from "@/app/[locale]/brand/components/form/form-brand";
 import { ModalDeleteBrand } from "@/app/[locale]/brand/components/modal/modal-delete-brand";
@@ -40,6 +41,8 @@ import {
 } from "../columns/columns-table-brand";
 
 export default function TableBrand() {
+	const tTable = useTranslations("DataTable");
+	const tColumns = useTranslations("BrandPage.Table.Columns");
 	const { setEditingBrand } = useBrandFormContext();
 	const { isModalEditOpen, setIsModalEditOpen } = useModalContext();
 
@@ -80,7 +83,7 @@ export default function TableBrand() {
 		[openEditModal, handleOpenDeleteModal],
 	);
 
-	const columns = useMemo(() => getBrandColumns(actions), [actions]);
+	const columns = useMemo(() => getBrandColumns(actions, tColumns), [actions, tColumns]);
 
 	const { data: dataBrand, isLoading } = useQuery({
 		queryKey: ["brand-get"],
@@ -154,7 +157,7 @@ export default function TableBrand() {
 						/>
 						<Button onClick={() => setIsModalEditOpen(true)}>
 							<LucidePlus />
-							Adicionar
+							{tTable("addButton")}
 						</Button>
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { FileText, Fuel, Info, TriangleAlert } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-documentation";
@@ -19,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function TabsVehicle() {
+	const t = useTranslations("VehiclePage.Tabs");
 	const { tabPanel, setTabPanel } = useModalContext();
 	const { editingVehicle } = useVehicleFormContext();
 
@@ -31,7 +33,7 @@ export default function TabsVehicle() {
 
 	const handleTabChange = (newValue: string) => {
 		if (!editingVehicle?.id && newValue !== "tab-general-data") {
-			toast.error("Adicione os dados gerais do veículo antes de continuar.");
+			toast.error(t("addDataFirstMessage"));
 		} else {
 			// scrollToTab(newValue);
 			setTabPanel(newValue as any);
@@ -40,7 +42,11 @@ export default function TabsVehicle() {
 
 	useEffect(() => {
 		if (!editingVehicle?.id && tabPanel !== "tab-general-data") {
-			setTabPanel("tab-general-data");
+			// Use setTimeout to avoid state update during render
+			const timeout = setTimeout(() => {
+				setTabPanel("tab-general-data");
+			}, 0);
+			return () => clearTimeout(timeout);
 		}
 	}, [editingVehicle, tabPanel, setTabPanel]);
 
@@ -65,7 +71,7 @@ export default function TabsVehicle() {
 					)}
 				>
 					<Info />
-					Dados gerais
+					{t("generalData")}
 				</TabsTrigger>
 				<TabsTrigger
 					value="tab-documentation"
@@ -76,7 +82,7 @@ export default function TabsVehicle() {
 					disabled={!editingVehicle?.id}
 				>
 					<FileText />
-					Documentação
+					{t("documentation")}
 				</TabsTrigger>
 				<TabsTrigger
 					value="tab-gas-supply"
@@ -87,7 +93,7 @@ export default function TabsVehicle() {
 					disabled={!editingVehicle?.id}
 				>
 					<Fuel />
-					Abastecimento
+					{t("gasSupply")}
 				</TabsTrigger>
 				<TabsTrigger
 					value="tab-occurrence"
@@ -98,7 +104,7 @@ export default function TabsVehicle() {
 					disabled={!editingVehicle?.id}
 				>
 					<TriangleAlert />
-					Ocorrência
+					{t("occurrence")}
 				</TabsTrigger>
 			</TabsList>
 			<TabsContents className="flex-1 overflow-y-auto">

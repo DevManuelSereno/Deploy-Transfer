@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/occurrence-context";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
@@ -22,6 +23,7 @@ type ModalFormProps = {
 };
 
 export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Occurrence.delete");
 	const { editingOccurrence, setEditingOccurrence } =
 		useOccurrenceFormContext();
 	const { editingVehicle } = useVehicleFormContext();
@@ -49,7 +51,7 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 				});
 
 			setEditingOccurrence(undefined);
-			toast.success("Ocorrência deletado com sucesso");
+			toast.success(t("successMessage"));
 			setOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);
@@ -66,24 +68,23 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 			>
 				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
 					<DialogHeader>
-						<DialogTitle>Tem certeza</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Essa ação não pode ser desfeita. Isso excluirá permanentemente o
-							veículo de nossos servidores.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">
-					<p className="mb-2 font-medium">Informações da ocorrência:</p>
+					<p className="mb-2 font-medium">{t("infoTitle")}</p>
 					<div className="grid gap-2">
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">Seriedade</p>
+							<p className="mb-0.5 text-muted-foreground">{t("seriousness")}</p>
 							<span className="text-foreground">
 								{editingOccurrence?.seriousnessId}
 							</span>
 						</div>
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">Registrada em</p>
+							<p className="mb-0.5 text-muted-foreground">{t("occurrenceDate")}</p>
 							<span className="text-foreground">
 								{editingOccurrence
 									? new Date(
@@ -100,7 +101,7 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 				</div>
 				<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
 					<DialogClose asChild>
-						<Button variant="outline">Cancel</Button>
+						<Button variant="outline">{t("cancel")}</Button>
 					</DialogClose>
 					{isLoadingDeleteOccurrence ? (
 						<Skeleton className="rounded-md w-full h-8" />
@@ -110,7 +111,7 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 							type="button"
 							onClick={handleDeleteOccurrence}
 						>
-							Excluir
+							{t("delete")}
 						</Button>
 					)}
 				</DialogFooter>

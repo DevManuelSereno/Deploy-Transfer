@@ -1,4 +1,7 @@
+"use client";
+
 import { Bot } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export function OpenAiToolbar() {
+	const t = useTranslations("OpenAiToolbar");
 	return (
 		<Tooltip>
 			<TooltipTrigger asChild>
@@ -41,12 +45,9 @@ export function OpenAiToolbar() {
 						<Icons.openAIblack size={24} />
 					</div>
 					<div className="space-y-1 font-normal">
-						<p className="font-medium text-sm">@passAI</p>
-						<p className="text-sm">
-							Use the AI assistant to generate reports directly from your
-							dashboard.
-						</p>
-						<p className="text-xs">Powered by PASS — © 2025</p>
+						<p className="font-medium text-sm">{t("title")}</p>
+						<p className="text-sm">{t("description")}</p>
+						<p className="text-xs">{t("footer")}</p>
 					</div>
 				</div>
 			</TooltipContent>

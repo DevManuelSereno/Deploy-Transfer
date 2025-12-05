@@ -13,6 +13,7 @@ export interface BrandColumnActions {
 }
 export const getBrandColumns = (
 	actions: BrandColumnActions,
+	t: (key: string) => string,
 ): ColumnDef<BrandData>[] => [
 	{
 		id: "select",
@@ -49,7 +50,7 @@ export const getBrandColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						Nome
+						{t("name")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>

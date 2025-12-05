@@ -1,4 +1,5 @@
 import { Building2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import {
 	Dialog,
 	DialogContent,
@@ -14,6 +15,8 @@ type ModalFormProps = {
 };
 
 export function ModalTableBrand({ open, setOpen, children }: ModalFormProps) {
+	const t = useTranslations("BrandPage.Modal");
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent
@@ -25,9 +28,9 @@ export function ModalTableBrand({ open, setOpen, children }: ModalFormProps) {
 						<Building2 size={16} className="opacity-80" />
 					</div>
 					<DialogHeader>
-						<DialogTitle>Nova marca</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Preencha os campos abaixo para cadastrar uma nova marca.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>

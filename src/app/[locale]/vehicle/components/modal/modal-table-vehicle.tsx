@@ -1,4 +1,5 @@
 import { BusFront, LucidePlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -16,6 +17,8 @@ type ModalFormProps = {
 };
 
 export function ModalTableVehicle({ open, setOpen, children }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Modal");
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			{/*<DialogTrigger asChild>*/}
@@ -33,9 +36,9 @@ export function ModalTableVehicle({ open, setOpen, children }: ModalFormProps) {
 						<BusFront size={16} className="opacity-80" />
 					</div>
 					<DialogHeader>
-						<DialogTitle>Novo veículo</DialogTitle>
+						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>
-							Preencha os campos abaixo para cadastrar um novo véiculo.
+							{t("description")}
 						</DialogDescription>
 					</DialogHeader>
 				</div>

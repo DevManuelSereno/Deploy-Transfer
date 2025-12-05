@@ -38,10 +38,200 @@
 	},
 	"VehiclePage": {
 		"title": "Vehículos",
+		"Tabs": {
+			"generalData": "Datos generales",
+			"documentation": "Documentación",
+			"gasSupply": "Abastecimiento",
+			"occurrence": "Ocurrencia",
+			"addDataFirstMessage": "Añada los datos generales del vehículo antes de continuar."
+		},
+		"Documentation": {
+			"addButton": "Añadir documentación",
+			"delete": {
+				"title": "¿Está seguro?",
+				"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el vehículo de nuestros servidores.",
+				"infoTitle": "Información del vehículo:",
+				"type": "Tipo",
+				"expiration": "Vencimiento",
+				"cancel": "Cancelar",
+				"delete": "Eliminar",
+				"successMessage": "Documento eliminado exitosamente"
+			},
+			"back": "Volver",
+			"continue": "Continuar",
+			"emptyState": "No se encontraron registros",
+			"columns": {
+				"document": "Documento",
+				"type": "Tipo",
+				"days": "Días",
+				"expiration": "Vencimiento"
+			},
+			"modal": {
+				"title": "Añadir documento",
+				"description": "Complete los campos a continuación para registrar un nuevo documento.",
+				"daysLabel": "Días",
+				"typeLabel": "Tipo",
+				"typePlaceholder": "Seleccione un tipo...",
+				"expirationLabel": "Vencimiento",
+				"anticipateLabel": "¿Anticip ar renovación?",
+				"documentLabel": "Documento",
+				"cancel": "Cancelar",
+				"save": "Guardar",
+				"errorMessage": "Por favor, corrija los errores en el formulario.",
+				"successCreate": "Documento creado exitosamente",
+				"successUpdate": "Documento actualizado exitosamente"
+			}
+		},
+		"GasSupply": {
+			"addButton": "Añadir abastecimiento",
+			"delete": {
+				"title": "¿Está seguro?",
+				"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el vehículo de nuestros servidores.",
+				"infoTitle": "Información del abastecimiento:",
+				"supplyDate": "Fecha de abastecimiento",
+				"station": "Estación",
+				"fuel": "Combustible",
+				"cancel": "Cancelar",
+				"delete": "Eliminar",
+				"successMessage": "Abastecimiento eliminado exitosamente"
+			},
+			"back": "Volver",
+			"continue": "Continuar",
+			"emptyState": "No se encontraron registros",
+			"columns": {
+				"supplyDate": "Fecha de abastecimiento",
+				"supplier": "Proveedor",
+				"fuel": "Combustible",
+				"liters": "Litros",
+				"value": "Valor"
+			},
+			"modal": {
+				"title": "Añadir abastecimiento",
+				"description": "Complete los campos a continuación para registrar un nuevo abastecimiento.",
+				"stationLabel": "Estación de combustible",
+				"stationPlaceholder": "Seleccione una estación...",
+				"kmToReviewLabel": "Km para revisión",
+				"kmToStopLabel": "Km de parada",
+				"fuelLabel": "Combustible",
+				"fuelPlaceholder": "Seleccione un combustible...",
+				"quantityLabel": "Cantidad de litros",
+				"supplyDateLabel": "Registro de abastecimiento",
+				"totalPriceLabel": "Valor total",
+				"receiptLabel": "Nota fiscal",
+				"cancel": "Cancelar",
+				"save": "Guardar",
+				"errorMessage": "Por favor, corrija los errores en el formulario.",
+				"successCreate": "Abastecimiento creado exitosamente",
+				"successUpdate": "Abastecimiento actualizado exitosamente"
+			}
+		},
+		"Occurrence": {
+			"addButton": "Añadir ocurrencia",
+			"back": "Volver",
+			"emptyState": "No se encontraron registros",
+			"columns": {
+				"occurrenceDate": "Fecha de ocurrencia",
+				"classification": "Clasificación",
+				"seriousness": "Gravedad"
+			},
+			"modal": {
+				"title": "Añadir ocurrencia",
+				"description": "Complete los campos a continuación para registrar una nueva ocurrencia.",
+				"seriousnessLabel": "Gravedad",
+				"classificationLabel": "Clasificación",
+				"occurrenceDateLabel": "Fecha de Ocurrencia",
+				"registrationDateLabel": "Registro de Ocurrencia",
+				"descriptionLabel": "Descripción",
+				"attachmentLabel": "Adjunto",
+				"dragDropText": "Arrastre y suelte archivos aquí, o",
+				"selectFilesButton": "Seleccionar archivos",
+				"filesCount": "0/1 archivos",
+				"allowedTypes": "Tipos permitidos: .jpg, .jpeg, .png, .gif, .bmp, .webp, .svg, .pdf, .doc, .docx, .txt",
+				"cancel": "Cancelar",
+				"save": "Guardar",
+				"errorMessage": "Por favor, corrija los errores en el formulario.",
+				"successCreate": "Ocurrencia creada exitosamente",
+				"successUpdate": "Ocurrencia actualizada exitosamente"
+			},
+			"delete": {
+				"title": "¿Está seguro?",
+				"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente la ocurrencia de nuestros servidores.",
+				"infoTitle": "Información de la ocurrencia:",
+				"occurrenceDate": "Fecha de ocurrencia",
+				"classification": "Clasificación",
+				"seriousness": "Gravedad",
+				"cancel": "Cancelar",
+				"delete": "Eliminar",
+				"successMessage": "Ocurrencia eliminada exitosamente"
+			}
+		},
+		"Modal": {
+			"title": "Nuevo vehículo",
+			"description": "Complete los campos a continuación para registrar un nuevo vehículo."
+		},
+		"Delete": {
+			"title": "¿Está seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el vehículo de nuestros servidores.",
+			"vehicleInfo": "Información del vehículo:",
+			"model": "Modelo",
+			"plate": "Placa",
+			"cancel": "Cancelar",
+			"delete": "Eliminar",
+			"successMessage": "Vehículo eliminado exitosamente"
+		},
+		"Form": {
+			"identifier": "Identificador",
+			"company": "Compañía",
+			"status": "Estado",
+			"model": "Modelo",
+			"year": "Año",
+			"brand": "Marca",
+			"capacity": "Capacidad",
+			"doors": "Puertas",
+			"category": "Categoría",
+			"classification": "Clasificación",
+			"uf": "UF",
+			"review": "Revisión",
+			"fuel": "Combustible",
+			"plateType": "Tipo de Placa",
+			"plate": "Placa",
+			"renavam": "Renavam",
+			"chassi": "Chasis",
+			"description": "Descripción",
+			"images": "Imágenes",
+			"selectCompany": "Seleccione una compañía...",
+			"selectStatus": "Seleccione un estado...",
+			"selectBrand": "Seleccione una marca...",
+			"selectCategory": "Seleccione una categoría...",
+			"selectClassification": "Seleccione una clasificación...",
+			"selectFuel": "Seleccione un combustible...",
+			"selectPlateType": "Seleccione un tipo...",
+			"errorMessage": "Por favor, corrija los errores en el formulario.",
+			"successCreate": "Vehículo creado exitosamente",
+			"successUpdate": "Vehículo actualizado exitosamente",
+			"cancel": "Cancelar",
+			"continue": "Continuar"
+		},
 		"Table": {
 			"Filters": {
 				"status": "Estado",
 				"company": "Compañía"
+			},
+			"Columns": {
+				"id": "ID",
+				"title": "Título",
+				"brand": "Marca",
+				"capacity": "Capacidad",
+				"plate": "Placa",
+				"company": "Compañía",
+				"status": "Estado",
+				"createdAt": "Creado en",
+				"updatedAt": "Última actualización"
+			},
+			"Status": {
+				"Liberado": "Disponible",
+				"Manutenção": "Mantenimiento",
+				"Inativo": "Inactivo"
 			}
 		}
 	},
@@ -56,6 +246,12 @@
 		"settings": "Configuración",
 		"logout": "Cerrar sesión"
 	},
+	"Search": {
+		"placeholder": "Buscar...",
+		"tooltip": "Buscar",
+		"commandPlaceholder": "Escriba un comando para buscar...",
+		"noResults": "Sin resultados."
+	},
 	"DataTable": {
 		"DataTableFacetedFilter": {
 			"selectedCount": "{count} seleccionado(s)",
@@ -68,6 +264,44 @@
 		},
 		"DataTableExport": {
 			"export": "Exportar"
+		},
+		"addButton": "Añadir"
+	},
+	"OpenAiToolbar": {
+		"title": "@passAI",
+		"description": "Use el asistente de IA para generar informes directamente desde su panel.",
+		"footer": "Desarrollado por PASS — © 2025"
+	},
+	"BrandPage": {
+		"title": "Marcas",
+		"Modal": {
+			"title": "Nueva marca",
+			"description": "Complete los campos a continuación para registrar una nueva marca."
+		},
+		"Delete": {
+			"title": "¿Está seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente la marca de nuestros servidores.",
+			"brandInfo": "Información de la marca:",
+			"name": "Nombre",
+			"cancel": "Cancelar",
+			"delete": "Eliminar",
+			"successMessage": "Marca eliminada exitosamente"
+		},
+		"Form": {
+			"title": "Nueva marca",
+			"description": "Complete los campos a continuación para registrar una nueva marca.",
+			"name": "Nombre",
+			"namePlaceholder": "Scania",
+			"cancel": "Cancelar",
+			"save": "Guardar",
+			"errorMessage": "Por favor, corrija los errores en el formulario.",
+			"successCreate": "Marca creada exitosamente",
+			"successUpdate": "Marca actualizada exitosamente"
+		},
+		"Table": {
+			"Columns": {
+				"name": "Nombre"
+			}
 		}
 	}
 }
