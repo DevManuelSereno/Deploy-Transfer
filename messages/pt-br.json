@@ -221,7 +221,7 @@
 				"id": "ID",
 				"title": "Título",
 				"brand": "Marca",
-				"capacity": "Capacidade",
+				"seats": "Assentos",
 				"plate": "Placa",
 				"company": "Companhia",
 				"status": "Status",

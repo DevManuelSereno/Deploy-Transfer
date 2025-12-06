@@ -221,7 +221,7 @@
 				"id": "ID",
 				"title": "Title",
 				"brand": "Brand",
-				"capacity": "Capacity",
+				"seats": "Seats",
 				"plate": "Plate",
 				"company": "Company",
 				"status": "Status",

@@ -3,19 +3,22 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
+import type { useTranslations } from "next-intl";
+import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
 
 export interface VehicleColumnActions {
-	onEdit: (vehicle: VehicleData) => void;
-	onDelete: (vehicle: VehicleData) => void;
+	onEdit: (vehicle: VehiclePassData) => void;
+	onDelete: (vehicle: VehiclePassData) => void;
 }
-export const getVehicleColumns = (
+
+type TFunction = ReturnType<typeof useTranslations>;
+
+export const getVehicleColumnsPass = (
 	actions: VehicleColumnActions,
-	t: (key: any) => string,
-): ColumnDef<VehicleData>[] => [
+	t: TFunction,
+): ColumnDef<VehiclePassData>[] => [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -61,38 +64,7 @@ export const getVehicleColumns = (
 		size: 65,
 	},
 	{
-		accessorKey: "model",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("title")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		cell: ({ cell, row }) => (
-			<div className="flex flex-col">
-				<span>{String(cell.getValue())}</span>
-				<span className="text-muted-foreground text-sm">
-					{row.original.classification?.description}
-				</span>
-			</div>
-		),
-		enableColumnFilter: true,
-		size: 250,
-		meta: {
-			cellClassName: "grow",
-			headerClassName: "grow",
-		},
-	},
-	{
-		accessorKey: "brand",
+		accessorKey: "BrandId",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -115,7 +87,7 @@ export const getVehicleColumns = (
 		},
 	},
 	{
-		accessorKey: "capacity",
+		accessorKey: "Seats",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -124,7 +96,7 @@ export const getVehicleColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("capacity")}
+						{t("seats")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -138,7 +110,7 @@ export const getVehicleColumns = (
 		},
 	},
 	{
-		accessorKey: "plate",
+		accessorKey: "Plate",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -160,7 +132,7 @@ export const getVehicleColumns = (
 		},
 	},
 	{
-		accessorKey: "company",
+		accessorKey: "CompanyId",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -191,54 +163,7 @@ export const getVehicleColumns = (
 		},
 	},
 	{
-		accessorKey: "status",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("status")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		cell: ({ cell }) => {
-			const status = String(cell.getValue());
-			return (
-				<div className="flex items-center gap-2">
-					<span
-						className={cn(
-							"h-1.5 w-1.5 rounded-full ring-2",
-							status === "Liberado" && "bg-emerald-600/70 ring-emerald-600/10",
-							status === "Manutenção" && "bg-orange-600/70 ring-orange-600/10",
-							status === "Inativo" && "bg-gray-600/70 ring-gray-600/10",
-						)}
-					/>
-					<span className="font-medium text-sm text-muted-foreground leading-0">
-						{status}
-					</span>
-				</div>
-			);
-		},
-		filterFn: (row, columnId, filterValue: unknown) => {
-			if (!filterValue) return true;
-			const values = Array.isArray(filterValue)
-				? filterValue
-				: [String(filterValue)];
-			const rowValue = String(row.getValue(columnId) ?? "");
-			return values.includes(rowValue);
-		},
-		meta: {
-			cellClassName: "grow",
-			headerClassName: "grow",
-		},
-	},
-	{
-		accessorKey: "createdAt",
+		accessorKey: "CreatedAt",
 		cell: ({ cell }) => {
 			if (!cell.getValue()) return "-";
 			if (typeof cell.getValue() === "string")
@@ -270,7 +195,7 @@ export const getVehicleColumns = (
 		},
 	},
 	{
-		accessorKey: "updatedAt",
+		accessorKey: "UpdatedAt",
 		cell: ({ cell }) => {
 			if (!cell.getValue()) return "-";
 			if (typeof cell.getValue() === "string")

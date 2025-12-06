@@ -17,15 +17,15 @@ import {
 import { LucidePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
-import { ModalDeleteVehicle } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle";
-import { ModalTableVehicle } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle";
-import TabsVehicle from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle";
-import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
-import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
+import { getVehicleColumnsPass } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass";
+import { ModalDeleteVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass";
+import { ModalTableVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle-pass";
+import TabsVehiclePass from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle-pass";
+import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
+import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
 import { DataTable } from "@/components/data-table";
 import { DataTableExport } from "@/components/data-table/data-table-export";
-import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
 import { DataTableUpdate } from "@/components/data-table/data-table-update";
 import { Button } from "@/components/ui/button";
@@ -36,18 +36,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
-import {
-	getVehicleColumns,
-	type VehicleColumnActions,
-} from "../columns/columns-table-vehicle";
+import type { VehicleColumnActions } from "../columns/columns-table-vehicle-pass";
 
-export default function TableVehicle() {
+export default function TableVehiclePass() {
 	const tFilters = useTranslations("VehiclePage.Table.Filters");
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("VehiclePage.Table.Columns");
-	const { setEditingVehicle } = useVehicleFormContext();
+	const { setEditingVehicle } = useVehiclePassFormContext();
 	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
-		useModalContext();
+		useModalContextPass();
 	const queryClient = useQueryClient();
 
 	const [globalFilter, setGlobalFilter] = useState("");
@@ -64,7 +61,7 @@ export default function TableVehicle() {
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
 	const openEditModal = useCallback(
-		(vehicle: VehicleData) => {
+		(vehicle: VehiclePassData) => {
 			setEditingVehicle(vehicle);
 			setTabPanel("tab-general-data");
 			setIsModalEditOpen(true);
@@ -73,7 +70,7 @@ export default function TableVehicle() {
 	);
 
 	const handleOpenDeleteModal = useCallback(
-		(vehicle?: VehicleData) => {
+		(vehicle?: VehiclePassData) => {
 			setEditingVehicle(vehicle);
 			setIsModalDeleteOpen(true);
 		},
@@ -89,14 +86,14 @@ export default function TableVehicle() {
 	);
 
 	const columns = useMemo(
-		() => getVehicleColumns(actions, tColumns),
+		() => getVehicleColumnsPass(actions, tColumns),
 		[actions, tColumns],
 	);
 
 	const { data: dataVehicle, isLoading } = useQuery({
 		queryKey: ["vehicle-get"],
 		queryFn: ({ signal }) =>
-			getData<VehicleData[]>({
+			getData<VehiclePassData[]>({
 				url: "/vehicle",
 				signal,
 				query:
@@ -106,8 +103,7 @@ export default function TableVehicle() {
 		select: (vehicleData) =>
 			vehicleData.map((vehicle) => ({
 				...vehicle,
-				status: vehicle.status.name,
-				company: vehicle.company.name,
+				// company: vehicle.company.name,
 				brand: vehicle.brand.name,
 			})),
 	});
@@ -127,7 +123,7 @@ export default function TableVehicle() {
 		[isLoading, columns],
 	);
 
-	const table = useReactTable<VehicleData>({
+	const table = useReactTable<VehiclePassData>({
 		data: tableData,
 		columns: tableColumns,
 		getCoreRowModel: getCoreRowModel(),
@@ -150,28 +146,6 @@ export default function TableVehicle() {
 		},
 	});
 
-	const statusColumn = table.getColumn("status");
-
-	const statusColumnOptions = useMemo(() => {
-		const uniqueStatus = [...new Set(dataVehicle?.map((v) => v.status))];
-
-		return uniqueStatus.map((status) => ({
-			label: status,
-			value: status,
-		}));
-	}, [dataVehicle]);
-
-	const companyColumn = table.getColumn("company");
-
-	const companyColumnOptions = useMemo(() => {
-		const uniqueCompanies = [...new Set(dataVehicle?.map((v) => v.company))];
-
-		return uniqueCompanies.map((company) => ({
-			label: company,
-			value: company,
-		}));
-	}, [dataVehicle]);
-
 	const handleUpdate = () =>
 		queryClient.invalidateQueries({
 			queryKey: ["vehicle-get"],
@@ -192,16 +166,6 @@ export default function TableVehicle() {
 						<DataTableSearchInput
 							value={globalFilter}
 							onChangeValue={(filter) => setGlobalFilter(filter)}
-						/>
-						<DataTableFacetedFilter
-							options={statusColumnOptions}
-							column={statusColumn}
-							title={tFilters("status")}
-						/>
-						<DataTableFacetedFilter
-							options={companyColumnOptions}
-							column={companyColumn}
-							title={tFilters("company")}
 						/>
 					</div>
 					<div className="flex items-center gap-2">
@@ -224,10 +188,13 @@ export default function TableVehicle() {
 				>
 					<DataTable />
 				</DataTableProvider>
-				<ModalTableVehicle open={isModalEditOpen} setOpen={setIsModalEditOpen}>
-					<TabsVehicle />
-				</ModalTableVehicle>
-				<ModalDeleteVehicle
+				<ModalTableVehiclePass
+					open={isModalEditOpen}
+					setOpen={setIsModalEditOpen}
+				>
+					<TabsVehiclePass />
+				</ModalTableVehiclePass>
+				<ModalDeleteVehiclePass
 					open={isModalDeleteOpen}
 					setOpen={setIsModalDeleteOpen}
 				/>

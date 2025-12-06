@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import TableVehicle from "@/app/[locale]/vehicle/components/table/table-vehicle";
+import TableVehiclePass from "@/app/[locale]/vehicle/components/table/table-vehicle-pass";
 
 export async function generateMetadata() {
 	const t = await getTranslations("Sidebar");
@@ -12,7 +12,7 @@ export async function generateMetadata() {
 export default async function VehiclePage() {
 	return (
 		<div className="flex flex-col p-6">
-			<TableVehicle />
+			<TableVehiclePass />
 		</div>
 	);
 }

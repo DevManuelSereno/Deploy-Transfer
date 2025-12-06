@@ -1,4 +1,5 @@
 export * from "./Brand.schema";
+export * from "./BrandPass.schema";
 export * from "./Category.schema";
 export * from "./Classification.schema";
 export * from "./Company.schema";
@@ -10,6 +11,7 @@ export * from "./Occurrence.schema";
 export * from "./Seriousness.schema";
 export * from "./Status.schema";
 export * from "./Vehicle.schema";
+export * from "./VehiclePass.schema";
 
 export interface GetData {
 	url: string;

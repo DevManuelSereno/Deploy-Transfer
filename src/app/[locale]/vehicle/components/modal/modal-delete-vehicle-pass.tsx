@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -14,16 +14,16 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { deleteData, toastErrorsApi } from "@/lib/functions.api";
-import type { DeleteData, VehicleType } from "@/types/models";
+import type { DeleteData, VehiclePassType } from "@/types/models";
 
 type ModalFormProps = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 };
 
-export function ModalDeleteVehicle({ open, setOpen }: ModalFormProps) {
+export function ModalDeleteVehiclePass({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.Delete");
-	const { editingVehicle } = useVehicleFormContext();
+	const { editingVehicle } = useVehiclePassFormContext();
 
 	const queryClient = useQueryClient();
 
@@ -31,16 +31,16 @@ export function ModalDeleteVehicle({ open, setOpen }: ModalFormProps) {
 		mutateAsync: mutateDeleteVehicle,
 		isPending: isLoadingDeleteVehicle,
 	} = useMutation({
-		mutationFn: (val: DeleteData) => deleteData<VehicleType>(val),
-		mutationKey: ["vehicle-delete", editingVehicle?.id],
+		mutationFn: (val: DeleteData) => deleteData<VehiclePassType>(val),
+		mutationKey: ["vehicle-delete", editingVehicle?.IDV],
 	});
 
 	const handleDeleteVehicle = async () => {
-		if (!editingVehicle?.id) return;
+		if (!editingVehicle?.IDV) return;
 		try {
 			await mutateDeleteVehicle({
 				url: "/vehicle",
-				id: editingVehicle?.id,
+				id: editingVehicle?.IDV,
 			});
 			toast.success(t("successMessage"));
 			await queryClient.invalidateQueries({ queryKey: ["vehicle-get"] });
@@ -69,11 +69,11 @@ export function ModalDeleteVehicle({ open, setOpen }: ModalFormProps) {
 					<div className="grid gap-2">
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("model")}</p>
-							<span className="text-foreground">{editingVehicle?.model}</span>
+							<span className="text-foreground">{editingVehicle?.Model}</span>
 						</div>
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("plate")}</p>
-							<span className="text-foreground">{editingVehicle?.plate}</span>
+							<span className="text-foreground">{editingVehicle?.Plate}</span>
 						</div>
 					</div>
 				</div>

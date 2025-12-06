@@ -3,14 +3,13 @@
 import { useQueryClient } from "@tanstack/react-query";
 import * as React from "react";
 import { type ReactNode, useCallback } from "react";
-import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/documentation-context";
-import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
+import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
 
 type ModalContextValue = {
 	isModalEditOpen: boolean;
 	setIsModalEditOpen: (open: boolean) => void;
-	openWithVehicle: (vehicle?: VehicleData) => void;
+	openWithVehicle: (vehicle?: VehiclePassData) => void;
 	tabPanel: string;
 	setTabPanel: (value: string) => void;
 };
@@ -19,20 +18,19 @@ const ModalContext = React.createContext<ModalContextValue | undefined>(
 	undefined,
 );
 
-export function ModalTableVehicleProvider({
+export function ModalTableVehiclePassProvider({
 	children,
 }: {
 	children: ReactNode;
 }) {
 	const queryClient = useQueryClient();
-	const { setEditingVehicle } = useVehicleFormContext();
-	const { setEditingDocumentation } = useDocumentationFormContext();
+	const { setEditingVehicle } = useVehiclePassFormContext();
 	const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
 
 	const [tabPanel, setTabPanel] = React.useState("general-data");
 
 	const openWithVehicle = React.useCallback(
-		(vehicle?: VehicleData) => {
+		(vehicle?: VehiclePassData) => {
 			setEditingVehicle(vehicle);
 			setIsModalEditOpen(true);
 		},
@@ -44,12 +42,11 @@ export function ModalTableVehicleProvider({
 			setIsModalEditOpen(open);
 			if (!open) {
 				setEditingVehicle(undefined);
-				setEditingDocumentation(undefined);
 				setTabPanel("tab-general-data");
 				await queryClient.invalidateQueries({ queryKey: ["vehicle-get"] });
 			}
 		},
-		[queryClient, setEditingVehicle, setEditingDocumentation],
+		[queryClient, setEditingVehicle],
 	);
 
 	const value = React.useMemo(
@@ -68,7 +65,7 @@ export function ModalTableVehicleProvider({
 	);
 }
 
-export function useModalContext() {
+export function useModalContextPass() {
 	const ctx = React.useContext(ModalContext);
 	if (!ctx) {
 		throw new Error(
