@@ -3,6 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
+import type { useTranslations } from "next-intl";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,9 +13,11 @@ export interface VehicleColumnActions {
 	onEdit: (vehicle: VehicleData) => void;
 	onDelete: (vehicle: VehicleData) => void;
 }
+type TFunction = ReturnType<typeof useTranslations>;
+
 export const getVehicleColumns = (
 	actions: VehicleColumnActions,
-	t: (key: any) => string,
+	t: TFunction,
 ): ColumnDef<VehicleData>[] => [
 	{
 		id: "select",
