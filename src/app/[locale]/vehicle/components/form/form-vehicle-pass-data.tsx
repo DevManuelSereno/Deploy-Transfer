@@ -100,7 +100,7 @@ export function FormVehiclePassData() {
 	);
 	const statusOptions = ["pending", "released", "maintenance", "block"].map(
 		(option) => ({
-			label: option,
+			label: t(`statusValues.${option}`),
 			value: option,
 		}),
 	);
@@ -188,7 +188,7 @@ export function FormVehiclePassData() {
 			toastErrorsApi(error);
 		}
 	};
-	return (
+		return (
 		<Form {...form}>
 			<form
 				autoComplete="off"
@@ -196,7 +196,7 @@ export function FormVehiclePassData() {
 				className="space-y-5 p-6"
 				id="vehicle-form"
 			>
-				<div className="grid items-start gap-x-4 gap-y-5 sm:grid-cols-4">
+				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
 					<Controller
 						name="Model"
 						control={form.control}
@@ -255,7 +255,7 @@ export function FormVehiclePassData() {
 						}
 					/>
 				</div>
-				<div className="grid items-start gap-x-4 gap-y-5 sm:grid-cols-4">
+				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
 					<Controller
 						name="Seats"
 						control={form.control}
@@ -334,7 +334,7 @@ export function FormVehiclePassData() {
 					/>
 				</div>
 
-				<div className="grid items-start gap-x-4 gap-y-5 sm:grid-cols-4">
+				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
 					<Controller
 						name="LuggageCapacity"
 						control={form.control}
@@ -419,7 +419,7 @@ export function FormVehiclePassData() {
 						}
 					/>
 				</div>
-				<div className="grid items-start gap-x-4 gap-y-5 sm:grid-cols-4">
+				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
 					<Controller
 						name="Location"
 						control={form.control}
@@ -512,7 +512,7 @@ export function FormVehiclePassData() {
 					}
 				/>
 			</form>
-			<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
+			<DialogFooter className="flex gap-4 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 pt-6 pb-4">
 				<DialogClose asChild>
 					<Button variant="outline">{t("cancel")}</Button>
 				</DialogClose>

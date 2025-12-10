@@ -113,7 +113,7 @@ export function FormBrand() {
 	return (
 		<Form {...form}>
 			<form autoComplete="off" onSubmit={form.handleSubmit(onSubmit, onErrors)}>
-				<div className="flex w-full flex-col gap-4 space-y-5 p-6">
+				<div className="flex w-full flex-col gap-4 p-6">
 					<Controller
 						name="name"
 						control={form.control}
@@ -133,7 +133,7 @@ export function FormBrand() {
 						}
 					/>
 				</div>
-				<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
+				<DialogFooter className="flex gap-4 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 pt-6 pb-4">
 					<DialogClose asChild>
 						<Button variant="outline">{t("cancel")}</Button>
 					</DialogClose>

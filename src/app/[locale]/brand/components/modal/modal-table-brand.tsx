@@ -23,11 +23,11 @@ export function ModalTableBrand({ open, setOpen, children }: ModalFormProps) {
 				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-4xl
         flex flex-col max-h-[90vh]"
 			>
-				<div className="flex items-center gap-3 p-6">
+				<div className="flex items-center gap-3 px-6 pt-6 mb-3">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-full border">
 						<Building2 size={16} className="opacity-80" />
 					</div>
-					<DialogHeader>
+					<DialogHeader className="gap-1">
 						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>

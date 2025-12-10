@@ -183,6 +183,12 @@
 			"identifier": "Identifier",
 			"company": "Company",
 			"status": "Status",
+			"statusValues": {
+				"pending": "Pending",
+				"released": "Released",
+				"maintenance": "Maintenance",
+				"block": "Blocked"
+			},
 			"model": "Model",
 			"year": "Year",
 			"brand": "Brand",

@@ -183,6 +183,12 @@
 			"identifier": "Identificador",
 			"company": "Compañía",
 			"status": "Estado",
+			"statusValues": {
+				"pending": "Pendiente",
+				"released": "Liberado",
+				"maintenance": "Mantenimiento",
+				"block": "Bloqueado"
+			},
 			"model": "Modelo",
 			"year": "Año",
 			"brand": "Marca",
