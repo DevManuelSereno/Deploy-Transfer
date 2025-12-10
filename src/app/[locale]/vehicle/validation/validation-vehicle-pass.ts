@@ -21,7 +21,7 @@ export const VehiclePassFormSchema = VehicleBaseSchema.extend({
 		.string()
 		.min(1, "Modelo é obrigatório")
 		.max(50, "Modelo não pode ter mais que 50 caracteres"),
-	Year: z.number().lt(4, "Ano de fabricação inválido"),
+	Year: z.number().gt(1900, "Ano de fabricação inválido"),
 	Seats: z.number().min(1, "Nº de assentos é obrigatório"),
 	Chassis: z
 		.string()
@@ -38,6 +38,6 @@ export const VehiclePassFormSchema = VehicleBaseSchema.extend({
 		.string()
 		.min(1, "RENAVAM é obrigatório")
 		.max(20, "RENAVAM não pode ter mais que 20 caracteres"),
-	CompanyId: z.number().min(1, "Empresa é obrigatória"),
-	BrandId: z.number().min(1, "Marca é obrigatória"),
+	CompanyId: z.string().min(1, "Empresa é obrigatória"),
+	BrandId: z.string().min(1, "Marca é obrigatória"),
 });

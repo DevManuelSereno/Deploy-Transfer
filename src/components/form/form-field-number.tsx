@@ -7,7 +7,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import NumberInputStepper from "../../components/ui/number-input-stepper";
+import NumberInputStepper from "../ui/number-input-stepper";
 
 interface FormFieldNumberProps<T extends FieldValues>
 	extends ComponentProps<typeof NumberInputStepper> {

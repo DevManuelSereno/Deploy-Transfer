@@ -146,6 +146,10 @@ export default function TableBrand() {
 				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
 					<div className="flex items-center gap-2">
 						<OpenAiToolbar />
+						<Separator
+							orientation="vertical"
+							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+						/>
 						<DataTableSearchInput
 							value={globalFilter}
 							onChangeValue={(filter) => setGlobalFilter(filter)}

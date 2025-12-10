@@ -18,9 +18,9 @@ import { LucidePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getVehicleColumnsPass } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass";
+import { FormVehiclePassData } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-data";
 import { ModalDeleteVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass";
 import { ModalTableVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle-pass";
-import TabsVehiclePass from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle-pass";
 import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
 import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
@@ -163,6 +163,10 @@ export default function TableVehiclePass() {
 				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
 					<div className="flex items-center gap-2">
 						<OpenAiToolbar />
+						<Separator
+							orientation="vertical"
+							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+						/>
 						<DataTableSearchInput
 							value={globalFilter}
 							onChangeValue={(filter) => setGlobalFilter(filter)}
@@ -192,7 +196,7 @@ export default function TableVehiclePass() {
 					open={isModalEditOpen}
 					setOpen={setIsModalEditOpen}
 				>
-					<TabsVehiclePass />
+					<FormVehiclePassData />
 				</ModalTableVehiclePass>
 				<ModalDeleteVehiclePass
 					open={isModalDeleteOpen}

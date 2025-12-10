@@ -16,6 +16,8 @@ import {
 	BrandFormSchema,
 	BrandPayloadSchema,
 } from "@/app/[locale]/brand/validation/validation-brand";
+import { FormFieldSelect } from "@/components/form/form-field-select";
+import { FormFieldText } from "@/components/form/form-field-text";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import {
@@ -24,6 +26,7 @@ import {
 	FieldGroup,
 	FieldLabel,
 } from "@/components/ui/field";
+import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
@@ -47,7 +50,7 @@ export function FormBrand() {
 		};
 	};
 
-	const { handleSubmit, control, reset } = useForm<BrandForm>({
+	const form = useForm<BrandForm>({
 		resolver: zodResolver(BrandFormSchema),
 		defaultValues: buildDefaultValues(editingBrand),
 	});
@@ -96,7 +99,7 @@ export function FormBrand() {
 
 			const normalized = buildDefaultValues(savedBrand as any);
 
-			reset(normalized);
+			form.reset(normalized);
 			toast.success(editingBrand ? t("successUpdate") : t("successCreate"));
 			setIsModalEditOpen(false);
 		} catch (error: any) {
@@ -104,43 +107,39 @@ export function FormBrand() {
 		}
 	};
 	return (
-		<form autoComplete="off" onSubmit={handleSubmit(onSubmit, onErrors)}>
-			<div className="flex w-full flex-col gap-4 space-y-5 p-6">
-				<Controller
-					name="name"
-					control={control}
-					render={({ field, fieldState }) =>
-						loading ? (
-							<Skeleton className="rounded-md w-full h-8" />
-						) : (
-							<Field
-								data-invalid={fieldState.invalid}
-								className="lg:col-span-2"
-							>
-								<FieldLabel htmlFor={field.name}>{t("name")}</FieldLabel>
-								<Input
+		<Form {...form}>
+			<form autoComplete="off" onSubmit={form.handleSubmit(onSubmit, onErrors)}>
+				<div className="flex w-full flex-col gap-4 space-y-5 p-6">
+					<Controller
+						name="name"
+						control={form.control}
+						render={({ field, fieldState }) =>
+							loading ? (
+								<Skeleton className="rounded-md w-full h-8" />
+							) : (
+								<FormFieldText
 									{...field}
+									label={t("name")}
+									control={form.control}
 									aria-invalid={fieldState.invalid}
-									placeholder={t("namePlaceholder")}
+									placeholder="Buss Vissta 340"
+									className="col-span-2"
 								/>
-								{fieldState.invalid && (
-									<FieldError errors={[fieldState.error]} />
-								)}
-							</Field>
-						)
-					}
-				/>
-			</div>
-			<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
-				<DialogClose asChild>
-					<Button variant="outline">{t("cancel")}</Button>
-				</DialogClose>
-				{loading ? (
-					<Skeleton className="rounded-md w-full h-8" />
-				) : (
-					<Button type="submit">{t("save")}</Button>
-				)}
-			</DialogFooter>
-		</form>
+							)
+						}
+					/>
+				</div>
+				<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
+					<DialogClose asChild>
+						<Button variant="outline">{t("cancel")}</Button>
+					</DialogClose>
+					{loading ? (
+						<Skeleton className="rounded-md w-full h-8" />
+					) : (
+						<Button type="submit">{t("save")}</Button>
+					)}
+				</DialogFooter>
+			</form>
+		</Form>
 	);
 }

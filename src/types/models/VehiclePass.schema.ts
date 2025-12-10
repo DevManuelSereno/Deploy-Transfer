@@ -44,7 +44,7 @@ export const VehiclePassSchema = z.object({
 	// Número do RENAVAM do veículo ou código de registro caso for internacional
 	RegistrationCode: z.string().max(20),
 
-	// Lista de comodidades do veículo (ex.: ar-condicionado, Wi-Fi, carregador USB)
+	/// Lista de comodidades do veículo (ex.: ar-condicionado, Wi-Fi, carregador USB)
 	Amenities: z.string().max(255).nullable().optional(),
 
 	// Período de KM para Inspeção do veículo (ex: a cada 10.000 km o veículo precisa fazer a revisão)
