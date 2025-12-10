@@ -100,7 +100,7 @@ export function FormVehiclePassData() {
 	);
 	const statusOptions = ["pending", "released", "maintenance", "block"].map(
 		(option) => ({
-			label: t(`statusValues.${option}`),
+			label: t(`statusValues.${option}` as any),
 			value: option,
 		}),
 	);

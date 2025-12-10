@@ -30,15 +30,15 @@ export function ModalDeleteBrand({ open, setOpen }: ModalFormProps) {
 	const { mutateAsync: mutateDeleteBrand, isPending: isLoadingDeleteBrand } =
 		useMutation({
 			mutationFn: (val: DeleteData) => deleteData<BrandType>(val),
-			mutationKey: ["brand-delete", editingBrand?.id],
+			mutationKey: ["brand-delete", editingBrand?.IDB],
 		});
 
 	const handleDeleteBrand = async () => {
-		if (!editingBrand?.id) return;
+		if (!editingBrand?.IDB) return;
 		try {
 			await mutateDeleteBrand({
 				url: "/brand",
-				id: editingBrand?.id,
+				id: editingBrand?.IDB,
 			});
 			toast.success({
 				title: t("successMessage"),
@@ -70,7 +70,7 @@ export function ModalDeleteBrand({ open, setOpen }: ModalFormProps) {
 					<div className="grid gap-2">
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("name")}</p>
-							<span className="text-foreground">{editingBrand?.name}</span>
+							<span className="text-foreground">{editingBrand?.Title}</span>
 						</div>
 					</div>
 				</div>
