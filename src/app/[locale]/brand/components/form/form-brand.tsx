@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { useBrandFormContext } from "@/app/[locale]/brand/context/brand-context";
 import { useModalContext } from "@/app/[locale]/brand/context/modal-table-brand";
 import type {
@@ -29,6 +28,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/sonner";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { BrandType, PostData, PutData } from "@/types/models";
 
@@ -72,7 +72,9 @@ export function FormBrand() {
 	const loading = isLoadingPostBrand || isLoadingPutBrand;
 
 	const onErrors = () => {
-		toast.error(t("errorMessage"));
+		toast.error({
+			title: t("errorMessage"),
+		});
 	};
 
 	const onSubmit = async (data: BrandForm) => {
@@ -100,7 +102,9 @@ export function FormBrand() {
 			const normalized = buildDefaultValues(savedBrand as any);
 
 			form.reset(normalized);
-			toast.success(editingBrand ? t("successUpdate") : t("successCreate"));
+			toast.success({
+				title: editingBrand ? t("successUpdate") : t("successCreate"),
+			});
 			setIsModalEditOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);

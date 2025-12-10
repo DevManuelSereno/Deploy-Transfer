@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
 import { useBrandFormContext } from "@/app/[locale]/brand/context/brand-context";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/sonner";
 import { deleteData, toastErrorsApi } from "@/lib/functions.api";
 import type { BrandType, DeleteData } from "@/types/models";
 
@@ -40,7 +40,9 @@ export function ModalDeleteBrand({ open, setOpen }: ModalFormProps) {
 				url: "/brand",
 				id: editingBrand?.id,
 			});
-			toast.success(t("successMessage"));
+			toast.success({
+				title: t("successMessage"),
+			});
 			await queryClient.invalidateQueries({ queryKey: ["brand-get"] });
 			setOpen(false);
 			// biome-ignore lint/suspicious/noExplicitAny: <explanation>

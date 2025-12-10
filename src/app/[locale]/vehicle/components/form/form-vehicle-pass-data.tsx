@@ -2,9 +2,9 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
 import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import { useVehiclePassFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-pass-form-options";
@@ -35,6 +35,7 @@ import { Input } from "@/components/ui/input";
 import { InputImage } from "@/components/ui/input-image";
 import { InputNumber } from "@/components/ui/input-number";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import api from "@/lib/api";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
@@ -167,7 +168,9 @@ export function FormVehiclePassData() {
 
 	const onErrors = (error: any) => {
 		console.log(error);
-		toast.error(t("errorMessage"));
+		toast.error({
+			title: t("errorMessage"),
+		});
 	};
 
 	const onSubmit = async (data: VehiclePassForm) => {

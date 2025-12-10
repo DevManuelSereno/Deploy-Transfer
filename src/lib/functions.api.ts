@@ -1,5 +1,5 @@
 import type { AxiosError } from "axios";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/sonner";
 import api from "@/lib/api";
 import type { DeleteData, GetData, PostData, PutData } from "@/types/models";
 
@@ -95,8 +95,11 @@ export const toastErrorsApi = (
 ) => {
 	console.error(error);
 	if (error?.response) {
-		if (message) return toast.error(message);
+		if (message) return toast.error({ title: message });
 		if (error.response?.data?.message)
-			return toast.error(error.response?.data?.message);
-	} else toast.error("Erro ao se comunicar com o servidor (erro desconhecido)");
+			return toast.error({ title: error.response?.data?.message });
+	} else
+		toast.error({
+			title: "Erro ao se comunicar com o servidor (erro desconhecido)",
+		});
 };

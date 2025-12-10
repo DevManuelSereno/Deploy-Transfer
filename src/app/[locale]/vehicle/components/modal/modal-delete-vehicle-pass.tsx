@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { toast } from "sonner";
 import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "@/components/ui/sonner";
 import { deleteData, toastErrorsApi } from "@/lib/functions.api";
 import type { DeleteData, VehiclePassType } from "@/types/models";
 
@@ -42,7 +42,9 @@ export function ModalDeleteVehiclePass({ open, setOpen }: ModalFormProps) {
 				url: "/vehicle",
 				id: editingVehicle?.IDV,
 			});
-			toast.success(t("successMessage"));
+			toast.success({
+				title: t("successMessage"),
+			});
 			await queryClient.invalidateQueries({ queryKey: ["vehicle-get"] });
 			setOpen(false);
 		} catch (error: any) {
