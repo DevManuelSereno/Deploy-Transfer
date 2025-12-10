@@ -45,7 +45,7 @@ export const getVehicleColumnsPass = (
 		size: 40,
 	},
 	{
-		accessorKey: "identifier",
+		accessorKey: "IDV",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -64,7 +64,7 @@ export const getVehicleColumnsPass = (
 		size: 65,
 	},
 	{
-		accessorKey: "BrandId",
+		accessorKey: "Model",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -73,7 +73,7 @@ export const getVehicleColumnsPass = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("brand")}
+						{t("model")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -86,6 +86,29 @@ export const getVehicleColumnsPass = (
 			headerClassName: "grow",
 		},
 	},
+	// {
+	// 	accessorKey: "BrandId",
+	// 	header: ({ column }) => {
+	// 		return (
+	// 			<div className="flex items-center h-full">
+	// 				<Button
+	// 					variant="ghost"
+	// 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+	// 					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+	// 				>
+	// 					{t("brand")}
+	// 					<ChevronsUpDown className="size-3" />
+	// 				</Button>
+	// 			</div>
+	// 		);
+	// 	},
+	// 	enableColumnFilter: true,
+	// 	size: 160,
+	// 	meta: {
+	// 		cellClassName: "grow",
+	// 		headerClassName: "grow",
+	// 	},
+	// },
 	{
 		accessorKey: "Seats",
 		header: ({ column }) => {
@@ -131,37 +154,37 @@ export const getVehicleColumnsPass = (
 			headerClassName: "grow",
 		},
 	},
-	{
-		accessorKey: "CompanyId",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("company")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		enableColumnFilter: true,
-		filterFn: (row, columnId, filterValue: unknown) => {
-			if (!filterValue) return true;
-			const values = Array.isArray(filterValue)
-				? filterValue
-				: [String(filterValue)];
-			const rowValue = String(row.getValue(columnId) ?? "");
-			return values.includes(rowValue);
-		},
-		size: 230,
-		meta: {
-			cellClassName: "grow",
-			headerClassName: "grow",
-		},
-	},
+	// {
+	// 	accessorKey: "CompanyId",
+	// 	header: ({ column }) => {
+	// 		return (
+	// 			<div className="flex items-center h-full">
+	// 				<Button
+	// 					variant="ghost"
+	// 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+	// 					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+	// 				>
+	// 					{t("company")}
+	// 					<ChevronsUpDown className="size-3" />
+	// 				</Button>
+	// 			</div>
+	// 		);
+	// 	},
+	// 	enableColumnFilter: true,
+	// 	filterFn: (row, columnId, filterValue: unknown) => {
+	// 		if (!filterValue) return true;
+	// 		const values = Array.isArray(filterValue)
+	// 			? filterValue
+	// 			: [String(filterValue)];
+	// 		const rowValue = String(row.getValue(columnId) ?? "");
+	// 		return values.includes(rowValue);
+	// 	},
+	// 	size: 230,
+	// 	meta: {
+	// 		cellClassName: "grow",
+	// 		headerClassName: "grow",
+	// 	},
+	// },
 	{
 		accessorKey: "CreatedAt",
 		cell: ({ cell }) => {

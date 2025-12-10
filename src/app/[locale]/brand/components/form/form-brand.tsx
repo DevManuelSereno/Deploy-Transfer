@@ -41,12 +41,12 @@ export function FormBrand() {
 	const buildDefaultValues = (brand?: BrandData): BrandForm => {
 		if (!brand) {
 			return {
-				name: "Scania",
+				Title: "Scania",
 			};
 		}
 
 		return {
-			name: brand.name ?? "",
+			Title: brand.Title ?? "",
 		};
 	};
 
@@ -55,21 +55,22 @@ export function FormBrand() {
 		defaultValues: buildDefaultValues(editingBrand),
 	});
 
-	const { mutateAsync: mutatePostBrand, isPending: isLoadingPostBrand } =
-		useMutation({
-			mutationFn: async (val: PostData<BrandPayload>) =>
-				postData<BrandType, BrandPayload>(val),
-			mutationKey: ["brand-post"],
-		});
+	// const { mutateAsync: mutatePostBrand, isPending: isLoadingPostBrand } =
+	// 	useMutation({
+	// 		mutationFn: async (val: PostData<BrandPayload>) =>
+	// 			postData<BrandType, BrandPayload>(val),
+	// 		mutationKey: ["brand-post"],
+	// 	});
+	//
+	// const { mutateAsync: mutatePutBrand, isPending: isLoadingPutBrand } =
+	// 	useMutation({
+	// 		mutationFn: (val: PutData<BrandPayload>) =>
+	// 			putData<BrandType, BrandPayload>(val),
+	// 		mutationKey: ["brand-put"],
+	// 	});
 
-	const { mutateAsync: mutatePutBrand, isPending: isLoadingPutBrand } =
-		useMutation({
-			mutationFn: (val: PutData<BrandPayload>) =>
-				putData<BrandType, BrandPayload>(val),
-			mutationKey: ["brand-put"],
-		});
-
-	const loading = isLoadingPostBrand || isLoadingPutBrand;
+	// const loading = isLoadingPostBrand || isLoadingPutBrand;
+	const loading = false;
 
 	const onErrors = () => {
 		toast.error({
@@ -83,25 +84,25 @@ export function FormBrand() {
 
 			const parseData = BrandPayloadSchema.parse(data);
 
-			if (!editingBrand) {
-				savedBrand = await mutatePostBrand({
-					url: "/brand",
-					data: parseData,
-				});
-			} else {
-				// UPDATE
-				savedBrand = await mutatePutBrand({
-					url: "/brand",
-					id: Number(editingBrand.id),
-					data: parseData,
-				});
-			}
+			// if (!editingBrand) {
+			// 	savedBrand = await mutatePostBrand({
+			// 		url: "/brand",
+			// 		data: parseData,
+			// 	});
+			// } else {
+			// 	// UPDATE
+			// 	savedBrand = await mutatePutBrand({
+			// 		url: "/brand",
+			// 		id: Number(editingBrand.id),
+			// 		data: parseData,
+			// 	});
+			// }
+			//
+			// setEditingBrand(savedBrand as any);
+			//
+			// const normalized = buildDefaultValues(savedBrand as any);
 
-			setEditingBrand(savedBrand as any);
-
-			const normalized = buildDefaultValues(savedBrand as any);
-
-			form.reset(normalized);
+			// form.reset(normalized);
 			toast.success({
 				title: editingBrand ? t("successUpdate") : t("successCreate"),
 			});
@@ -115,7 +116,7 @@ export function FormBrand() {
 			<form autoComplete="off" onSubmit={form.handleSubmit(onSubmit, onErrors)}>
 				<div className="flex w-full flex-col gap-4 p-6">
 					<Controller
-						name="name"
+						name="Title"
 						control={form.control}
 						render={({ field, fieldState }) =>
 							loading ? (

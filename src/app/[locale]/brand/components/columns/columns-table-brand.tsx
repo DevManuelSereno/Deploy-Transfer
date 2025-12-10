@@ -41,7 +41,26 @@ export const getBrandColumns = (
 		size: 40,
 	},
 	{
-		accessorKey: "name",
+		accessorKey: "IDB",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("id")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		enableColumnFilter: true,
+		size: 65,
+	},
+	{
+		accessorKey: "Title",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">

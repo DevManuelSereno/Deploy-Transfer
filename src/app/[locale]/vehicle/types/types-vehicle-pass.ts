@@ -9,6 +9,6 @@ export type VehiclePassPayload = z.infer<typeof VehiclePassPayloadSchema>;
 export type VehiclePassForm = z.infer<typeof VehiclePassFormSchema>;
 
 export type VehiclePassData = VehiclePassType & {
-	brand: BrandType;
+	// brand: BrandType;
 	// company: CompanyType;
 };

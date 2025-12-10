@@ -51,23 +51,23 @@ export function FormVehiclePassData() {
 		}
 
 		return {
-			Plate: "ABC1D23",
-			Model: "Corolla XEi",
-			Year: 2020,
-			Color: "Prata",
-			Seats: 5,
-			Chassis: "9BWZZZ377VT004251",
-			Fuel: "Gasolina",
-			Status: "released",
-			Location: "SP",
-			Door: 4,
-			LuggageCapacity: 30,
-			Category: "Sedan",
-			RegistrationCode: "00512345678",
-			Amenities: "Ar-condicionado",
-			InspectionInterval: 10000,
-			CompanyId: "12",
-			BrandId: "Scania",
+			Plate: vehicle.Plate,
+			Model: vehicle.Model,
+			Year: vehicle.Year,
+			Color: vehicle.Color ?? "",
+			Seats: vehicle.Seats,
+			Chassis: vehicle.Chassis,
+			Fuel: vehicle.Fuel,
+			Status: vehicle.Status ?? "",
+			Location: vehicle.Location,
+			Door: vehicle.Door,
+			LuggageCapacity: vehicle.LuggageCapacity ?? 0,
+			Category: vehicle.Category,
+			RegistrationCode: vehicle.RegistrationCode,
+			Amenities: vehicle.Amenities ?? "",
+			InspectionInterval: vehicle.InspectionInterval ?? 0,
+			CompanyId: String(vehicle.CompanyId),
+			BrandId: String(vehicle.BrandId),
 		};
 	};
 
@@ -76,21 +76,21 @@ export function FormVehiclePassData() {
 		defaultValues: buildDefaultValues(editingVehicle),
 	});
 
-	const { mutateAsync: mutatePostVehicle, isPending: isLoadingPostVehicle } =
-		useMutation({
-			mutationFn: async (val: PostData<VehiclePassPayload>) =>
-				postData<VehicleType, VehiclePassPayload>(val),
-			mutationKey: ["vehicle-post"],
-		});
-
-	const { mutateAsync: mutatePutVehicle, isPending: isLoadingPutVehicle } =
-		useMutation({
-			mutationFn: (val: PutData<VehiclePassPayload>) =>
-				putData<VehicleType, VehiclePassPayload>(val),
-			mutationKey: ["vehicle-put"],
-		});
-
-	const { isLoadingOptions } = useVehiclePassFormOptions();
+	// const { mutateAsync: mutatePostVehicle, isPending: isLoadingPostVehicle } =
+	// 	useMutation({
+	// 		mutationFn: async (val: PostData<VehiclePassPayload>) =>
+	// 			postData<VehicleType, VehiclePassPayload>(val),
+	// 		mutationKey: ["vehicle-post"],
+	// 	});
+	//
+	// const { mutateAsync: mutatePutVehicle, isPending: isLoadingPutVehicle } =
+	// 	useMutation({
+	// 		mutationFn: (val: PutData<VehiclePassPayload>) =>
+	// 			putData<VehicleType, VehiclePassPayload>(val),
+	// 		mutationKey: ["vehicle-put"],
+	// 	});
+	//
+	// const { isLoadingOptions } = useVehiclePassFormOptions();
 
 	const brandOptions = ["Scania", "Mercedes-Benz", "Volvo", "Ford"].map(
 		(option) => ({
@@ -119,19 +119,12 @@ export function FormVehiclePassData() {
 		}),
 	);
 
-	const fuelOptions = [
-		"Diesel + Arla",
-		"Diesel",
-		"Etanol",
-		"Gasolina",
-		"GNV",
-		"GLP",
-		" Querosene Aviação",
-		"Electricity",
-	].map((option) => ({
-		label: option,
-		value: option,
-	}));
+	const fuelOptions = ["Diesel", "Etanol", "Gasolina", "GNV", "GLP"].map(
+		(option) => ({
+			label: option,
+			value: option,
+		}),
+	);
 
 	const amenitiesOptions = ["Ar-condicionado", "Wi-Fi", "Carregador USB"].map(
 		(option) => ({
@@ -140,9 +133,9 @@ export function FormVehiclePassData() {
 		}),
 	);
 
-	const loading =
-		isLoadingPostVehicle || isLoadingPutVehicle || isLoadingOptions;
-	// const loading = true;
+	// const loading =
+	// 	isLoadingPostVehicle || isLoadingPutVehicle || isLoadingOptions;
+	const loading = false;
 
 	const onErrors = (error: any) => {
 		console.log(error);
@@ -176,9 +169,11 @@ export function FormVehiclePassData() {
 			// setEditingVehicle(savedVehicle as any);
 			//
 			// const normalized = buildDefaultValues(savedVehicle as any);
-			//
+
 			// form.reset(normalized);
-			// toast.success(editingVehicle ? t("successUpdate") : t("successCreate"));
+			toast.success({
+				title: editingVehicle ? t("successUpdate") : t("successCreate"),
+			});
 			// setTabPanel("tab-documentation");
 			// const tabElement = document.getElementById("documentation");
 			// if (tabElement) {
@@ -188,7 +183,7 @@ export function FormVehiclePassData() {
 			toastErrorsApi(error);
 		}
 	};
-		return (
+	return (
 		<Form {...form}>
 			<form
 				autoComplete="off"

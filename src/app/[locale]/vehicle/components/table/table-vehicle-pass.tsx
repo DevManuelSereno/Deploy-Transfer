@@ -90,42 +90,267 @@ export default function TableVehiclePass() {
 		[actions, tColumns],
 	);
 
-	const { data: dataVehicle, isLoading } = useQuery({
-		queryKey: ["vehicle-get"],
-		queryFn: ({ signal }) =>
-			getData<VehiclePassData[]>({
-				url: "/vehicle",
-				signal,
-				query:
-					"include.classification=true&include.category=true" +
-					"&&include.brand=true&&include.company&&include.status=true",
-			}),
-		select: (vehicleData) =>
-			vehicleData.map((vehicle) => ({
-				...vehicle,
-				// company: vehicle.company.name,
-				brand: vehicle.brand.name,
-			})),
-	});
+	// const { data: dataVehicle, isLoading } = useQuery({
+	// 	queryKey: ["vehicle-get"],
+	// 	queryFn: ({ signal }) =>
+	// 		getData<VehiclePassData[]>({
+	// 			url: "/vehicle",
+	// 			signal,
+	// 			query:
+	// 				"include.classification=true&include.category=true" +
+	// 				"&&include.brand=true&&include.company&&include.status=true",
+	// 		}),
+	// 	select: (vehicleData) =>
+	// 		vehicleData.map((vehicle) => ({
+	// 			...vehicle,
+	// 			// company: vehicle.company.name,
+	// 			brand: vehicle.brand.name,
+	// 		})),
+	// });
 
-	const tableData = useMemo(
-		() => (isLoading ? Array(30).fill({}) : (dataVehicle ?? [])),
-		[isLoading, dataVehicle],
-	);
-	const tableColumns = useMemo(
-		() =>
-			isLoading
-				? columns.map((column) => ({
-						...column,
-						cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
-					}))
-				: columns,
-		[isLoading, columns],
-	);
+	const dataVehicle = [
+		{
+			IDV: 1,
+			Plate: "ABC1D23",
+			Model: "Corolla",
+			Year: 2020,
+			Color: "Prata",
+			Seats: 5,
+			Chassis: "9BWZZZ377VT004251",
+			Fuel: "Gasolina",
+			Status: "released",
+			Location: "SP",
+			Door: 4,
+			LuggageCapacity: 3,
+			Category: "Sedan",
+			RegistrationCode: "12345678901",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 10000,
+			CompanyId: 12,
+			BrandId: 4,
+			CreatedAt: "2024-01-10T10:20:00Z",
+			UpdatedAt: "2024-09-15T12:40:00Z",
+		},
+		{
+			IDV: 2,
+			Plate: "XYZ9F88",
+			Model: "Sprinter",
+			Year: 2018,
+			Color: "Branco",
+			Seats: 15,
+			Chassis: "8ACZZZ123VT553210",
+			Fuel: "Diesel",
+			Status: "maintenance",
+			Location: "RJ",
+			Door: 4,
+			LuggageCapacity: 10,
+			Category: "Van",
+			RegistrationCode: "BR998877665",
+			Amenities: "Wi-Fi",
+			InspectionInterval: 15000,
+			CompanyId: 3,
+			BrandId: 7,
+			CreatedAt: "2023-05-22T09:10:00Z",
+			UpdatedAt: "2024-03-11T14:30:00Z",
+		},
+		{
+			IDV: 3,
+			Plate: "JKL3E55",
+			Model: "HB20",
+			Year: 2021,
+			Color: "Preto",
+			Seats: 5,
+			Chassis: "9BG111377VT003114",
+			Fuel: "Etanol",
+			Status: "released",
+			Location: "MG",
+			Door: 4,
+			LuggageCapacity: 2,
+			Category: "Hatch",
+			RegistrationCode: "3344556677",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 12000,
+			CompanyId: 8,
+			BrandId: 10,
+			CreatedAt: "2022-08-01T11:00:00Z",
+			UpdatedAt: "2024-04-09T17:25:00Z",
+		},
+		{
+			IDV: 4,
+			Plate: "MNO7B12",
+			Model: "Hilux",
+			Year: 2019,
+			Color: "Vermelho",
+			Seats: 5,
+			Chassis: "8AJZZZ377VT112233",
+			Fuel: "Diesel",
+			Status: "pending",
+			Location: "PR",
+			Door: 4,
+			LuggageCapacity: 4,
+			Category: "Pickup",
+			RegistrationCode: "1122334455",
+			Amenities: "Wi-Fi",
+			InspectionInterval: 20000,
+			CompanyId: 2,
+			BrandId: 4,
+			CreatedAt: "2023-11-30T10:15:00Z",
+			UpdatedAt: "2024-01-18T15:10:00Z",
+		},
+		{
+			IDV: 5,
+			Plate: "QRS5Y77",
+			Model: "Civic",
+			Year: 2022,
+			Color: "Cinza",
+			Seats: 5,
+			Chassis: "9ABZZZ377VT221144",
+			Fuel: "Gasolina",
+			Status: "released",
+			Location: "SC",
+			Door: 4,
+			LuggageCapacity: 3,
+			Category: "Sedan",
+			RegistrationCode: "9988776655",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 10000,
+			CompanyId: 11,
+			BrandId: 6,
+			CreatedAt: "2024-02-01T09:30:00Z",
+			UpdatedAt: "2024-06-20T18:40:00Z",
+		},
+		{
+			IDV: 6,
+			Plate: "TUV2H99",
+			Model: "Compass",
+			Year: 2023,
+			Color: "Branco",
+			Seats: 5,
+			Chassis: "9DDZZZ377VT999888",
+			Fuel: "Gasolina",
+			Status: "released",
+			Location: "GO",
+			Door: 4,
+			LuggageCapacity: 3,
+			Category: "SUV",
+			RegistrationCode: "5544332211",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 15000,
+			CompanyId: 14,
+			BrandId: 12,
+			CreatedAt: "2023-07-10T08:00:00Z",
+			UpdatedAt: "2024-05-10T16:30:00Z",
+		},
+		{
+			IDV: 7,
+			Plate: "DEF6K44",
+			Model: "Onix",
+			Year: 2020,
+			Color: "Azul",
+			Seats: 5,
+			Chassis: "7HGZZZ377VT002200",
+			Fuel: "Etanol",
+			Status: "block",
+			Location: "RS",
+			Door: 4,
+			LuggageCapacity: 2,
+			Category: "Hatch",
+			RegistrationCode: "7788996655",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 10000,
+			CompanyId: 5,
+			BrandId: 9,
+			CreatedAt: "2021-10-11T12:40:00Z",
+			UpdatedAt: "2024-03-01T13:55:00Z",
+		},
+		{
+			IDV: 8,
+			Plate: "GHI1L22",
+			Model: "Ducato",
+			Year: 2017,
+			Color: "Branco",
+			Seats: 16,
+			Chassis: "6FSZZZ377VT441100",
+			Fuel: "Diesel",
+			Status: "maintenance",
+			Location: "BA",
+			Door: 4,
+			LuggageCapacity: 12,
+			Category: "Micro-ônibus",
+			RegistrationCode: "2233445566",
+			Amenities: "Wi-Fi",
+			InspectionInterval: 20000,
+			CompanyId: 6,
+			BrandId: 13,
+			CreatedAt: "2020-01-02T11:20:00Z",
+			UpdatedAt: "2024-07-12T10:10:00Z",
+		},
+		{
+			IDV: 9,
+			Plate: "PQR8T66",
+			Model: "Model 3",
+			Year: 2023,
+			Color: "Branco",
+			Seats: 5,
+			Chassis: "5YJ3E1EA7JF000001",
+			Fuel: "Diesel",
+			Status: "released",
+			Location: "SP",
+			Door: 4,
+			LuggageCapacity: 2,
+			Category: "Sedan",
+			RegistrationCode: "TESLA-998877",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 30000,
+			CompanyId: 22,
+			BrandId: 15,
+			CreatedAt: "2024-05-01T11:20:00Z",
+			UpdatedAt: "2024-08-01T10:00:00Z",
+		},
+		{
+			IDV: 10,
+			Plate: "STU3P11",
+			Model: "Renegade",
+			Year: 2021,
+			Color: "Verde",
+			Seats: 5,
+			Chassis: "9FGZZZ377VT777555",
+			Fuel: "Gasolina",
+			Status: "released",
+			Location: "CE",
+			Door: 4,
+			LuggageCapacity: 3,
+			Category: "SUV",
+			RegistrationCode: "8899001122",
+			Amenities: "Ar-condicionado",
+			InspectionInterval: 12000,
+			CompanyId: 9,
+			BrandId: 12,
+			CreatedAt: "2022-02-15T07:50:00Z",
+			UpdatedAt: "2024-06-18T12:00:00Z",
+		},
+	];
+
+	// const tableData = useMemo(
+	// 	() => (isLoading ? Array(30).fill({}) : (dataVehicle ?? [])),
+	// 	[isLoading, dataVehicle],
+	// );
+
+	const tableData = useMemo(() => dataVehicle ?? [], []);
+	// const tableColumns = useMemo(
+	// 	() =>
+	// 		isLoading
+	// 			? columns.map((column) => ({
+	// 					...column,
+	// 					cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
+	// 				}))
+	// 			: columns,
+	// 	[isLoading, columns],
+	// );
 
 	const table = useReactTable<VehiclePassData>({
 		data: tableData,
-		columns: tableColumns,
+		columns: columns,
 		getCoreRowModel: getCoreRowModel(),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
@@ -188,7 +413,7 @@ export default function TableVehiclePass() {
 				<DataTableProvider
 					recordCount={tableData.length}
 					table={table}
-					isLoading={isLoading}
+					isLoading={false}
 				>
 					<DataTable />
 				</DataTableProvider>

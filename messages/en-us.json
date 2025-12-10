@@ -231,7 +231,7 @@
 			},
 			"Columns": {
 				"id": "ID",
-				"title": "Title",
+				"model": "Model",
 				"brand": "Brand",
 				"seats": "Seats",
 				"plate": "Plate",
@@ -316,7 +316,8 @@
 		},
 		"Table": {
 			"Columns": {
-				"name": "Name"
+				"name": "Name",
+				"id": "ID"
 			}
 		}
 	}

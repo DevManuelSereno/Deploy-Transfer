@@ -231,7 +231,7 @@
 			},
 			"Columns": {
 				"id": "ID",
-				"title": "Título",
+				"model": "Modelo",
 				"brand": "Marca",
 				"seats": "Asientos",
 				"plate": "Placa",
@@ -316,7 +316,8 @@
 		},
 		"Table": {
 			"Columns": {
-				"name": "Nombre"
+				"name": "Nombre",
+				"id": "ID"
 			}
 		}
 	}

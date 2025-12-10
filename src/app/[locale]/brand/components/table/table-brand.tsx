@@ -1,6 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -31,8 +30,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import {
@@ -88,33 +85,76 @@ export default function TableBrand() {
 		[actions, tColumns],
 	);
 
-	const { data: dataBrand, isLoading } = useQuery({
-		queryKey: ["brand-get"],
-		queryFn: ({ signal }) =>
-			getData<BrandData[]>({
-				url: "/brand",
-				signal,
-			}),
-	});
+	// const { data: dataBrand, isLoading } = useQuery({
+	// 	queryKey: ["brand-get"],
+	// 	queryFn: ({ signal }) =>
+	// 		getData<BrandData[]>({
+	// 			url: "/brand",
+	// 			signal,
+	// 		}),
+	// });
+	const dataBrand = [
+		{
+			IDB: 1,
+			Title: "Toyota",
+		},
+		{
+			IDB: 2,
+			Title: "Mercedes-Benz",
+		},
+		{
+			IDB: 3,
+			Title: "Volkswagen",
+		},
+		{
+			IDB: 4,
+			Title: "Honda",
+		},
+		{
+			IDB: 5,
+			Title: "Chevrolet",
+		},
+		{
+			IDB: 6,
+			Title: "Ford",
+		},
+		{
+			IDB: 7,
+			Title: "Hyundai",
+		},
+		{
+			IDB: 8,
+			Title: "Fiat",
+		},
+		{
+			IDB: 9,
+			Title: "Renault",
+		},
+		{
+			IDB: 10,
+			Title: "BMW",
+		},
+	];
 
-	const tableData = useMemo(
-		() => (isLoading ? Array(30).fill({}) : (dataBrand ?? [])),
-		[isLoading, dataBrand],
-	);
-	const tableColumns = useMemo(
-		() =>
-			isLoading
-				? columns.map((column) => ({
-						...column,
-						cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
-					}))
-				: columns,
-		[isLoading, columns],
-	);
+	// const tableData = useMemo(
+	// 	() => (isLoading ? Array(30).fill({}) : (dataBrand ?? [])),
+	// 	[isLoading, dataBrand],
+	// )
+	const tableData = useMemo(() => dataBrand ?? [], []);
+	// const tableColumns = useMemo(
+	// 	() =>
+	// 		isLoading
+	// 			? columns.map((column) => ({
+	// 					...column,
+	// 					cell: () => <Skeleton className="h-8 w-full rounded-lg" />,
+	// 				}))
+	// 			: columns,
+	// 	[isLoading, columns],
+	// );
 
-	const table = useReactTable<BrandData>({
+	const table = useReactTable({
 		data: tableData,
-		columns: tableColumns,
+		columns: columns,
 		getCoreRowModel: getCoreRowModel(),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
@@ -171,7 +211,7 @@ export default function TableBrand() {
 				<DataTableProvider
 					recordCount={tableData.length}
 					table={table}
-					isLoading={isLoading}
+					isLoading={false}
 				>
 					<DataTable />
 				</DataTableProvider>
