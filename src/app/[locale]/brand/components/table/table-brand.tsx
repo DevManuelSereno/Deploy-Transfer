@@ -32,6 +32,7 @@ import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
+import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import {
 	type BrandColumnActions,
 	getBrandColumns,
@@ -214,6 +215,7 @@ export default function TableBrand() {
 					isLoading={false}
 				>
 					<DataTable />
+				<DataTablePagination />
 				</DataTableProvider>
 				<ModalTableBrand open={isModalEditOpen} setOpen={setIsModalEditOpen}>
 					<FormBrand />

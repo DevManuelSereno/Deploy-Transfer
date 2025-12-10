@@ -36,6 +36,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
+import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import type { VehicleColumnActions } from "../columns/columns-table-vehicle-pass";
 
 export default function TableVehiclePass() {
@@ -416,6 +417,7 @@ export default function TableVehiclePass() {
 					isLoading={false}
 				>
 					<DataTable />
+				<DataTablePagination />
 				</DataTableProvider>
 				<ModalTableVehiclePass
 					open={isModalEditOpen}
