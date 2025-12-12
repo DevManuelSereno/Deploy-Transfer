@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
+import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
 import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import { useVehiclePassFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-pass-form-options";
 import type {
@@ -26,6 +27,7 @@ import type { PostData, PutData, VehicleType } from "@/types/models";
 export function FormVehiclePassData() {
 	const t = useTranslations("VehiclePage.Form");
 	const { editingVehicle, setEditingVehicle } = useVehiclePassFormContext();
+	const { setShowTabs, setTabPanel } = useModalContextPass();
 
 	const buildDefaultValues = (vehicle?: VehiclePassData): VehiclePassForm => {
 		if (!vehicle) {
@@ -174,11 +176,12 @@ export function FormVehiclePassData() {
 			toast.success({
 				title: editingVehicle ? t("successUpdate") : t("successCreate"),
 			});
-			// setTabPanel("tab-documentation");
-			// const tabElement = document.getElementById("documentation");
-			// if (tabElement) {
-			// 	tabElement.scrollIntoView({ behavior: "smooth" });
-			// }
+			
+			// Enable tabs mode after successful save and navigate to next tab
+			if (!editingVehicle) {
+				setShowTabs(true);
+				setTabPanel("tab-documentation");
+			}
 		} catch (error: any) {
 			toastErrorsApi(error);
 		}

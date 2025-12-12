@@ -21,6 +21,7 @@ import { getVehicleColumnsPass } from "@/app/[locale]/vehicle/components/columns
 import { FormVehiclePassData } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-data";
 import { ModalDeleteVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass";
 import { ModalTableVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle-pass";
+import TabsVehicle from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle";
 import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
 import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
 import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
@@ -44,8 +45,13 @@ export default function TableVehiclePass() {
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("VehiclePage.Table.Columns");
 	const { setEditingVehicle } = useVehiclePassFormContext();
-	const { isModalEditOpen, setIsModalEditOpen, setTabPanel } =
-		useModalContextPass();
+	const {
+		isModalEditOpen,
+		setIsModalEditOpen,
+		setTabPanel,
+		showTabs,
+		setShowTabs,
+	} = useModalContextPass();
 	const queryClient = useQueryClient();
 
 	const [globalFilter, setGlobalFilter] = useState("");
@@ -65,9 +71,10 @@ export default function TableVehiclePass() {
 		(vehicle: VehiclePassData) => {
 			setEditingVehicle(vehicle);
 			setTabPanel("tab-general-data");
+			setShowTabs(true); // Always show tabs when editing
 			setIsModalEditOpen(true);
 		},
-		[setEditingVehicle, setTabPanel, setIsModalEditOpen],
+		[setEditingVehicle, setTabPanel, setShowTabs, setIsModalEditOpen],
 	);
 
 	const handleOpenDeleteModal = useCallback(
@@ -423,7 +430,7 @@ export default function TableVehiclePass() {
 					open={isModalEditOpen}
 					setOpen={setIsModalEditOpen}
 				>
-					<FormVehiclePassData />
+					{showTabs ? <TabsVehicle /> : <FormVehiclePassData />}
 				</ModalTableVehiclePass>
 				<ModalDeleteVehiclePass
 					open={isModalDeleteOpen}

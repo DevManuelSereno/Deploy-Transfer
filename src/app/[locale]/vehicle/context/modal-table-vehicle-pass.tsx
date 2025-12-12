@@ -12,6 +12,8 @@ type ModalContextValue = {
 	openWithVehicle: (vehicle?: VehiclePassData) => void;
 	tabPanel: string;
 	setTabPanel: (value: string) => void;
+	showTabs: boolean;
+	setShowTabs: (value: boolean) => void;
 };
 
 const ModalContext = React.createContext<ModalContextValue | undefined>(
@@ -27,11 +29,14 @@ export function ModalTableVehiclePassProvider({
 	const { setEditingVehicle } = useVehiclePassFormContext();
 	const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
 
-	const [tabPanel, setTabPanel] = React.useState("general-data");
+	const [tabPanel, setTabPanel] = React.useState("tab-general-data");
+	const [showTabs, setShowTabs] = React.useState(false);
 
 	const openWithVehicle = React.useCallback(
 		(vehicle?: VehiclePassData) => {
 			setEditingVehicle(vehicle);
+			// Show tabs immediately when editing, hide when adding new
+			setShowTabs(!!vehicle);
 			setIsModalEditOpen(true);
 		},
 		[setEditingVehicle],
@@ -43,6 +48,7 @@ export function ModalTableVehiclePassProvider({
 			if (!open) {
 				setEditingVehicle(undefined);
 				setTabPanel("tab-general-data");
+				setShowTabs(false);
 				await queryClient.invalidateQueries({ queryKey: ["vehicle-get"] });
 			}
 		},
@@ -56,8 +62,10 @@ export function ModalTableVehiclePassProvider({
 			openWithVehicle,
 			tabPanel,
 			setTabPanel,
+			showTabs,
+			setShowTabs,
 		}),
-		[isModalEditOpen, openWithVehicle, tabPanel, _setIsModalOpen],
+		[isModalEditOpen, openWithVehicle, tabPanel, showTabs, _setIsModalOpen],
 	);
 
 	return (
