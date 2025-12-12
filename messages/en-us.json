@@ -254,7 +254,7 @@
 		"logout": "Log out"
 	},
 	"Search": {
-		"placeholder": "Search...",
+		"placeholder": "Search",
 		"tooltip": "Search",
 		"commandPlaceholder": "Type a command to search...",
 		"noResults": "No results."
@@ -262,7 +262,7 @@
 	"DataTable": {
 		"DataTableFacetedFilter": {
 			"selectedCount": "{count} selected",
-			"filterPlaceholder": "Filter {title}...",
+			"filterPlaceholder": "Filter {title}",
 			"noResults": "No results found.",
 			"clearFilters": "Clear filters"
 		},
