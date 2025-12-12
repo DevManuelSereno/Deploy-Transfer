@@ -24,6 +24,7 @@ import { useModalContext } from "@/app/[locale]/brand/context/modal-table-brand"
 import type { BrandData } from "@/app/[locale]/brand/types/types-brand";
 import { DataTable } from "@/components/data-table";
 import { DataTableExport } from "@/components/data-table/data-table-export";
+import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
 import { DataTableUpdate } from "@/components/data-table/data-table-update";
 import { Button } from "@/components/ui/button";
@@ -32,7 +33,6 @@ import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
-import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import {
 	type BrandColumnActions,
 	getBrandColumns,
@@ -179,9 +179,9 @@ export default function TableBrand() {
 		<div className="flex flex-1 flex-col gap-6">
 			<Card
 				className={cn(
-					"rounded-[14px] p-0 gap-0 overflow-hidden shadow-custom! border dark:border-[#262626]",
-					"max-h-[calc(100dvh-var(--header-height))] md:max-h-[calc(100dvh-var(--header-height)-3rem)]",
-					"min-[56rem]:max-h-[calc(100dvh-var(--header-height)-4rem)] dark:shadow-none",
+					"border-0 gap-0 p-0 shadow-custom! bg-[linear-gradient(to_bottom,#ffffff_0%,#fcfcfc_50%,#fafafa_100%)]",
+					"dark:bg-[linear-gradient(to_top,#232323_0%,#1c1c1c_30%,#161616_100%)] dark:shadow-none dark:border",
+					"dark:border-[#262626] overflow-hidden",
 				)}
 			>
 				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
@@ -215,7 +215,7 @@ export default function TableBrand() {
 					isLoading={false}
 				>
 					<DataTable />
-				<DataTablePagination />
+					<DataTablePagination />
 				</DataTableProvider>
 				<ModalTableBrand open={isModalEditOpen} setOpen={setIsModalEditOpen}>
 					<FormBrand />
