@@ -1,10 +1,8 @@
 "use client";
-import { UserIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LanguageToggle } from "@/components/navbar/language-toggle";
 import { NavUser } from "@/components/navbar/nav-user";
 import { PassApps } from "@/components/navbar/pass-apps";
-import { SearchCommand } from "@/components/navbar/search-command";
 import { ThemeToggle } from "@/components/navbar/theme-toggle";
 import {
 	Breadcrumb,
@@ -37,25 +35,17 @@ export function AppNavbar() {
 	}
 
 	return (
-		<div className="flex w-full items-center justify-between px-4 @4xl/main:px-6">
-			<div className="flex items-center gap-1">
-				<SidebarTrigger className="-ml-1 rounded-full size-9 [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground" />
-				<Separator
-					orientation="vertical"
-					className="mx-1.5 sm:mx-2.5 data-[orientation=vertical]:h-4"
-				/>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbPage>{getLabelByPathname(pathname)}</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
-			</div>
-			<div className="hidden @4xl/main:block">
-				<SearchCommand />
-			</div>
-			<div className="flex items-center gap-2 sm:gap-2.5">
+		<div className="flex w-full items-center gap-1 px-4 lg:px-6">
+			<SidebarTrigger className="-ml-1 rounded-full size-9 [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground" />
+			<Separator orientation="vertical" />
+			<Breadcrumb>
+				<BreadcrumbList>
+					<BreadcrumbItem>
+						<BreadcrumbPage>{getLabelByPathname(pathname)}</BreadcrumbPage>
+					</BreadcrumbItem>
+				</BreadcrumbList>
+			</Breadcrumb>
+			<div className="ml-auto flex items-center gap-2">
 				<ThemeToggle />
 				<LanguageToggle />
 				<PassApps />
