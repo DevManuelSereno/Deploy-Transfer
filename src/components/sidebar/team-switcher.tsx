@@ -43,7 +43,7 @@ export function TeamSwitcher({
 							size="lg"
 							className="rounded-b-none border-b p-2 group-data-[collapsible=icon]:h-12 gap-3"
 						>
-							<div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-md">
+							<div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
 								<activeTeam.logo className="size-4" />
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight">
