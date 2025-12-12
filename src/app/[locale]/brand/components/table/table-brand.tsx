@@ -82,6 +82,7 @@ export default function TableBrand() {
 	);
 
 	const columns = useMemo(
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 		() => getBrandColumns(actions, tColumns as any),
 		[actions, tColumns],
 	);
