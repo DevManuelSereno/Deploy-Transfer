@@ -2,11 +2,11 @@
 
 import { FileText, Fuel, Info, TriangleAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { FormVehiclePassData } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-data";
-import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-documentation";
-import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-gas-supply";
-import { FormOccurrence } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-occurrence";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
+import { FormVehicleData } from "@/app/[locale]/vehicle/components/form/form-vehicle-data";
+import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-vehicle-documentation";
+import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-gas-supply";
+import { FormOccurrence } from "@/app/[locale]/vehicle/components/form/form-vehicle-occurrence";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import {
 	Tabs,
 	TabsContent,
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 export default function TabsVehicle() {
 	const t = useTranslations("VehiclePage.Tabs");
-	const { tabPanel, setTabPanel } = useModalContextPass();
+	const { tabPanel, setTabPanel } = useModalContext();
 
 	const handleTabChange = (newValue: string) => {
 		setTabPanel(newValue as any);
@@ -80,7 +80,7 @@ export default function TabsVehicle() {
 			</TabsList>
 			<TabsContents className="flex-1 overflow-y-auto">
 				<TabsContent value="tab-general-data" id="tab-general-data">
-					<FormVehiclePassData />
+					<FormVehicleData />
 				</TabsContent>
 				<TabsContent id="tab-documentation" value="tab-documentation">
 					<FormDocumentation />

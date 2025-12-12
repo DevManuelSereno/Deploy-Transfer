@@ -1,6 +1,6 @@
 "use client";
 import { type QueryClientConfig, useQuery } from "@tanstack/react-query";
-import { createOptionsMapper } from "@/app/[locale]/vehicle/hooks/use-vehicle-pass-form-options";
+import { createOptionsMapper } from "@/app/[locale]/vehicle/hooks/use-vehicle-form-options";
 import { getData } from "@/lib/functions.api";
 import type { ClassificationType, SeriousnessType } from "@/types/models";
 

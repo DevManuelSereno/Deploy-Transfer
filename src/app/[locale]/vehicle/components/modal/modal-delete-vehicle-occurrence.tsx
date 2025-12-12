@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-occurrence-context";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -26,7 +26,7 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.Occurrence.delete");
 	const { editingOccurrence, setEditingOccurrence } =
 		useOccurrenceFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 	const queryClient = useQueryClient();
 
 	const {
@@ -45,10 +45,10 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 				id: editingOccurrence?.id,
 			});
 
-		if (editingVehicle)
-			await queryClient.invalidateQueries({
-				queryKey: ["occurrence-get", editingVehicle?.IDV],
-			});
+			if (editingVehicle)
+				await queryClient.invalidateQueries({
+					queryKey: ["occurrence-get", editingVehicle?.IDV],
+				});
 
 			setEditingOccurrence(undefined);
 			toast.success(t("successMessage"));

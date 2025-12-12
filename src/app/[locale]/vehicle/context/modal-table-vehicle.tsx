@@ -3,13 +3,13 @@
 import { useQueryClient } from "@tanstack/react-query";
 import * as React from "react";
 import { type ReactNode, useCallback } from "react";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 
 type ModalContextValue = {
 	isModalEditOpen: boolean;
 	setIsModalEditOpen: (open: boolean) => void;
-	openWithVehicle: (vehicle?: VehiclePassData) => void;
+	openWithVehicle: (vehicle?: VehicleData) => void;
 	tabPanel: string;
 	setTabPanel: (value: string) => void;
 	showTabs: boolean;
@@ -20,20 +20,20 @@ const ModalContext = React.createContext<ModalContextValue | undefined>(
 	undefined,
 );
 
-export function ModalTableVehiclePassProvider({
+export function ModalTableVehicleProvider({
 	children,
 }: {
 	children: ReactNode;
 }) {
 	const queryClient = useQueryClient();
-	const { setEditingVehicle } = useVehiclePassFormContext();
+	const { setEditingVehicle } = useVehicleFormContext();
 	const [isModalEditOpen, setIsModalEditOpen] = React.useState(false);
 
 	const [tabPanel, setTabPanel] = React.useState("tab-general-data");
 	const [showTabs, setShowTabs] = React.useState(false);
 
 	const openWithVehicle = React.useCallback(
-		(vehicle?: VehiclePassData) => {
+		(vehicle?: VehicleData) => {
 			setEditingVehicle(vehicle);
 			// Show tabs immediately when editing, hide when adding new
 			setShowTabs(!!vehicle);
@@ -73,7 +73,7 @@ export function ModalTableVehiclePassProvider({
 	);
 }
 
-export function useModalContextPass() {
+export function useModalContext() {
 	const ctx = React.useContext(ModalContext);
 	if (!ctx) {
 		throw new Error(

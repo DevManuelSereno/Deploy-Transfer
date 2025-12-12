@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -14,16 +14,16 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
 import { deleteData, toastErrorsApi } from "@/lib/functions.api";
-import type { DeleteData, VehiclePassType } from "@/types/models";
+import type { DeleteData, VehicleType } from "@/types/models";
 
 type ModalFormProps = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 };
 
-export function ModalDeleteVehiclePass({ open, setOpen }: ModalFormProps) {
+export function ModalDeleteVehicle({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.Delete");
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
 	const queryClient = useQueryClient();
 
@@ -31,7 +31,7 @@ export function ModalDeleteVehiclePass({ open, setOpen }: ModalFormProps) {
 		mutateAsync: mutateDeleteVehicle,
 		isPending: isLoadingDeleteVehicle,
 	} = useMutation({
-		mutationFn: (val: DeleteData) => deleteData<VehiclePassType>(val),
+		mutationFn: (val: DeleteData) => deleteData<VehicleType>(val),
 		mutationKey: ["vehicle-delete", editingVehicle?.IDV],
 	});
 

@@ -2,20 +2,20 @@
 
 import type { ReactNode } from "react";
 import * as React from "react";
-import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
+import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 
 type VehicleFormContextValue = {
-	editingVehicle?: VehiclePassData;
-	setEditingVehicle: (vehicle?: VehiclePassData) => void;
+	editingVehicle?: VehicleData;
+	setEditingVehicle: (vehicle?: VehicleData) => void;
 };
 
 const VehicleFormContext = React.createContext<
 	VehicleFormContextValue | undefined
 >(undefined);
 
-export function VehiclePassFormProvider({ children }: { children: ReactNode }) {
+export function VehicleFormProvider({ children }: { children: ReactNode }) {
 	const [editingVehicle, setEditingVehicle] = React.useState<
-		VehiclePassData | undefined
+		VehicleData | undefined
 	>(undefined);
 
 	const value = React.useMemo(
@@ -33,7 +33,7 @@ export function VehiclePassFormProvider({ children }: { children: ReactNode }) {
 	);
 }
 
-export function useVehiclePassFormContext() {
+export function useVehicleFormContext() {
 	const ctx = React.useContext(VehicleFormContext);
 	if (!ctx) {
 		throw new Error(

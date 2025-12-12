@@ -17,14 +17,14 @@ import {
 import { LucidePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
-import { getVehicleColumnsPass } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass";
-import { FormVehiclePassData } from "@/app/[locale]/vehicle/components/form/form-vehicle-pass-data";
-import { ModalDeleteVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass";
-import { ModalTableVehiclePass } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle-pass";
+import { getVehicleColumns } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle";
+import { FormVehicleData } from "@/app/[locale]/vehicle/components/form/form-vehicle-data";
+import { ModalDeleteVehicle } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle";
+import { ModalTableVehicle } from "@/app/[locale]/vehicle/components/modal/modal-table-vehicle";
 import TabsVehicle from "@/app/[locale]/vehicle/components/tabs/tabs-vehicle";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { DataTable } from "@/components/data-table";
 import { DataTableExport } from "@/components/data-table/data-table-export";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
@@ -38,20 +38,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
-import type { VehicleColumnActions } from "../columns/columns-table-vehicle-pass";
+import type { VehicleColumnActions } from "../columns/columns-table-vehicle";
 
-export default function TableVehiclePass() {
+export default function TableVehicle() {
 	const tFilters = useTranslations("VehiclePage.Table.Filters");
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("VehiclePage.Table.Columns");
-	const { setEditingVehicle } = useVehiclePassFormContext();
+	const { setEditingVehicle } = useVehicleFormContext();
 	const {
 		isModalEditOpen,
 		setIsModalEditOpen,
 		setTabPanel,
 		showTabs,
 		setShowTabs,
-	} = useModalContextPass();
+	} = useModalContext();
 	const queryClient = useQueryClient();
 
 	const [globalFilter, setGlobalFilter] = useState("");
@@ -68,7 +68,7 @@ export default function TableVehiclePass() {
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
 	const openEditModal = useCallback(
-		(vehicle: VehiclePassData) => {
+		(vehicle: VehicleData) => {
 			setEditingVehicle(vehicle);
 			setTabPanel("tab-general-data");
 			setShowTabs(true); // Always show tabs when editing
@@ -78,7 +78,7 @@ export default function TableVehiclePass() {
 	);
 
 	const handleOpenDeleteModal = useCallback(
-		(vehicle?: VehiclePassData) => {
+		(vehicle?: VehicleData) => {
 			setEditingVehicle(vehicle);
 			setIsModalDeleteOpen(true);
 		},
@@ -94,14 +94,14 @@ export default function TableVehiclePass() {
 	);
 
 	const columns = useMemo(
-		() => getVehicleColumnsPass(actions, tColumns),
+		() => getVehicleColumns(actions, tColumns),
 		[actions, tColumns],
 	);
 
 	// const { data: dataVehicle, isLoading } = useQuery({
 	// 	queryKey: ["vehicle-get"],
 	// 	queryFn: ({ signal }) =>
-	// 		getData<VehiclePassData[]>({
+	// 		getData<VehicleData[]>({
 	// 			url: "/vehicle",
 	// 			signal,
 	// 			query:
@@ -356,7 +356,7 @@ export default function TableVehiclePass() {
 	// 	[isLoading, columns],
 	// );
 
-	const table = useReactTable<VehiclePassData>({
+	const table = useReactTable<VehicleData>({
 		data: tableData,
 		columns: columns,
 		getCoreRowModel: getCoreRowModel(),
@@ -426,13 +426,10 @@ export default function TableVehiclePass() {
 					<DataTable />
 					<DataTablePagination />
 				</DataTableProvider>
-				<ModalTableVehiclePass
-					open={isModalEditOpen}
-					setOpen={setIsModalEditOpen}
-				>
-					{showTabs ? <TabsVehicle /> : <FormVehiclePassData />}
-				</ModalTableVehiclePass>
-				<ModalDeleteVehiclePass
+				<ModalTableVehicle open={isModalEditOpen} setOpen={setIsModalEditOpen}>
+					{showTabs ? <TabsVehicle /> : <FormVehicleData />}
+				</ModalTableVehicle>
+				<ModalDeleteVehicle
 					open={isModalDeleteOpen}
 					setOpen={setIsModalDeleteOpen}
 				/>

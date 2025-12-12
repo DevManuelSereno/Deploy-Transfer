@@ -1,7 +1,7 @@
 "use client";
 import { type QueryClientConfig, useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/functions.api";
-import type { BrandPassType } from "@/types/models";
+import type { BrandType } from "@/types/models";
 
 /**
  * Cria uma função 'select' para o useQuery que mapeia um array de objetos
@@ -23,7 +23,7 @@ export const createOptionsMapper = <T extends Record<string, any>>(
 		}));
 };
 
-export function useVehiclePassFormOptions() {
+export function useVehicleFormOptions() {
 	const queryConfig = {
 		refetchOnWindowFocus: false,
 		refetchOnMount: false,
@@ -39,7 +39,7 @@ export function useVehiclePassFormOptions() {
 
 	const { data: brandOptions, isLoading: isLoadingBrand } = useQuery({
 		queryKey: ["brand-get"],
-		queryFn: ({ signal }) => getData<BrandPassType[]>({ url: "brand", signal }),
+		queryFn: ({ signal }) => getData<BrandType[]>({ url: "brand", signal }),
 		select: createOptionsMapper("IDB", "Title"),
 		...queryConfig,
 	});

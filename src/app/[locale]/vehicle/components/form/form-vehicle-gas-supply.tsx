@@ -18,13 +18,13 @@ import { useCallback, useMemo, useState } from "react";
 import {
 	type GasSupplyColumnActions,
 	getGasSupplyColumns,
-} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass-gas-supply";
-import { ModalDeleteGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass-gas-supply";
-import { ModalFormGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-pass-gas-supply";
-import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-gas-supply-context";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-gas-supply";
+} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-gas-supply";
+import { ModalDeleteGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-gas-supply";
+import { ModalFormGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-gas-supply";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
+import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,9 +35,9 @@ export function FormGasSupply() {
 	const t = useTranslations("VehiclePage.GasSupply");
 	const tColumns = useTranslations("VehiclePage.GasSupply.columns");
 	const { setEditingGasSupply } = useGasSupplyFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
-	const { setTabPanel } = useModalContextPass();
+	const { setTabPanel } = useModalContext();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);

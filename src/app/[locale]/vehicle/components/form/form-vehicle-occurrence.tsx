@@ -18,13 +18,13 @@ import { useCallback, useMemo, useState } from "react";
 import {
 	getOccurrenceColumns,
 	type OccurrenceColumnActions,
-} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass-occurrence";
-import { ModalDeleteOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass-occurrence";
-import { ModalFormOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-pass-occurrence";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-occurrence-context";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-occurrence";
+} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-occurrence";
+import { ModalDeleteOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-occurrence";
+import { ModalFormOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-occurrence";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
+import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,9 +35,9 @@ export function FormOccurrence() {
 	const t = useTranslations("VehiclePage.Occurrence");
 	const tColumns = useTranslations("VehiclePage.Occurrence.columns");
 	const { setEditingOccurrence } = useOccurrenceFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
-	const { setTabPanel } = useModalContextPass();
+	const { setTabPanel } = useModalContext();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);

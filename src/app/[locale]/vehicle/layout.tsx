@@ -1,8 +1,8 @@
-import { ModalTableVehiclePassProvider } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { VehiclePassFormProvider } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import { DocumentationFormProvider } from "@/app/[locale]/vehicle/context/vehicle-pass-documentation-context";
-import { GasSupplyFormProvider } from "@/app/[locale]/vehicle/context/vehicle-pass-gas-supply-context";
-import { OccurrenceFormProvider } from "@/app/[locale]/vehicle/context/vehicle-pass-occurrence-context";
+import { ModalTableVehicleProvider } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { VehicleFormProvider } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { DocumentationFormProvider } from "@/app/[locale]/vehicle/context/vehicle-documentation-context";
+import { GasSupplyFormProvider } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
+import { OccurrenceFormProvider } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
 
 export default async function Layout({
 	children,
@@ -10,16 +10,14 @@ export default async function Layout({
 	children: React.ReactNode;
 }) {
 	return (
-		<VehiclePassFormProvider>
+		<VehicleFormProvider>
 			<DocumentationFormProvider>
 				<GasSupplyFormProvider>
 					<OccurrenceFormProvider>
-						<ModalTableVehiclePassProvider>
-							{children}
-						</ModalTableVehiclePassProvider>
+						<ModalTableVehicleProvider>{children}</ModalTableVehicleProvider>
 					</OccurrenceFormProvider>
 				</GasSupplyFormProvider>
 			</DocumentationFormProvider>
-		</VehiclePassFormProvider>
+		</VehicleFormProvider>
 	);
 }

@@ -3,7 +3,7 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-gas-supply";
+import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
 import { Button } from "@/components/ui/button";
 import type { GasStationType, GasType } from "@/types/models";
 

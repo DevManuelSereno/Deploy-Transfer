@@ -2,25 +2,25 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookmarkIcon, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
-import { Controller, FieldValue, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-documentation-context";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
+import { useGasSupplyFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-form-gas-supply-option";
+import type {
+	FileValue,
+	GasSupplyData,
+	GasSupplyForm,
+	GasSupplyPayload,
+} from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
 import {
-	type DocumentationData,
-	type DocumentationForm,
-	type DocumentationPayload,
-	documentationTypes,
-	type FileValue,
-} from "@/app/[locale]/vehicle/types/types-vehicle-pass-documentation";
-import {
-	DocumentationFormSchema,
-	DocumentationPayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-pass-documentation";
+	GasSupplyFormSchema,
+	GasSupplyPayloadSchema,
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-gas-supply";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -38,11 +38,10 @@ import {
 	FieldLabel,
 } from "@/components/ui/field";
 import { FilePreviewList } from "@/components/ui/file-preview-list";
-import { FormBooleanButton } from "@/components/ui/form-boolean-button";
 import { FormDatePicker } from "@/components/ui/form-date-picker";
 import { FormSelect } from "@/components/ui/form-select";
-import { FormToggleGroup } from "@/components/ui/form-toggle-group";
 import { InputFile } from "@/components/ui/input-file";
+import { InputNumber } from "@/components/ui/input-number";
 import { Skeleton } from "@/components/ui/skeleton";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { PostData, PutData } from "@/types/models";
@@ -53,41 +52,44 @@ type ModalFormProps = {
 	children?: React.ReactNode;
 };
 
-export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
-	const t = useTranslations("VehiclePage.Documentation.modal");
-	const { editingDocumentation, setEditingDocumentation } =
-		useDocumentationFormContext();
+export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.GasSupply.modal");
+	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
 
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
-	const { setTabPanel } = useModalContextPass();
+	const { setTabPanel } = useModalContext();
 
 	const queryClient = useQueryClient();
 
 	const buildDefaultValues = useCallback(
-		(documentation?: DocumentationData): DocumentationForm => {
-			if (documentation) {
+		(gasSupply?: GasSupplyData): GasSupplyForm => {
+			if (gasSupply) {
 				return {
-					days: documentation.days ?? [],
-					type: documentation.type ?? "",
-					anticipateRenewal: documentation.anticipateRenewal ?? false,
-					file: documentation.file ? [documentation.file] : [],
-					expiryAt: documentation.expiryAt
-						? new Date(documentation.expiryAt)
+					supplyAt: gasSupply.supplyAt
+						? new Date(gasSupply.supplyAt)
 						: new Date(),
-				vehicleId: String(
-					documentation.vehicleId ?? editingVehicle?.IDV ?? "",
-				),
+					kmToStop: gasSupply.kmToStop ?? 0,
+					kmToReview: gasSupply.kmToReview ?? 0,
+					quantity: gasSupply.quantity ?? 0,
+					totalPrice: gasSupply.totalPrice ?? 0,
+					file: gasSupply.file ? [gasSupply.file] : [],
+					vehicleId: String(gasSupply.vehicleId ?? editingVehicle?.IDV ?? ""),
+					gasStationId: String(gasSupply.gasStationId),
+					gasId: String(gasSupply.gasId),
 				};
 			}
 
 			return {
-				days: ["seg", "qua"],
-				type: "Tacógrafo",
-				anticipateRenewal: false,
+				supplyAt: new Date(),
+				kmToStop: 0,
+				kmToReview: 0,
+				quantity: 0,
+				totalPrice: 0,
 				file: [],
-				expiryAt: new Date(),
-			vehicleId: String(editingVehicle?.IDV ?? ""),
+				vehicleId: String(editingVehicle?.IDV ?? ""),
+				gasStationId: "1",
+				gasId: "1",
 			};
 		},
 		[editingVehicle],
@@ -98,88 +100,72 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 		control,
 		reset,
 		formState: { isDirty },
-	} = useForm<DocumentationForm>({
-		resolver: zodResolver(DocumentationFormSchema),
-		defaultValues: buildDefaultValues(editingDocumentation),
+	} = useForm<GasSupplyForm>({
+		resolver: zodResolver(GasSupplyFormSchema),
+		defaultValues: buildDefaultValues(editingGasSupply),
 	});
 
 	const { mutateAsync: mutateUploadDoc } = useMutation({
 		mutationFn: async (params: { id: number; formData: FormData }) =>
-			postData<DocumentationData, FormData>({
-				url: `/documentation/${params.id}/docs`,
+			postData<GasSupplyData, FormData>({
+				url: `/gasSupply/${params.id}/receipt`,
 				data: params.formData,
 			}),
-		mutationKey: ["documentation-upload-docs"],
+		mutationKey: ["gas-supply-upload-receipt"],
 	});
 
 	const {
-		mutateAsync: mutatePostDocumentation,
-		isPending: isLoadingPostDocumentation,
+		mutateAsync: mutatePostGasSupply,
+		isPending: isLoadingPostGasSupply,
 	} = useMutation({
-		mutationFn: async (val: PostData<DocumentationPayload>) =>
-			postData<DocumentationData, DocumentationPayload>(val),
-		mutationKey: ["documentation-post"],
+		mutationFn: async (val: PostData<GasSupplyPayload>) =>
+			postData<GasSupplyData, GasSupplyPayload>(val),
+		mutationKey: ["gas-supply-post"],
 	});
 
-	const {
-		mutateAsync: mutatePutDocumentation,
-		isPending: isLoadingPutDocumentation,
-	} = useMutation({
-		mutationFn: (val: PutData<DocumentationPayload>) =>
-			putData<DocumentationData, DocumentationPayload>(val),
-		mutationKey: ["documentation-put"],
-	});
+	const { mutateAsync: mutatePutGasSupply, isPending: isLoadingPutGasSupply } =
+		useMutation({
+			mutationFn: (val: PutData<GasSupplyPayload>) =>
+				putData<GasSupplyData, GasSupplyPayload>(val),
+			mutationKey: ["gas-supply-put"],
+		});
 
-	const typeOptions = documentationTypes.map((option) => ({
-		label: option,
-		value: option,
-	}));
+	const { gasOptions, gasStationOptions, isLoadingOptions } =
+		useGasSupplyFormOptions();
 
-	const daysOfWeekOptions = [
-		"dom",
-		"seg",
-		"ter",
-		"qua",
-		"qui",
-		"sex",
-		"sáb",
-	].map((day) => ({
-		label: day.charAt(0).toUpperCase(),
-		value: day,
-	}));
-
-	const loading = isLoadingPostDocumentation || isLoadingPutDocumentation;
+	const loading =
+		isLoadingPostGasSupply || isLoadingPutGasSupply || isLoadingOptions;
 
 	const onErrors = (err: any) => {
 		toast.error(t("errorMessage"));
 	};
 
-	const onSubmit = async (data: DocumentationForm) => {
+	const onSubmit = async (data: GasSupplyForm) => {
 		try {
-			if (!isDirty && editingDocumentation) {
-				setTabPanel("tab-documentation");
+			if (!isDirty && editingGasSupply) {
+				setTabPanel("tab-gas-supply");
 				return;
 			}
 
-			let savedDocumentation: DocumentationData;
+			let savedGasSupply: GasSupplyData;
 
-			const parseData = DocumentationPayloadSchema.parse({
+			const parseData = GasSupplyPayloadSchema.parse({
 				...data,
-				expiryAt: data.expiryAt?.toISOString(),
+				supplyAt: data.supplyAt?.toISOString(),
 				vehicleId: editingVehicle?.IDV,
 				file: undefined,
 				// document: [],
 			});
 
-			if (!editingDocumentation) {
-				savedDocumentation = await mutatePostDocumentation({
-					url: "/documentation",
+			if (!editingGasSupply) {
+				savedGasSupply = await mutatePostGasSupply({
+					url: "/gasSupply",
 					data: parseData,
 				});
 			} else {
-				savedDocumentation = await mutatePutDocumentation({
-					url: "/documentation",
-					id: Number(editingDocumentation.id),
+				savedGasSupply = await mutatePutGasSupply({
+					url: "/gasSupply",
+					id: Number(editingGasSupply.id),
 					data: parseData,
 				});
 			}
@@ -187,7 +173,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 			const hasNewFiles =
 				data.file?.some(
 					(doc: FileValue) =>
-						doc?.fileName !== editingDocumentation?.file?.fileName,
+						doc?.fileName !== editingGasSupply?.file?.fileName,
 				) ?? false;
 
 			if (hasNewFiles) {
@@ -200,21 +186,19 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 				}
 
 				await mutateUploadDoc({
-					id: savedDocumentation.id,
+					id: savedGasSupply.id,
 					formData,
 				});
 			}
 
-			setEditingDocumentation(undefined);
+			setEditingGasSupply(undefined);
 
-		if (editingVehicle)
-			await queryClient.invalidateQueries({
-				queryKey: ["documentation-get", editingVehicle?.IDV],
-			});
+			if (editingVehicle)
+				await queryClient.invalidateQueries({
+					queryKey: ["gas-supply-get", editingVehicle?.IDV],
+				});
 			reset();
-			toast.success(
-				editingDocumentation ? t("successUpdate") : t("successCreate"),
-			);
+			toast.success(editingGasSupply ? t("successUpdate") : t("successCreate"));
 			setOpen(false);
 		} catch (error: any) {
 			toastErrorsApi(error);
@@ -222,13 +206,13 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 	};
 
 	useEffect(() => {
-		reset(buildDefaultValues(editingDocumentation));
-	}, [editingDocumentation, reset, buildDefaultValues]);
+		reset(buildDefaultValues(editingGasSupply));
+	}, [editingGasSupply, reset, buildDefaultValues]);
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent
-				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-5xl
+				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-3xl
         flex flex-col max-h-[90vh]"
 			>
 				<div className="flex items-center gap-3 p-6 flex-shrink-0">
@@ -246,32 +230,54 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 					onSubmit={handleSubmit(onSubmit, onErrors)}
 					className="flex w-full flex-col gap-4 p-6 overflow-hidden flex-1 overflow-y-auto"
 				>
-					<FieldGroup className="grid grid-cols-1 lg:grid-cols-9 gap-4">
+					<Controller
+						name="gasStationId"
+						control={control}
+						render={({ field, fieldState }) =>
+							loading ? (
+								<Skeleton className="rounded-md w-full h-10" />
+							) : (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor={field.name}>
+										{t("stationLabel")}
+									</FieldLabel>
+									<FormSelect
+										id={field.name}
+										value={field.value ?? ""}
+										onChange={field.onChange}
+										onBlur={field.onBlur}
+										aria-invalid={fieldState.invalid}
+										options={gasStationOptions}
+										placeholder={t("stationPlaceholder")}
+										className="w-full"
+										name={field.name}
+									/>
+									{fieldState.invalid && (
+										<FieldError errors={[fieldState.error]} />
+									)}
+								</Field>
+							)
+						}
+					/>
+					<FieldGroup className="grid grid-cols-1 lg:grid-cols-4 gap-4">
 						<Controller
-							name="days"
+							name="kmToReview"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-8" />
 								) : (
-									<Field
-										data-invalid={fieldState.invalid}
-										className="col-span-3"
-									>
+									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											{t("daysLabel")}
+											{t("kmToReviewLabel")}
 										</FieldLabel>
-										<FormToggleGroup
-											id={field.name}
-											value={field.value}
-											onChange={field.onChange}
-											onBlur={field.onBlur}
+										<InputNumber
+											{...field}
 											aria-invalid={fieldState.invalid}
-											options={daysOfWeekOptions}
-											className="w-full"
-											type="multiple"
+											placeholder="30"
+											value={Number(field.value)}
+											min={0}
 										/>
-
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
@@ -280,18 +286,40 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 							}
 						/>
 						<Controller
-							name="type"
+							name="kmToStop"
+							control={control}
+							render={({ field, fieldState }) =>
+								loading ? (
+									<Skeleton className="rounded-md w-full h-8" />
+								) : (
+									<Field data-invalid={fieldState.invalid}>
+										<FieldLabel htmlFor={field.name}>
+											{t("kmToStopLabel")}
+										</FieldLabel>
+										<InputNumber
+											{...field}
+											aria-invalid={fieldState.invalid}
+											placeholder="45"
+											value={Number(field.value)}
+											min={0}
+										/>
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
+									</Field>
+								)
+							}
+						/>
+						<Controller
+							name="gasId"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
-									<Field
-										data-invalid={fieldState.invalid}
-										className="col-span-3 lg:col-span-2"
-									>
+									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											{t("typeLabel")}
+											{t("fuelLabel")}
 										</FieldLabel>
 										<FormSelect
 											id={field.name}
@@ -299,12 +327,11 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 											onChange={field.onChange}
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
-											options={typeOptions}
-											placeholder={t("typePlaceholder")}
+											options={gasOptions}
+											placeholder={t("fuelPlaceholder")}
 											className="w-full"
 											name={field.name}
 										/>
-
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
@@ -313,18 +340,42 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 							}
 						/>
 						<Controller
-							name="expiryAt"
+							name="quantity"
+							control={control}
+							render={({ field, fieldState }) =>
+								loading ? (
+									<Skeleton className="rounded-md w-full h-8" />
+								) : (
+									<Field data-invalid={fieldState.invalid}>
+										<FieldLabel htmlFor={field.name}>
+											{t("quantityLabel")}
+										</FieldLabel>
+										<InputNumber
+											{...field}
+											aria-invalid={fieldState.invalid}
+											placeholder="10"
+											value={Number(field.value)}
+											min={0}
+										/>
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
+									</Field>
+								)
+							}
+						/>
+					</FieldGroup>
+					<FieldGroup className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+						<Controller
+							name="supplyAt"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
-									<Field
-										data-invalid={fieldState.invalid}
-										className="col-span-3"
-									>
+									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											{t("expirationLabel")}
+											{t("supplyDateLabel")}
 										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
@@ -345,45 +396,32 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 							}
 						/>
 						<Controller
-							name="anticipateRenewal"
+							name="totalPrice"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
-									<Skeleton className="rounded-md w-full h-10" />
+									<Skeleton className="rounded-md w-full h-8" />
 								) : (
-									<Field
-										// orientation="horizontal"
-										data-invalid={fieldState.invalid}
-									>
+									<Field data-invalid={fieldState.invalid}>
 										<FieldLabel htmlFor={field.name}>
-											{t("anticipateLabel")}
+											{t("totalPriceLabel")}
 										</FieldLabel>
+										<InputNumber
+											{...field}
+											aria-invalid={fieldState.invalid}
+											placeholder="108"
+											value={Number(field.value)}
+											min={0}
+										/>
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
-										<FormBooleanButton
-											id={field.name}
-											value={field.value}
-											onChange={field.onChange}
-											onBlur={field.onBlur}
-											aria-invalid={fieldState.invalid}
-											className="w-full"
-										>
-											<BookmarkIcon />
-											Bookmark
-										</FormBooleanButton>
-										{/*<Switch*/}
-										{/*	id={field.name}*/}
-										{/*	name={field.name}*/}
-										{/*	checked={field.value}*/}
-										{/*	onCheckedChange={field.onChange}*/}
-										{/*	aria-invalid={fieldState.invalid}*/}
-										{/*/>*/}
 									</Field>
 								)
 							}
 						/>
-				</FieldGroup>
+					</FieldGroup>
+
 					<Controller
 						name="file"
 						control={control}
@@ -399,7 +437,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 									className="md:col-span-2"
 								>
 									<FieldLabel htmlFor={field.name}>
-										{t("documentLabel")}
+										{t("receiptLabel")}
 									</FieldLabel>
 
 									<InputFile

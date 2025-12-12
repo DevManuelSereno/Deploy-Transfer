@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { BrandPassSchema, BrandSchema } from "@/types/models";
+import { BrandSchema } from "@/types/models";
 
 const BrandBaseSchema = BrandSchema.omit({
 	IDB: true,

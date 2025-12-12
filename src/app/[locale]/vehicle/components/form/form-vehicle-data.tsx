@@ -4,15 +4,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import { useVehiclePassFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-pass-form-options";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useVehicleFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-form-options";
 import type {
-	VehiclePassData,
-	VehiclePassForm,
-	VehiclePassPayload,
-} from "@/app/[locale]/vehicle/types/types-vehicle-pass";
-import { VehiclePassFormSchema } from "@/app/[locale]/vehicle/validation/validation-vehicle-pass";
+	VehicleData,
+	VehicleForm,
+	VehiclePayload,
+} from "@/app/[locale]/vehicle/types/types-vehicle";
+import { VehicleFormSchema } from "@/app/[locale]/vehicle/validation/validation-vehicle";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
 import { FormFieldText } from "@/components/form/form-field-text";
@@ -24,12 +24,12 @@ import { toast } from "@/components/ui/sonner";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { PostData, PutData, VehicleType } from "@/types/models";
 
-export function FormVehiclePassData() {
+export function FormVehicleData() {
 	const t = useTranslations("VehiclePage.Form");
-	const { editingVehicle, setEditingVehicle } = useVehiclePassFormContext();
-	const { setShowTabs, setTabPanel } = useModalContextPass();
+	const { editingVehicle, setEditingVehicle } = useVehicleFormContext();
+	const { setShowTabs, setTabPanel } = useModalContext();
 
-	const buildDefaultValues = (vehicle?: VehiclePassData): VehiclePassForm => {
+	const buildDefaultValues = (vehicle?: VehicleData): VehicleForm => {
 		if (!vehicle) {
 			return {
 				Plate: "ABC1D23",
@@ -73,26 +73,26 @@ export function FormVehiclePassData() {
 		};
 	};
 
-	const form = useForm<VehiclePassForm>({
-		resolver: zodResolver(VehiclePassFormSchema),
+	const form = useForm<VehicleForm>({
+		resolver: zodResolver(VehicleFormSchema),
 		defaultValues: buildDefaultValues(editingVehicle),
 	});
 
 	// const { mutateAsync: mutatePostVehicle, isPending: isLoadingPostVehicle } =
 	// 	useMutation({
-	// 		mutationFn: async (val: PostData<VehiclePassPayload>) =>
-	// 			postData<VehicleType, VehiclePassPayload>(val),
+	// 		mutationFn: async (val: PostData<VehiclePayload>) =>
+	// 			postData<VehicleType, VehiclePayload>(val),
 	// 		mutationKey: ["vehicle-post"],
 	// 	});
 	//
 	// const { mutateAsync: mutatePutVehicle, isPending: isLoadingPutVehicle } =
 	// 	useMutation({
-	// 		mutationFn: (val: PutData<VehiclePassPayload>) =>
-	// 			putData<VehicleType, VehiclePassPayload>(val),
+	// 		mutationFn: (val: PutData<VehiclePayload>) =>
+	// 			putData<VehicleType, VehiclePayload>(val),
 	// 		mutationKey: ["vehicle-put"],
 	// 	});
 	//
-	// const { isLoadingOptions } = useVehiclePassFormOptions();
+	// const { isLoadingOptions } = useVehicleFormOptions();
 
 	const brandOptions = ["Scania", "Mercedes-Benz", "Volvo", "Ford"].map(
 		(option) => ({
@@ -146,13 +146,13 @@ export function FormVehiclePassData() {
 		});
 	};
 
-	const onSubmit = async (data: VehiclePassForm) => {
+	const onSubmit = async (data: VehicleForm) => {
 		try {
 			let savedVehicle: VehicleType;
 
 			console.log(data);
 
-			// const parseData = VehiclePassPayloadSchema.parse(data);
+			// const parseData = VehiclePayloadSchema.parse(data);
 			//
 			// if (!editingVehicle) {
 			// 	savedVehicle = await mutatePostVehicle({
@@ -176,7 +176,7 @@ export function FormVehiclePassData() {
 			toast.success({
 				title: editingVehicle ? t("successUpdate") : t("successCreate"),
 			});
-			
+
 			// Enable tabs mode after successful save and navigate to next tab
 			if (!editingVehicle) {
 				setShowTabs(true);

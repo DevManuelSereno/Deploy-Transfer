@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import * as React from "react";
-import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-occurrence";
+import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
 
 type OccurrenceFormContextValue = {
 	editingOccurrence?: OccurrenceData;

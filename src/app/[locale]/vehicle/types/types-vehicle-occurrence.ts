@@ -3,7 +3,7 @@ import type {
 	FileValueSchema,
 	OccurrenceFormSchema,
 	OccurrencePayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-pass-occurrence";
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-occurrence";
 import type {
 	ClassificationType,
 	OccurrenceType,

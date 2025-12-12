@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-gas-supply-context";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -25,7 +25,7 @@ type ModalFormProps = {
 export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.GasSupply.delete");
 	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 	const queryClient = useQueryClient();
 
 	const {
@@ -44,10 +44,10 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 				id: editingGasSupply?.id,
 			});
 
-		if (editingVehicle)
-			await queryClient.invalidateQueries({
-				queryKey: ["gas-supply-get", editingVehicle?.IDV],
-			});
+			if (editingVehicle)
+				await queryClient.invalidateQueries({
+					queryKey: ["gas-supply-get", editingVehicle?.IDV],
+				});
 
 			setEditingGasSupply(undefined);
 			toast.success(t("successMessage"));

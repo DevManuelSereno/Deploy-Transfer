@@ -4,21 +4,21 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 import type { useTranslations } from "next-intl";
-import type { VehiclePassData } from "@/app/[locale]/vehicle/types/types-vehicle-pass";
+import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export interface VehicleColumnActions {
-	onEdit: (vehicle: VehiclePassData) => void;
-	onDelete: (vehicle: VehiclePassData) => void;
+	onEdit: (vehicle: VehicleData) => void;
+	onDelete: (vehicle: VehicleData) => void;
 }
 
 type TFunction = ReturnType<typeof useTranslations>;
 
-export const getVehicleColumnsPass = (
+export const getVehicleColumns = (
 	actions: VehicleColumnActions,
 	t: TFunction,
-): ColumnDef<VehiclePassData>[] => [
+): ColumnDef<VehicleData>[] => [
 	{
 		id: "select",
 		header: ({ table }) => (

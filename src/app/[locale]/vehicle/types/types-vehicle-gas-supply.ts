@@ -3,7 +3,7 @@ import type {
 	FileValueSchema,
 	GasSupplyFormSchema,
 	GasSupplyPayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-pass-gas-supply";
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-gas-supply";
 import type { GasStationType, GasSupplyType, GasType } from "@/types/models";
 import type { FileType } from "@/types/models/File.schema";
 

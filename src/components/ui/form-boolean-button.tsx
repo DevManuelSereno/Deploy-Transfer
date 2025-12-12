@@ -26,7 +26,7 @@ export const FormBooleanButton = React.forwardRef<
 			disabled={disabled}
 			variant="ghost"
 			className={cn(
-				"h-9 px-3 min-w-14 border border-input text-xs font-medium transition-all",
+				"h-10 px-3 min-w-14 border border-input text-xs font-medium transition-all",
 				!value &&
 					"bg-transparent hover:bg-accent hover:text-accent-foreground text-muted-foreground",
 				value &&

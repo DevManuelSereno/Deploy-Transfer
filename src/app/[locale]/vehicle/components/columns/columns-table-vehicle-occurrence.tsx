@@ -3,20 +3,20 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { DocumentationData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-documentation";
+import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
 import { Button } from "@/components/ui/button";
-import type { FileType } from "@/types/models/File.schema";
+import type { ClassificationType, SeriousnessType } from "@/types/models";
 
-export interface DocumentationColumnActions {
-	onEdit: (document: DocumentationData) => void;
-	onDelete: (document: DocumentationData) => void;
+export interface OccurrenceColumnActions {
+	onEdit: (occurrence: OccurrenceData) => void;
+	onDelete: (occurrence: OccurrenceData) => void;
 }
-export const getDocumentationColumns = (
-	actions: DocumentationColumnActions,
+export const getOccurrenceColumns = (
+	actions: OccurrenceColumnActions,
 	t: (key: string) => string,
-): ColumnDef<DocumentationData>[] => [
+): ColumnDef<OccurrenceData>[] => [
 	{
-		accessorKey: "file",
+		accessorKey: "occurrenceDate",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -25,60 +25,13 @@ export const getDocumentationColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("document")}
+						{t("occurrenceDate")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
 		enableColumnFilter: true,
-		cell: ({ cell }) =>
-			(cell.getValue() as FileType | undefined | null)?.mimeType,
-		size: 200,
-	},
-	{
-		accessorKey: "type",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("type")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		enableColumnFilter: true,
-		size: 230,
-	},
-	{
-		accessorKey: "days",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("days")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		cell: ({ cell }) =>
-			(cell.getValue() as string[]).length >= 0
-				? (cell.getValue() as string[]).join(", ")
-				: "-",
-		size: 150,
-	},
-	{
-		accessorKey: "expiryAt",
 		cell: ({ cell }) => {
 			if (!cell.getValue()) return "-";
 			if (typeof cell.getValue() === "string")
@@ -88,6 +41,10 @@ export const getDocumentationColumns = (
 					year: "numeric",
 				});
 		},
+		size: 280,
+	},
+	{
+		accessorKey: "classification",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -96,21 +53,42 @@ export const getDocumentationColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("expiration")}
+						{t("classification")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
+		cell: ({ cell }) => (cell.getValue() as ClassificationType).description,
 		enableColumnFilter: true,
-		size: 150,
+		size: 200,
+	},
+	{
+		accessorKey: "seriousness",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("seriousness")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		cell: ({ cell }) => (cell.getValue() as SeriousnessType).level,
+		enableColumnFilter: true,
+		size: 200,
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
 		cell: ({ row }) => {
-			const document = row.original;
+			const occurrence = row.original;
 
 			return (
 				<div className="md:opacity-0 md:group-hover/table:opacity-100 transition-opacity backdrop-blur-xs p-0 h-[calc(100%-2px)]">
@@ -119,7 +97,7 @@ export const getDocumentationColumns = (
 							variant="ghost"
 							size="icon"
 							onClick={() => {
-								actions.onEdit(document);
+								actions.onEdit(occurrence);
 							}}
 						>
 							<Pencil />
@@ -127,7 +105,7 @@ export const getDocumentationColumns = (
 						<Button
 							variant="ghost"
 							size="icon"
-							onClick={() => actions.onDelete(document)}
+							onClick={() => actions.onDelete(occurrence)}
 						>
 							<Trash className="text-destructive" />
 						</Button>

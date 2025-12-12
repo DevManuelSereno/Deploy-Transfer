@@ -3,7 +3,7 @@ import type {
 	DocumentationFormSchema,
 	DocumentationPayloadSchema,
 	FileValueSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-pass-documentation";
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-documentation";
 import type { DocumentationType } from "@/types/models";
 import type { FileType } from "@/types/models/File.schema";
 

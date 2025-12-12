@@ -7,20 +7,20 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
 import { Controller, FieldValue, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-occurrence-context";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import { useOccurrenceFormOptions } from "@/app/[locale]/vehicle/hooks/use-vehicle-pass-form-occurrence-options";
-import type {
-	FileValue,
-	OccurrenceData,
-	OccurrenceForm,
-	OccurrencePayload,
-} from "@/app/[locale]/vehicle/types/types-vehicle-pass-occurrence";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-documentation-context";
 import {
-	OccurrenceFormSchema,
-	OccurrencePayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-pass-occurrence";
+	type DocumentationData,
+	type DocumentationForm,
+	type DocumentationPayload,
+	documentationTypes,
+	type FileValue,
+} from "@/app/[locale]/vehicle/types/types-vehicle-documentation";
+import {
+	DocumentationFormSchema,
+	DocumentationPayloadSchema,
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-documentation";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -44,7 +44,6 @@ import { FormSelect } from "@/components/ui/form-select";
 import { FormToggleGroup } from "@/components/ui/form-toggle-group";
 import { InputFile } from "@/components/ui/input-file";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Textarea } from "@/components/ui/textarea";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { PostData, PutData } from "@/types/models";
 
@@ -54,44 +53,42 @@ type ModalFormProps = {
 	children?: React.ReactNode;
 };
 
-export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
-	const t = useTranslations("VehiclePage.Occurrence.modal");
-	const { editingOccurrence, setEditingOccurrence } =
-		useOccurrenceFormContext();
+export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Documentation.modal");
+	const { editingDocumentation, setEditingDocumentation } =
+		useDocumentationFormContext();
 
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
-	const { setTabPanel } = useModalContextPass();
+	const { setTabPanel } = useModalContext();
 
 	const queryClient = useQueryClient();
 
 	const buildDefaultValues = useCallback(
-		(occurrence?: OccurrenceData): OccurrenceForm => {
-			if (occurrence) {
+		(documentation?: DocumentationData): DocumentationForm => {
+			if (documentation) {
 				return {
-					registerDate: occurrence.registerDate
-						? new Date(occurrence.registerDate)
+					days: documentation.days ?? [],
+					type: documentation.type ?? "",
+					anticipateRenewal: documentation.anticipateRenewal ?? false,
+					file: documentation.file ? [documentation.file] : [],
+					expiryAt: documentation.expiryAt
+						? new Date(documentation.expiryAt)
 						: new Date(),
-					occurrenceDate: occurrence.occurrenceDate
-						? new Date(occurrence.occurrenceDate)
-						: new Date(),
-					description: occurrence.description ?? false,
-					file: occurrence.file ? [occurrence.file] : [],
-					vehicleId: String(occurrence.vehicleId ?? editingVehicle?.IDV ?? ""),
-					seriousnessId: String(occurrence.seriousnessId),
-					classificationId: String(occurrence.classificationId),
+					vehicleId: String(
+						documentation.vehicleId ?? editingVehicle?.IDV ?? "",
+					),
 				};
 			}
 
-		return {
-			registerDate: new Date(),
-			occurrenceDate: new Date(),
-			description: "",
-			file: [],
-			classificationId: "1",
-			seriousnessId: "2",
-			vehicleId: String(editingVehicle?.IDV ?? ""),
-		};
+			return {
+				days: ["seg", "qua"],
+				type: "Tacógrafo",
+				anticipateRenewal: false,
+				file: [],
+				expiryAt: new Date(),
+				vehicleId: String(editingVehicle?.IDV ?? ""),
+			};
 		},
 		[editingVehicle],
 	);
@@ -101,75 +98,88 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 		control,
 		reset,
 		formState: { isDirty },
-	} = useForm<OccurrenceForm>({
-		resolver: zodResolver(OccurrenceFormSchema),
-		defaultValues: buildDefaultValues(editingOccurrence),
+	} = useForm<DocumentationForm>({
+		resolver: zodResolver(DocumentationFormSchema),
+		defaultValues: buildDefaultValues(editingDocumentation),
 	});
 
 	const { mutateAsync: mutateUploadDoc } = useMutation({
 		mutationFn: async (params: { id: number; formData: FormData }) =>
-			postData<OccurrenceData, FormData>({
-				url: `/occurrence/${params.id}/attachments`,
+			postData<DocumentationData, FormData>({
+				url: `/documentation/${params.id}/docs`,
 				data: params.formData,
 			}),
-		mutationKey: ["occurrence-upload-attachments"],
+		mutationKey: ["documentation-upload-docs"],
 	});
 
 	const {
-		mutateAsync: mutatePostOccurrence,
-		isPending: isLoadingPostOccurrence,
+		mutateAsync: mutatePostDocumentation,
+		isPending: isLoadingPostDocumentation,
 	} = useMutation({
-		mutationFn: async (val: PostData<OccurrencePayload>) =>
-			postData<OccurrenceData, OccurrencePayload>(val),
-		mutationKey: ["occurrence-post"],
+		mutationFn: async (val: PostData<DocumentationPayload>) =>
+			postData<DocumentationData, DocumentationPayload>(val),
+		mutationKey: ["documentation-post"],
 	});
 
 	const {
-		mutateAsync: mutatePutOccurrence,
-		isPending: isLoadingPutOccurrence,
+		mutateAsync: mutatePutDocumentation,
+		isPending: isLoadingPutDocumentation,
 	} = useMutation({
-		mutationFn: (val: PutData<OccurrencePayload>) =>
-			putData<OccurrenceData, OccurrencePayload>(val),
-		mutationKey: ["occurrence-put"],
+		mutationFn: (val: PutData<DocumentationPayload>) =>
+			putData<DocumentationData, DocumentationPayload>(val),
+		mutationKey: ["documentation-put"],
 	});
 
-	const { seriousnessOptions, classificationOptions, isLoadingOptions } =
-		useOccurrenceFormOptions();
+	const typeOptions = documentationTypes.map((option) => ({
+		label: option,
+		value: option,
+	}));
 
-	const loading =
-		isLoadingPostOccurrence || isLoadingPutOccurrence || isLoadingOptions;
+	const daysOfWeekOptions = [
+		"dom",
+		"seg",
+		"ter",
+		"qua",
+		"qui",
+		"sex",
+		"sáb",
+	].map((day) => ({
+		label: day.charAt(0).toUpperCase(),
+		value: day,
+	}));
+
+	const loading = isLoadingPostDocumentation || isLoadingPutDocumentation;
 
 	const onErrors = (err: any) => {
 		toast.error(t("errorMessage"));
 	};
 
-	const onSubmit = async (data: OccurrenceForm) => {
+	const onSubmit = async (data: DocumentationForm) => {
 		try {
-			if (!isDirty && editingOccurrence) {
-				setTabPanel("tab-occurrence");
+			if (!isDirty && editingDocumentation) {
+				setTabPanel("tab-documentation");
 				return;
 			}
 
-			let savedOccurrence: OccurrenceData;
+			let savedDocumentation: DocumentationData;
 
-		const parseData = OccurrencePayloadSchema.parse({
-			...data,
-			registerDate: data.registerDate?.toISOString(),
-			occurrenceDate: data.occurrenceDate?.toISOString(),
-			vehicleId: editingVehicle?.IDV,
-			file: undefined,
-			// document: [],
-		});
+			const parseData = DocumentationPayloadSchema.parse({
+				...data,
+				expiryAt: data.expiryAt?.toISOString(),
+				vehicleId: editingVehicle?.IDV,
+				file: undefined,
+				// document: [],
+			});
 
-			if (!editingOccurrence) {
-				savedOccurrence = await mutatePostOccurrence({
-					url: "/occurrence",
+			if (!editingDocumentation) {
+				savedDocumentation = await mutatePostDocumentation({
+					url: "/documentation",
 					data: parseData,
 				});
 			} else {
-				savedOccurrence = await mutatePutOccurrence({
-					url: "/occurrence",
-					id: Number(editingOccurrence.id),
+				savedDocumentation = await mutatePutDocumentation({
+					url: "/documentation",
+					id: Number(editingDocumentation.id),
 					data: parseData,
 				});
 			}
@@ -177,7 +187,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 			const hasNewFiles =
 				data.file?.some(
 					(doc: FileValue) =>
-						doc?.fileName !== editingOccurrence?.file?.fileName,
+						doc?.fileName !== editingDocumentation?.file?.fileName,
 				) ?? false;
 
 			if (hasNewFiles) {
@@ -190,20 +200,20 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 				}
 
 				await mutateUploadDoc({
-					id: savedOccurrence.id,
+					id: savedDocumentation.id,
 					formData,
 				});
 			}
 
-		setEditingOccurrence(undefined);
+			setEditingDocumentation(undefined);
 
-		if (editingVehicle)
-			await queryClient.invalidateQueries({
-				queryKey: ["occurrence-get", editingVehicle?.IDV],
-			});
-		reset();
+			if (editingVehicle)
+				await queryClient.invalidateQueries({
+					queryKey: ["documentation-get", editingVehicle?.IDV],
+				});
+			reset();
 			toast.success(
-				editingOccurrence ? t("successUpdate") : t("successCreate"),
+				editingDocumentation ? t("successUpdate") : t("successCreate"),
 			);
 			setOpen(false);
 		} catch (error: any) {
@@ -212,13 +222,13 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 	};
 
 	useEffect(() => {
-		reset(buildDefaultValues(editingOccurrence));
-	}, [editingOccurrence, reset, buildDefaultValues]);
+		reset(buildDefaultValues(editingDocumentation));
+	}, [editingDocumentation, reset, buildDefaultValues]);
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent
-				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-3xl
+				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-5xl
         flex flex-col max-h-[90vh]"
 			>
 				<div className="flex items-center gap-3 p-6 flex-shrink-0">
@@ -236,29 +246,32 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 					onSubmit={handleSubmit(onSubmit, onErrors)}
 					className="flex w-full flex-col gap-4 p-6 overflow-hidden flex-1 overflow-y-auto"
 				>
-					<FieldGroup className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+					<FieldGroup className="grid grid-cols-1 lg:grid-cols-9 gap-4">
 						<Controller
-							name="seriousnessId"
+							name="days"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
-									<Skeleton className="rounded-md w-full h-10" />
+									<Skeleton className="rounded-md w-full h-8" />
 								) : (
-									<Field data-invalid={fieldState.invalid}>
+									<Field
+										data-invalid={fieldState.invalid}
+										className="col-span-3"
+									>
 										<FieldLabel htmlFor={field.name}>
-											{t("seriousnessLabel")}
+											{t("daysLabel")}
 										</FieldLabel>
-										<FormSelect
+										<FormToggleGroup
 											id={field.name}
-											value={field.value ?? ""}
+											value={field.value}
 											onChange={field.onChange}
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
-											options={seriousnessOptions}
-											placeholder={t("seriousnessLabel")}
+											options={daysOfWeekOptions}
 											className="w-full"
-											name={field.name}
+											type="multiple"
 										/>
+
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
@@ -267,15 +280,18 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 							}
 						/>
 						<Controller
-							name="classificationId"
+							name="type"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
-									<Field data-invalid={fieldState.invalid}>
+									<Field
+										data-invalid={fieldState.invalid}
+										className="col-span-3 lg:col-span-2"
+									>
 										<FieldLabel htmlFor={field.name}>
-											{t("classificationLabel")}
+											{t("typeLabel")}
 										</FieldLabel>
 										<FormSelect
 											id={field.name}
@@ -283,36 +299,8 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 											onChange={field.onChange}
 											onBlur={field.onBlur}
 											aria-invalid={fieldState.invalid}
-											options={classificationOptions}
-											placeholder={t("classificationLabel")}
-											className="w-full"
-											name={field.name}
-										/>
-										{fieldState.invalid && (
-											<FieldError errors={[fieldState.error]} />
-										)}
-									</Field>
-								)
-							}
-						/>
-						<Controller
-							name="occurrenceDate"
-							control={control}
-							render={({ field, fieldState }) =>
-								loading ? (
-									<Skeleton className="rounded-md w-full h-10" />
-								) : (
-									<Field data-invalid={fieldState.invalid}>
-										<FieldLabel htmlFor={field.name}>
-											{t("occurrenceDateLabel")}
-										</FieldLabel>
-										<FormDatePicker
-											id={field.name}
-											value={field.value ?? ""}
-											onChange={field.onChange}
-											onBlur={field.onBlur}
-											aria-invalid={fieldState.invalid}
-											placeholder="14/05/2026"
+											options={typeOptions}
+											placeholder={t("typePlaceholder")}
 											className="w-full"
 											name={field.name}
 										/>
@@ -325,15 +313,18 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 							}
 						/>
 						<Controller
-							name="registerDate"
+							name="expiryAt"
 							control={control}
 							render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
-									<Field data-invalid={fieldState.invalid}>
+									<Field
+										data-invalid={fieldState.invalid}
+										className="col-span-3"
+									>
 										<FieldLabel htmlFor={field.name}>
-											{t("registrationDateLabel")}
+											{t("expirationLabel")}
 										</FieldLabel>
 										<FormDatePicker
 											id={field.name}
@@ -353,33 +344,46 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 								)
 							}
 						/>
+						<Controller
+							name="anticipateRenewal"
+							control={control}
+							render={({ field, fieldState }) =>
+								loading ? (
+									<Skeleton className="rounded-md w-full h-10" />
+								) : (
+									<Field
+										// orientation="horizontal"
+										data-invalid={fieldState.invalid}
+									>
+										<FieldLabel htmlFor={field.name}>
+											{t("anticipateLabel")}
+										</FieldLabel>
+										{fieldState.invalid && (
+											<FieldError errors={[fieldState.error]} />
+										)}
+										<FormBooleanButton
+											id={field.name}
+											value={field.value}
+											onChange={field.onChange}
+											onBlur={field.onBlur}
+											aria-invalid={fieldState.invalid}
+											className="w-full"
+										>
+											<BookmarkIcon />
+											Bookmark
+										</FormBooleanButton>
+										{/*<Switch*/}
+										{/*	id={field.name}*/}
+										{/*	name={field.name}*/}
+										{/*	checked={field.value}*/}
+										{/*	onCheckedChange={field.onChange}*/}
+										{/*	aria-invalid={fieldState.invalid}*/}
+										{/*/>*/}
+									</Field>
+								)
+							}
+						/>
 					</FieldGroup>
-					<Controller
-						name="description"
-						control={control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor={field.name}>
-										{t("descriptionLabel")}
-									</FieldLabel>
-									<Textarea
-										{...field}
-										placeholder="Houve uma tentativa de roubo"
-										rows={6}
-										className="min-h-24"
-										aria-invalid={fieldState.invalid}
-										value={field.value ?? ""} // parse para caso seja null
-									/>
-									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
-									)}
-								</Field>
-							)
-						}
-					/>
 					<Controller
 						name="file"
 						control={control}
@@ -395,7 +399,7 @@ export function ModalFormOccurrence({ open, setOpen }: ModalFormProps) {
 									className="md:col-span-2"
 								>
 									<FieldLabel htmlFor={field.name}>
-										{t("attachmentLabel")}
+										{t("documentLabel")}
 									</FieldLabel>
 
 									<InputFile

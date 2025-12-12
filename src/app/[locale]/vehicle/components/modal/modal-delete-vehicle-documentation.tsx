@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-documentation-context";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-documentation-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -26,7 +26,7 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.Documentation.delete");
 	const { editingDocumentation, setEditingDocumentation } =
 		useDocumentationFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 	const queryClient = useQueryClient();
 
 	const {
@@ -45,10 +45,10 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 				id: editingDocumentation?.id,
 			});
 
-		if (editingVehicle)
-			await queryClient.invalidateQueries({
-				queryKey: ["documentation-get", editingVehicle?.IDV],
-			});
+			if (editingVehicle)
+				await queryClient.invalidateQueries({
+					queryKey: ["documentation-get", editingVehicle?.IDV],
+				});
 
 			setEditingDocumentation(undefined);
 			toast.success(t("successMessage"));

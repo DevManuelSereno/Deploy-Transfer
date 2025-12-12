@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { VehiclePassSchema } from "@/types/models/VehiclePass.schema";
+import { VehicleSchema } from "@/types/models/Vehicle.schema";
 
-const VehicleBaseSchema = VehiclePassSchema.omit({
+const VehicleBaseSchema = VehicleSchema.omit({
 	IDV: true,
 	CreatedAt: true,
 	UpdatedAt: true,
 });
 
-export const VehiclePassPayloadSchema = VehicleBaseSchema.extend({
+export const VehiclePayloadSchema = VehicleBaseSchema.extend({
 	Seats: z.coerce.number(),
 	Door: z.coerce.number(),
 	BrandId: z.coerce.number(),
@@ -15,7 +15,7 @@ export const VehiclePassPayloadSchema = VehicleBaseSchema.extend({
 	Year: z.coerce.number(),
 });
 
-export const VehiclePassFormSchema = VehicleBaseSchema.extend({
+export const VehicleFormSchema = VehicleBaseSchema.extend({
 	Plate: z.string().length(7, "Placa inválida"),
 	Model: z
 		.string()

@@ -14,7 +14,7 @@ type ModalFormProps = {
 	children?: React.ReactNode;
 };
 
-export function ModalTableVehiclePass({
+export function ModalTableVehicle({
 	open,
 	setOpen,
 	children,

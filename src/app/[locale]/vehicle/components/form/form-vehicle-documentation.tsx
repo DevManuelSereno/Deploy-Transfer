@@ -18,13 +18,13 @@ import { useCallback, useMemo, useState } from "react";
 import {
 	type DocumentationColumnActions,
 	getDocumentationColumns,
-} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-pass-documentation";
-import { ModalDeleteDocumentation } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-pass-documentation";
-import { ModalFormDocumentation } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-pass-documentation";
-import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-documentation-context";
-import { useModalContextPass } from "@/app/[locale]/vehicle/context/modal-table-vehicle-pass";
-import { useVehiclePassFormContext } from "@/app/[locale]/vehicle/context/vehicle-pass-context";
-import type { DocumentationData } from "@/app/[locale]/vehicle/types/types-vehicle-pass-documentation";
+} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-documentation";
+import { ModalDeleteDocumentation } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-documentation";
+import { ModalFormDocumentation } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-documentation";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useDocumentationFormContext } from "@/app/[locale]/vehicle/context/vehicle-documentation-context";
+import type { DocumentationData } from "@/app/[locale]/vehicle/types/types-vehicle-documentation";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,9 +35,9 @@ export function FormDocumentation() {
 	const t = useTranslations("VehiclePage.Documentation");
 	const tColumns = useTranslations("VehiclePage.Documentation.columns");
 	const { setEditingDocumentation } = useDocumentationFormContext();
-	const { editingVehicle } = useVehiclePassFormContext();
+	const { editingVehicle } = useVehicleFormContext();
 
-	const { setTabPanel } = useModalContextPass();
+	const { setTabPanel } = useModalContext();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
