@@ -52,10 +52,6 @@ export function FormDocumentation() {
 	const [isModalFormOpen, setIsModalFormOpen] = useState(false);
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
-	const handleForward = () => setTabPanel("tab-gas-supply");
-
-	const handleBack = () => setTabPanel("tab-general-data");
-
 	const vehicleId = editingVehicle?.IDV;
 
 	const { data: dataDocumentation, isLoading } = useQuery({

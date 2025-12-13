@@ -52,10 +52,6 @@ export function FormGasSupply() {
 	const [isModalFormOpen, setIsModalFormOpen] = useState(false);
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
-	const handleForward = () => setTabPanel("tab-occurrence");
-
-	const handleBack = () => setTabPanel("tab-documentation");
-
 	const vehicleId = editingVehicle?.IDV;
 
 	const { data: dataGasSupply, isLoading } = useQuery({

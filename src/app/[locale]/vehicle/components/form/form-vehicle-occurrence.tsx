@@ -52,8 +52,6 @@ export function FormOccurrence() {
 	const [isModalFormOpen, setIsModalFormOpen] = useState(false);
 	const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
 
-	const handleBack = () => setTabPanel("tab-gas-supply");
-
 	const vehicleId = editingVehicle?.IDV;
 
 	const { data: dataOccurrence, isLoading } = useQuery({
