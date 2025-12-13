@@ -7,6 +7,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
 import NumberInputStepper from "../ui/number-input-stepper";
 
 interface FormFieldNumberProps<T extends FieldValues>
@@ -15,6 +16,7 @@ interface FormFieldNumberProps<T extends FieldValues>
 	name: Path<T>;
 	label?: string;
 	onValueChange?: (value: number) => void;
+	formItemClassName?: string;
 }
 
 export function FormFieldNumber<T extends FieldValues>({
@@ -22,6 +24,7 @@ export function FormFieldNumber<T extends FieldValues>({
 	name,
 	label,
 	onValueChange,
+	formItemClassName,
 	...props
 }: FormFieldNumberProps<T>) {
 	return (
@@ -29,7 +32,7 @@ export function FormFieldNumber<T extends FieldValues>({
 			control={control}
 			name={name}
 			render={({ field }) => (
-				<FormItem className="w-full">
+				<FormItem className={cn("w-full", formItemClassName)}>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
 						<NumberInputStepper
