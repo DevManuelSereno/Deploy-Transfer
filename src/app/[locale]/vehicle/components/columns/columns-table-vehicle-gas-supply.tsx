@@ -41,7 +41,11 @@ export const getGasSupplyColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 190,
+		size: 170,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "gasStation",
@@ -61,7 +65,11 @@ export const getGasSupplyColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as GasStationType)?.name,
 		enableColumnFilter: true,
-		size: 110,
+		size: 90,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "gas",
@@ -81,7 +89,11 @@ export const getGasSupplyColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as GasType)?.type,
 		enableColumnFilter: true,
-		size: 150,
+		size: 130,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "quantity",
@@ -102,7 +114,11 @@ export const getGasSupplyColumns = (
 		cell: ({ cell }) =>
 			`${Number(cell.getValue()).toLocaleString("pt-BR", { maximumFractionDigits: 2 })}L`,
 		enableColumnFilter: true,
-		size: 110,
+		size: 90,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "totalPrice",
@@ -127,12 +143,20 @@ export const getGasSupplyColumns = (
 				maximumFractionDigits: 2,
 			}),
 		enableColumnFilter: true,
-		size: 180,
+		size: 160,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
+		meta: {
+			headerClassName: "data-pinned:-ml-[96px]",
+			cellClassName: "data-pinned:-ml-[96px]",
+		},
 		cell: ({ row }) => {
 			const document = row.original;
 			return (

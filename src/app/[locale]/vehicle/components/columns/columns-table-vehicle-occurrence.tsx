@@ -41,7 +41,11 @@ export const getOccurrenceColumns = (
 					year: "numeric",
 				});
 		},
-		size: 280,
+		size: 260,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "classification",
@@ -61,7 +65,11 @@ export const getOccurrenceColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as ClassificationType).description,
 		enableColumnFilter: true,
-		size: 200,
+		size: 180,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "seriousness",
@@ -81,12 +89,20 @@ export const getOccurrenceColumns = (
 		},
 		cell: ({ cell }) => (cell.getValue() as SeriousnessType).level,
 		enableColumnFilter: true,
-		size: 200,
+		size: 180,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
+		meta: {
+			headerClassName: "data-pinned:-ml-[96px]",
+			cellClassName: "data-pinned:-ml-[96px]",
+		},
 		cell: ({ row }) => {
 			const occurrence = row.original;
 

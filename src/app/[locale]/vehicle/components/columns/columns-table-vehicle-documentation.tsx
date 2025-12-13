@@ -34,7 +34,11 @@ export const getDocumentationColumns = (
 		enableColumnFilter: true,
 		cell: ({ cell }) =>
 			(cell.getValue() as FileType | undefined | null)?.mimeType,
-		size: 200,
+		size: 180,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "type",
@@ -53,7 +57,11 @@ export const getDocumentationColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 230,
+		size: 180,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "days",
@@ -75,7 +83,11 @@ export const getDocumentationColumns = (
 			(cell.getValue() as string[]).length >= 0
 				? (cell.getValue() as string[]).join(", ")
 				: "-",
-		size: 150,
+		size: 100,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		accessorKey: "expiryAt",
@@ -103,12 +115,20 @@ export const getDocumentationColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 150,
+		size: 100,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
 	},
 	{
 		id: "actions",
 		size: 96,
 		enablePinning: true,
+		meta: {
+			headerClassName: "data-pinned:-ml-[96px]",
+			cellClassName: "data-pinned:-ml-[96px]",
+		},
 		cell: ({ row }) => {
 			const document = row.original;
 
