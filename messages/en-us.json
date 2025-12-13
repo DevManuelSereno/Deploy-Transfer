@@ -33,6 +33,10 @@
 		"brands": "Brands",
 		"user": "User"
 	},
+	"Form": {
+		"cancel": "Cancel",
+		"register": "Register"
+	},
 	"HomePage": {
 		"title": "Dashboard"
 	},
@@ -193,7 +197,7 @@
 			"year": "Year",
 			"brand": "Brand",
 			"seats": "Seats",
-			"luggageCapacity": "Luggage capacity",
+			"luggageCapacity": "Luggage",
 			"inspectionInterval": "Inspection interval",
 			"amenities": "Amenities",
 			"color": "Color",

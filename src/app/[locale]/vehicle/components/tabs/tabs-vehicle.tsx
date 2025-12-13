@@ -7,6 +7,7 @@ import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-v
 import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-gas-supply";
 import { FormOccurrence } from "@/app/[locale]/vehicle/components/form/form-vehicle-occurrence";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Tabs,
 	TabsContent,

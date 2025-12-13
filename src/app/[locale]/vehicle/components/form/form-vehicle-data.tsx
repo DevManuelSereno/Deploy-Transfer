@@ -13,12 +13,14 @@ import type {
 	VehiclePayload,
 } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { VehicleFormSchema } from "@/app/[locale]/vehicle/validation/validation-vehicle";
+import { FormFieldMultiSelect } from "@/components/form/form-field-multi-select";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
 import { FormFieldText } from "@/components/form/form-field-text";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
@@ -45,7 +47,7 @@ export function FormVehicleData() {
 				LuggageCapacity: 30,
 				Category: "Sedan",
 				RegistrationCode: "00512345678",
-				Amenities: "Ar-condicionado",
+				Amenities: [{ value: "Ar-condicionado", label: "Ar-condicionado" }],
 				InspectionInterval: 10000,
 				CompanyId: "12",
 				BrandId: "Scania",
@@ -66,7 +68,7 @@ export function FormVehicleData() {
 			LuggageCapacity: vehicle.LuggageCapacity ?? 0,
 			Category: vehicle.Category,
 			RegistrationCode: vehicle.RegistrationCode,
-			Amenities: vehicle.Amenities ?? "",
+			Amenities: [vehicle.Amenities ?? ""],
 			InspectionInterval: vehicle.InspectionInterval ?? 0,
 			CompanyId: String(vehicle.CompanyId),
 			BrandId: String(vehicle.BrandId),
@@ -152,6 +154,8 @@ export function FormVehicleData() {
 
 			console.log(data);
 
+			// tem que converter o multiselect para apenas o value, retornando uma string[] no lugar de object[]
+
 			// const parseData = VehiclePayloadSchema.parse(data);
 			//
 			// if (!editingVehicle) {
@@ -187,341 +191,345 @@ export function FormVehicleData() {
 		}
 	};
 	return (
-		<Form {...form}>
-			<form
-				autoComplete="off"
-				onSubmit={form.handleSubmit(onSubmit, onErrors)}
-				className="space-y-5 p-6"
-				id="vehicle-form"
-			>
-				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
-					<Controller
-						name="Model"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldText
-									{...field}
-									label={t("model")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="Buss Vissta 340"
-									className="col-span-2"
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Year"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldNumber
-									{...field}
-									label={t("year")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="41"
-									formatOptions={{ useGrouping: false }}
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="BrandId"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-10" />
-							) : (
-								<FormFieldSelect
-									label={t("brand")}
-									value={field.value ?? ""}
-									onValueChange={field.onChange}
-									aria-invalid={fieldState.invalid}
-									options={brandOptions}
-									placeholder={t("selectBrand")}
-									className="w-full"
-									name={field.name}
-									control={form.control}
-								/>
-							)
-						}
-					/>
-				</div>
-				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
-					<Controller
-						name="Seats"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldNumber
-									{...field}
-									label={t("seats")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="41"
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Door"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldNumber
-									{...field}
-									label={t("doors")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="4"
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Category"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-10" />
-							) : (
-								<FormFieldSelect
-									label={t("category")}
-									value={field.value ?? ""}
-									onValueChange={field.onChange}
-									aria-invalid={fieldState.invalid}
-									options={categoryOptions}
-									placeholder={t("selectCategory")}
-									className="w-full"
-									name={field.name}
-									control={form.control}
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Status"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-10" />
-							) : (
-								<FormFieldSelect
-									label={t("status")}
-									value={field.value ?? ""}
-									onValueChange={field.onChange}
-									aria-invalid={fieldState.invalid}
-									options={statusOptions}
-									placeholder={t("selectStatus")}
-									className="w-full"
-									name={field.name}
-									control={form.control}
-								/>
-							)
-						}
-					/>
-				</div>
-
-				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
-					<Controller
-						name="LuggageCapacity"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldNumber
-									{...field}
-									label={t("luggageCapacity")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="50"
-									value={field.value ?? 0}
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="InspectionInterval"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldNumber
-									{...field}
-									label={t("inspectionInterval")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="9400 km"
-									value={field.value ?? 0}
-									formatOptions={{
-										style: "unit",
-										unit: "kilometer",
-										unitDisplay: "short",
-									}}
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Color"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-10" />
-							) : (
-								<FormFieldSelect
-									label={t("color")}
-									value={field.value ?? ""}
-									onValueChange={field.onChange}
-									aria-invalid={fieldState.invalid}
-									options={colorOptions}
-									placeholder={t("selectColor")}
-									className="w-full"
-									name={field.name}
-									control={form.control}
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Fuel"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-10" />
-							) : (
-								<FormFieldSelect
-									label={t("fuel")}
-									value={field.value ?? ""}
-									onValueChange={field.onChange}
-									aria-invalid={fieldState.invalid}
-									options={fuelOptions}
-									placeholder={t("selectFuel")}
-									className="w-full"
-									name={field.name}
-									control={form.control}
-								/>
-							)
-						}
-					/>
-				</div>
-				<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-4">
-					<Controller
-						name="Location"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldText
-									{...field}
-									label={t("uf")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="SP"
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="Plate"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldText
-									{...field}
-									label={t("plate")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="ABC1D23"
-								/>
-							)
-						}
-					/>
-					<Controller
-						name="RegistrationCode"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldText
-									{...field}
-									label={t("renavam")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="00512345678"
-								/>
-							)
-						}
-					/>
-
-					<Controller
-						name="Chassis"
-						control={form.control}
-						render={({ field, fieldState }) =>
-							loading ? (
-								<Skeleton className="rounded-md w-full h-8" />
-							) : (
-								<FormFieldText
-									{...field}
-									label={t("chassi")}
-									control={form.control}
-									aria-invalid={fieldState.invalid}
-									placeholder="9BWZZZ377VT004251"
-								/>
-							)
-						}
-					/>
-				</div>
-				<Controller
-					name="Amenities"
-					control={form.control}
-					render={({ field, fieldState }) =>
-						loading ? (
-							<Skeleton className="rounded-md w-full h-10" />
-						) : (
-							<FormFieldSelect
-								label={t("amenities")}
-								value={field.value ?? ""}
-								onValueChange={field.onChange}
-								aria-invalid={fieldState.invalid}
-								options={amenitiesOptions}
-								placeholder={t("selectAmenities")}
-								className="w-full"
-								name={field.name}
+		<ScrollArea className="flex flex-col">
+			<Form {...form}>
+				<form
+					autoComplete="off"
+					onSubmit={form.handleSubmit(onSubmit, onErrors)}
+					className="overflow-hidden"
+					id="vehicle-form"
+				>
+					<div className="flex flex-col gap-4 px-6 pb-6">
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="Model"
 								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldText
+											{...field}
+											label={t("model")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="Buss Vissta 340"
+											className="col-span-6"
+										/>
+									)
+								}
 							/>
-						)
-					}
-				/>
-			</form>
-			<DialogFooter className="flex gap-4 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 pt-6 pb-4">
-				<DialogClose asChild>
-					<Button variant="outline">{t("cancel")}</Button>
-				</DialogClose>
-				{loading ? (
-					<Skeleton className="rounded-md w-full h-8" />
-				) : (
-					<Button type="submit" form="vehicle-form">
-						{t("continue")}
-					</Button>
-				)}
-			</DialogFooter>
-		</Form>
+							<Controller
+								name="BrandId"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("brand")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={brandOptions}
+											placeholder={t("selectBrand")}
+											className="w-full col-span-4"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Year"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldNumber
+											{...field}
+											label={t("year")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="41"
+											formatOptions={{ useGrouping: false }}
+											formItemClassName="col-span-2"
+										/>
+									)
+								}
+							/>
+						</div>
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="Category"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("category")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={categoryOptions}
+											placeholder={t("selectCategory")}
+											className="w-full col-span-4"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Color"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("color")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={colorOptions}
+											placeholder={t("selectColor")}
+											className="w-full col-span-4"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Fuel"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("fuel")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={fuelOptions}
+											placeholder={t("selectFuel")}
+											className="w-full col-span-4"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+						</div>
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="Seats"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldNumber
+											{...field}
+											label={t("seats")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="41"
+											formItemClassName="col-span-3"
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Door"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldNumber
+											{...field}
+											label={t("doors")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="4"
+											formItemClassName="col-span-3"
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="LuggageCapacity"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldNumber
+											{...field}
+											label={t("luggageCapacity")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="50"
+											formItemClassName="col-span-3"
+											value={field.value ?? 0}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="InspectionInterval"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldNumber
+											{...field}
+											label={t("inspectionInterval")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="9400 km"
+											value={field.value ?? 0}
+											formItemClassName="col-span-3"
+											formatOptions={{
+												style: "unit",
+												unit: "kilometer",
+												unitDisplay: "short",
+											}}
+										/>
+									)
+								}
+							/>
+						</div>
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="Plate"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldText
+											{...field}
+											label={t("plate")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="ABC1D23"
+											className="col-span-3"
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Location"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldText
+											{...field}
+											label={t("uf")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="SP"
+											className="col-span-2"
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="Status"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("status")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={statusOptions}
+											placeholder={t("selectStatus")}
+											className="w-full col-span-7"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+						</div>
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="RegistrationCode"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldText
+											{...field}
+											label={t("renavam")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="00512345678"
+											className="col-span-6"
+										/>
+									)
+								}
+							/>
+
+							<Controller
+								name="Chassis"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldText
+											{...field}
+											label={t("chassi")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="9BWZZZ377VT004251"
+											className="col-span-6"
+										/>
+									)
+								}
+							/>
+						</div>
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
+							<Controller
+								name="Amenities"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldMultiSelect
+											label={t("amenities")}
+											value={field.value ?? []}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={amenitiesOptions}
+											placeholder={t("selectAmenities")}
+											className="w-full col-span-12"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+						</div>
+					</div>
+				</form>
+			</Form>
+		</ScrollArea>
 	);
 }

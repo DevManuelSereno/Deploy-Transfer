@@ -33,6 +33,10 @@
 		"brands": "Marcas",
 		"user": "Usuário"
 	},
+	"Form": {
+		"cancel": "Cancelar",
+		"register": "Registrar"
+	},
 	"HomePage": {
 		"title": "Dashboard"
 	},
@@ -193,7 +197,7 @@
 			"year": "Ano",
 			"brand": "Marca",
 			"seats": "Assentos",
-			"luggageCapacity": "Capacidade de bagagem",
+			"luggageCapacity": "Bagagem",
 			"inspectionInterval": "Intervalo de inspeção",
 			"amenities": "Comodidades",
 			"color": "Cor",

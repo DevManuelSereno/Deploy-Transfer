@@ -33,6 +33,10 @@
 		"brands": "Marcas",
 		"user": "Usuario"
 	},
+	"Form": {
+		"cancel": "Cancelar",
+		"register": "Registrar"
+	},
 	"HomePage": {
 		"title": "Panel de Control"
 	},
@@ -193,7 +197,7 @@
 			"year": "Año",
 			"brand": "Marca",
 			"seats": "Asientos",
-			"luggageCapacity": "Capacidad de equipaje",
+			"luggageCapacity": "Equipaje",
 			"inspectionInterval": "Intervalo de inspección",
 			"amenities": "Comodidades",
 			"color": "Color",

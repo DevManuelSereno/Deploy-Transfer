@@ -1,12 +1,18 @@
 import { BusFront } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 type ModalFormProps = {
 	open: boolean;
@@ -14,18 +20,16 @@ type ModalFormProps = {
 	children?: React.ReactNode;
 };
 
-export function ModalTableVehicle({
-	open,
-	setOpen,
-	children,
-}: ModalFormProps) {
+export function ModalTableVehicle({ open, setOpen, children }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.Modal");
+	const tForm = useTranslations("Form");
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent
-				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-4xl
-        flex flex-col max-h-[90vh]"
+				className={cn(
+					"flex flex-col gap-0 p-0 rounded-xl sm:max-w-2xl! max-h-[calc(100dvh-2rem)] overflow-hidden",
+				)}
 			>
 				<div className="flex items-center gap-3 px-6 pt-6 mb-4">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-full border">
@@ -37,6 +41,15 @@ export function ModalTableVehicle({
 					</DialogHeader>
 				</div>
 				{children}
+				<DialogFooter className="flex gap-4 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 pt-6 pb-4">
+					<DialogClose asChild>
+						<Button variant="outline">{tForm("cancel")}</Button>
+					</DialogClose>
+
+					<Button type="submit" form="vehicle-form">
+						{tForm("register")}
+					</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);

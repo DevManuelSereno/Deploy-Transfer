@@ -7,6 +7,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 
 type ModalFormProps = {
 	open: boolean;
@@ -20,8 +21,10 @@ export function ModalTableBrand({ open, setOpen, children }: ModalFormProps) {
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogContent
-				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-4xl
-        flex flex-col max-h-[90vh]"
+				className={cn(
+					"p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none",
+					"sm:max-w-2xl! flex flex-col max-h-[90vh]",
+				)}
 			>
 				<div className="flex items-center gap-3 px-6 pt-6 mb-3">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-full border">

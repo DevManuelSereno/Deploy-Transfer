@@ -16,6 +16,12 @@ export const VehiclePayloadSchema = VehicleBaseSchema.extend({
 });
 
 export const VehicleFormSchema = VehicleBaseSchema.extend({
+	Amenities: z
+		.object({
+			value: z.string(),
+			label: z.string(),
+		})
+		.array(),
 	Plate: z.string().length(7, "Placa inválida"),
 	Model: z
 		.string()
