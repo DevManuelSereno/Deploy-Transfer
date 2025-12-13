@@ -139,44 +139,26 @@ export function FormGasSupply() {
 	});
 
 	return (
-		<>
-			<div className="space-y-5 p-6">
-				<DataTableProvider recordCount={20} table={table}>
-					<DataTable />
-				</DataTableProvider>
-				<Button
-					type="button"
-					onClick={() => {
-						setEditingGasSupply(undefined);
-						setIsModalFormOpen(true);
-					}}
-				>
-					{t("addButton")}
-				</Button>
+		<div className="space-y-5 p-6">
+			<DataTableProvider recordCount={20} table={table}>
+				<DataTable />
+			</DataTableProvider>
+			<Button
+				type="button"
+				onClick={() => {
+					setEditingGasSupply(undefined);
+					setIsModalFormOpen(true);
+				}}
+			>
+				{t("addButton")}
+			</Button>
 
-				<ModalFormGasSupply
-					open={isModalFormOpen}
-					setOpen={setIsModalFormOpen}
-				/>
+			<ModalFormGasSupply open={isModalFormOpen} setOpen={setIsModalFormOpen} />
 
-				<ModalDeleteGasSupply
-					open={isModalDeleteOpen}
-					setOpen={setIsModalDeleteOpen}
-				/>
-			</div>
-			<div className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
-				<Button variant="outline" onClick={handleBack}>
-					{t("back")}
-				</Button>
-
-				<Button
-					type="button"
-					onClick={handleForward}
-					disabled={!editingVehicle?.IDV}
-				>
-					{t("continue")}
-				</Button>
-			</div>
-		</>
+			<ModalDeleteGasSupply
+				open={isModalDeleteOpen}
+				setOpen={setIsModalDeleteOpen}
+			/>
+		</div>
 	);
 }

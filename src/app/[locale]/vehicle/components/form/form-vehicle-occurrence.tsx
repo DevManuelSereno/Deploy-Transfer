@@ -136,35 +136,28 @@ export function FormOccurrence() {
 	});
 
 	return (
-		<>
-			<div className="space-y-5 p-6">
-				<DataTableProvider recordCount={20} table={table}>
-					<DataTable />
-				</DataTableProvider>
-				<Button
-					type="button"
-					onClick={() => {
-						setEditingOccurrence(undefined);
-						setIsModalFormOpen(true);
-					}}
-				>
-					{t("addButton")}
-				</Button>
-				<ModalFormOccurrence
-					open={isModalFormOpen}
-					setOpen={setIsModalFormOpen}
-				/>
+		<div className="space-y-5 p-6">
+			<DataTableProvider recordCount={20} table={table}>
+				<DataTable />
+			</DataTableProvider>
+			<Button
+				type="button"
+				onClick={() => {
+					setEditingOccurrence(undefined);
+					setIsModalFormOpen(true);
+				}}
+			>
+				{t("addButton")}
+			</Button>
+			<ModalFormOccurrence
+				open={isModalFormOpen}
+				setOpen={setIsModalFormOpen}
+			/>
 
-				<ModalDeleteOccurrence
-					open={isModalDeleteOpen}
-					setOpen={setIsModalDeleteOpen}
-				/>
-			</div>
-			<div className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 py-4">
-				<Button variant="outline" onClick={handleBack}>
-					{t("back")}
-				</Button>
-			</div>
-		</>
+			<ModalDeleteOccurrence
+				open={isModalDeleteOpen}
+				setOpen={setIsModalDeleteOpen}
+			/>
+		</div>
 	);
 }
