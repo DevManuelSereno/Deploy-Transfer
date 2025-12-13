@@ -2,10 +2,10 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 
-import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
+import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
 import { Button } from "@/components/ui/button";
 import type { GasStationType, GasType } from "@/types/models";
+import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 
 export interface GasSupplyColumnActions {
 	onEdit: (document: GasSupplyData) => void;

@@ -4,7 +4,7 @@ import { FileText, Fuel, Info, TriangleAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FormVehicleData } from "@/app/[locale]/vehicle/components/form/form-vehicle-data";
 import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-vehicle-documentation";
-import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-gas-supply";
+import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-fueling";
 import { FormOccurrence } from "@/app/[locale]/vehicle/components/form/form-vehicle-occurrence";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { ScrollArea } from "@/components/ui/scroll-area";

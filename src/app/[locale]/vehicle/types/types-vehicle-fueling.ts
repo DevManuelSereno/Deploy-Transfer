@@ -1,11 +1,11 @@
-import type { z } from "zod";
 import type {
-	FileValueSchema,
-	GasSupplyFormSchema,
-	GasSupplyPayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-gas-supply";
+    FileValueSchema,
+    GasSupplyFormSchema,
+    GasSupplyPayloadSchema,
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-fueling";
 import type { GasStationType, GasSupplyType, GasType } from "@/types/models";
 import type { FileType } from "@/types/models/File.schema";
+import type { z } from "zod";
 
 export type GasSupplyPayload = z.infer<typeof GasSupplyPayloadSchema>;
 export type GasSupplyForm = z.infer<typeof GasSupplyFormSchema>;

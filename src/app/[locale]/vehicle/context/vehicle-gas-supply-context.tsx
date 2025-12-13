@@ -1,8 +1,8 @@
 "use client";
 
+import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
 import type { ReactNode } from "react";
 import * as React from "react";
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
 
 type GasSupplyFormContextValue = {
 	editingGasSupply?: GasSupplyData;

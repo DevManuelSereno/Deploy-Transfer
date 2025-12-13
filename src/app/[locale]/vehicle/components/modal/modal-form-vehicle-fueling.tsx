@@ -1,12 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { FileText } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useCallback, useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
@@ -16,11 +9,11 @@ import type {
 	GasSupplyData,
 	GasSupplyForm,
 	GasSupplyPayload,
-} from "@/app/[locale]/vehicle/types/types-vehicle-gas-supply";
+} from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
 import {
 	GasSupplyFormSchema,
 	GasSupplyPayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-gas-supply";
+} from "@/app/[locale]/vehicle/validation/validation-vehicle-fueling";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -45,6 +38,13 @@ import { InputNumber } from "@/components/ui/input-number";
 import { Skeleton } from "@/components/ui/skeleton";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
 import type { PostData, PutData } from "@/types/models";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type ModalFormProps = {
 	open: boolean;
