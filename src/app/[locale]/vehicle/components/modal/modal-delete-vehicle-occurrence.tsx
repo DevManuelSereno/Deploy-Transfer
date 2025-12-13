@@ -34,15 +34,15 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 		isPending: isLoadingDeleteOccurrence,
 	} = useMutation({
 		mutationFn: (val: DeleteData) => deleteData<OccurrenceType>(val),
-		mutationKey: ["occurrence-delete", editingOccurrence?.id],
+		mutationKey: ["occurrence-delete", editingOccurrence?.IDO],
 	});
 
 	const handleDeleteOccurrence = async () => {
-		if (!editingOccurrence?.id) return;
+		if (!editingOccurrence?.IDO) return;
 		try {
 			await mutateDeleteOccurrence({
 				url: "/occurrence",
-				id: editingOccurrence?.id,
+				id: editingOccurrence?.IDO,
 			});
 
 			if (editingVehicle)
@@ -76,24 +76,23 @@ export function ModalDeleteOccurrence({ open, setOpen }: ModalFormProps) {
 					<p className="mb-2 font-medium">{t("infoTitle")}</p>
 					<div className="grid gap-2">
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">{t("seriousness")}</p>
+							<p className="mb-0.5 text-muted-foreground">{t("severity")}</p>
 							<span className="text-foreground">
-								{editingOccurrence?.seriousnessId}
+								{editingOccurrence?.Severity}
 							</span>
 						</div>
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">
-								{t("occurrenceDate")}
-							</p>
+							<p className="mb-0.5 text-muted-foreground">{t("occurrenceAt")}</p>
 							<span className="text-foreground">
 								{editingOccurrence
-									? new Date(
-											editingOccurrence?.registerDate,
-										).toLocaleDateString("pt-BR", {
-											day: "2-digit",
-											month: "2-digit",
-											year: "numeric",
-										})
+									? new Date(editingOccurrence?.OccurrenceAt).toLocaleDateString(
+											"pt-BR",
+											{
+												day: "2-digit",
+												month: "2-digit",
+												year: "numeric",
+											},
+										)
 									: "-"}
 							</span>
 						</div>

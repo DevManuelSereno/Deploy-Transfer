@@ -16,7 +16,7 @@ export const getOccurrenceColumns = (
 	t: (key: string) => string,
 ): ColumnDef<OccurrenceData>[] => [
 	{
-		accessorKey: "occurrenceDate",
+		accessorKey: "OccurrenceAt",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -25,7 +25,7 @@ export const getOccurrenceColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("occurrenceDate")}
+						{t("occurrenceAt")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -48,7 +48,7 @@ export const getOccurrenceColumns = (
 		},
 	},
 	{
-		accessorKey: "classification",
+		accessorKey: "Classification",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -63,7 +63,6 @@ export const getOccurrenceColumns = (
 				</div>
 			);
 		},
-		cell: ({ cell }) => (cell.getValue() as ClassificationType).description,
 		enableColumnFilter: true,
 		size: 180,
 		meta: {
@@ -72,7 +71,7 @@ export const getOccurrenceColumns = (
 		},
 	},
 	{
-		accessorKey: "seriousness",
+		accessorKey: "Severity",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -81,13 +80,12 @@ export const getOccurrenceColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("seriousness")}
+						{t("severity")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
-		cell: ({ cell }) => (cell.getValue() as SeriousnessType).level,
 		enableColumnFilter: true,
 		size: 180,
 		meta: {

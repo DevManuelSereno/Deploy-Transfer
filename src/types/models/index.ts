@@ -3,6 +3,8 @@ export * from "./Category.schema";
 export * from "./Classification.schema";
 export * from "./Company.schema";
 export * from "./Documentation.schema";
+export * from "./Documents.schema";
+export * from "./Fueling.schema";
 export * from "./Gas.schema";
 export * from "./GasStation.schema";
 export * from "./GasSupply.schema";

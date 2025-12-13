@@ -1,28 +1,14 @@
 import type { z } from "zod";
 import type {
-	FileValueSchema,
 	OccurrenceFormSchema,
 	OccurrencePayloadSchema,
 } from "@/app/[locale]/vehicle/validation/validation-vehicle-occurrence";
-import type {
-	ClassificationType,
-	OccurrenceType,
-	SeriousnessType,
-} from "@/types/models";
-import type { FileType } from "@/types/models/File.schema";
+import type { OccurrenceType } from "@/types/models";
 
 export type OccurrencePayload = z.infer<typeof OccurrencePayloadSchema>;
 export type OccurrenceForm = z.infer<typeof OccurrenceFormSchema>;
 
-export type FileValue = z.infer<typeof FileValueSchema>;
-
-export type OccurrenceData = Omit<
-	OccurrenceType,
-	"occurrenceDate" | "registerDate"
-> & {
-	occurrenceDate: string;
-	registerDate: string;
-	file?: FileType | null;
-	classification: ClassificationType;
-	seriousness: SeriousnessType;
+export type OccurrenceData = OccurrenceType & {
+	// classification: ClassificationType;
+	// severity: SeriousnessType;
 };

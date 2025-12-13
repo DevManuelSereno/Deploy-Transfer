@@ -21,7 +21,6 @@ import {
 } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-occurrence";
 import { ModalDeleteOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-occurrence";
 import { ModalFormOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-occurrence";
-import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
 import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
@@ -36,8 +35,6 @@ export function FormOccurrence() {
 	const tColumns = useTranslations("VehiclePage.Occurrence.columns");
 	const { setEditingOccurrence } = useOccurrenceFormContext();
 	const { editingVehicle } = useVehicleFormContext();
-
-	const { setTabPanel } = useModalContext();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -62,7 +59,7 @@ export function FormOccurrence() {
 				signal,
 				query:
 					`where.vehicleId=${vehicleId}&&include.file=true&&` +
-					"include.classification&&include.seriousness=true",
+					"include.classification&&include.severity=true",
 			}),
 		enabled: !!vehicleId,
 	});
