@@ -68,7 +68,9 @@ export function FormVehicleData() {
 			LuggageCapacity: vehicle.LuggageCapacity ?? 0,
 			Category: vehicle.Category,
 			RegistrationCode: vehicle.RegistrationCode,
-			Amenities: [vehicle.Amenities ?? ""],
+			Amenities: [
+				{ value: vehicle.Amenities ?? "", label: vehicle.Amenities ?? "" },
+			],
 			InspectionInterval: vehicle.InspectionInterval ?? 0,
 			CompanyId: String(vehicle.CompanyId),
 			BrandId: String(vehicle.BrandId),
@@ -515,7 +517,7 @@ export function FormVehicleData() {
 										<FormFieldMultiSelect
 											label={t("amenities")}
 											value={field.value ?? []}
-											onValueChange={field.onChange}
+											onChange={field.onChange}
 											aria-invalid={fieldState.invalid}
 											options={amenitiesOptions}
 											placeholder={t("selectAmenities")}
