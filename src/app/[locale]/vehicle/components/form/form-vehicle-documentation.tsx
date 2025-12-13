@@ -99,7 +99,7 @@ export function FormDocumentation() {
 	);
 
 	const tableData = useMemo(
-		() => (isLoading ? Array(10).fill({}) : (dataDocumentation ?? [])),
+		() => (isLoading ? Array(5).fill({}) : (dataDocumentation ?? [])),
 		[isLoading, dataDocumentation],
 	);
 	const tableColumns = useMemo(

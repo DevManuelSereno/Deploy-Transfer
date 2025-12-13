@@ -101,7 +101,7 @@ export function FormGasSupply() {
 	);
 
 	const tableData = useMemo(
-		() => (isLoading ? Array(10).fill({}) : (dataGasSupply ?? [])),
+		() => (isLoading ? Array(5).fill({}) : (dataGasSupply ?? [])),
 		[isLoading, dataGasSupply],
 	);
 	const tableColumns = useMemo(

@@ -98,7 +98,7 @@ export function FormOccurrence() {
 		[actions, tColumns],
 	);
 	const tableData = useMemo(
-		() => (isLoading ? Array(10).fill({}) : (dataOccurrence ?? [])),
+		() => (isLoading ? Array(5).fill({}) : (dataOccurrence ?? [])),
 		[isLoading, dataOccurrence],
 	);
 	const tableColumns = useMemo(
