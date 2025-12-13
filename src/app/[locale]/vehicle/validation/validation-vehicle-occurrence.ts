@@ -11,8 +11,8 @@ const OccurrenceBaseSchema = OccurrenceSchema.omit({
 export const FileValueSchema = FileSchema;
 
 export const OccurrencePayloadSchema = OccurrenceBaseSchema.extend({
-	occurrenceDate: z.string().datetime(),
-	registerDate: z.string().datetime(),
+	occurrenceDate: z.iso.datetime(),
+	registerDate: z.iso.datetime(),
 	vehicleId: z.coerce.number(),
 	seriousnessId: z.coerce.number(),
 	classificationId: z.coerce.number(),
