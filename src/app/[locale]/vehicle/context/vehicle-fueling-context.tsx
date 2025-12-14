@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import * as React from "react";
-import type { FuelingData } from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
+import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
 
 type FuelingFormContextValue = {
 	editingFueling?: FuelingData;

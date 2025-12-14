@@ -33,15 +33,15 @@ export function ModalDeleteFueling({ open, setOpen }: ModalFormProps) {
 		isPending: isLoadingDeleteFueling,
 	} = useMutation({
 		mutationFn: (val: DeleteData) => deleteData<FuelingType>(val),
-		mutationKey: ["fueling-delete", editingFueling?.id],
+		mutationKey: ["fueling-delete", editingFueling?.IDF],
 	});
 
 	const handleDeleteFueling = async () => {
-		if (!editingFueling?.id) return;
+		if (!editingFueling?.IDF) return;
 		try {
 			await mutateDeleteFueling({
 				url: "/fueling",
-				id: editingFueling?.id,
+				id: editingFueling?.IDF,
 			});
 
 			if (editingVehicle)
@@ -78,27 +78,24 @@ export function ModalDeleteFueling({ open, setOpen }: ModalFormProps) {
 							<p className="mb-0.5 text-muted-foreground">{t("supplyDate")}</p>
 							<span className="text-foreground">
 								{editingFueling
-									? new Date(editingFueling?.supplyAt).toLocaleDateString(
-											"pt-BR",
-											{
-												day: "2-digit",
-												month: "2-digit",
-												year: "numeric",
-											},
-										)
+									? new Date(editingFueling?.Date).toLocaleDateString("pt-BR", {
+											day: "2-digit",
+											month: "2-digit",
+											year: "numeric",
+										})
 									: "-"}
 							</span>
 						</div>
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("station")}</p>
 							<span className="text-foreground">
-								{editingFueling?.gasStation?.name || "-"}
+								{editingFueling?.Station || "-"}
 							</span>
 						</div>
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("fuel")}</p>
 							<span className="text-foreground">
-								{editingFueling?.gas?.type || "-"}
+								{editingFueling?.FuelType || "-"}
 							</span>
 						</div>
 					</div>
