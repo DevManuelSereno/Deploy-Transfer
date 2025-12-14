@@ -3,7 +3,6 @@
 import { useTranslations } from "next-intl";
 import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
 import {
 	Dialog,
 	DialogClose,
@@ -13,27 +12,25 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/sonner";
 
 interface ModalDeleteFuelingProps {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 }
 
-export function ModalDeleteFueling({
-	open,
-	setOpen,
-}: ModalDeleteFuelingProps) {
+export function ModalDeleteFueling({ open, setOpen }: ModalDeleteFuelingProps) {
 	const t = useTranslations("FuelingPage.Delete");
 	const { editingFueling, setEditingFueling } = useFuelingFormContext();
 
 	const handleDelete = () => {
 		// Delete logic will be implemented here
 		console.log("Deleting fueling:", editingFueling);
-		
+
 		toast.success({
 			title: t("successMessage"),
 		});
-		
+
 		setOpen(false);
 		setEditingFueling(undefined);
 	};
@@ -49,23 +46,19 @@ export function ModalDeleteFueling({
 				<div className="flex items-center gap-3 p-6">
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
-						<DialogDescription>
-							{t("description")}
-						</DialogDescription>
+						<DialogDescription>{t("description")}</DialogDescription>
 					</DialogHeader>
 				</div>
 				<div className="text-sm px-6">
 					<p className="mb-2 font-medium">{t("fuelingInfo")}</p>
 					<div className="grid gap-2">
 						<div className="truncate">
-							<p className="mb-0.5 text-muted-foreground">{t("vehiclePlate")}</p>
-							<span className="text-foreground">{editingFueling?.VehiclePlate}</span>
-						</div>
-						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("date")}</p>
 							<span className="text-foreground">
-								{editingFueling?.Date
-									? new Date(editingFueling.Date).toLocaleDateString("pt-BR")
+								{editingFueling?.FuelingAt
+									? new Date(editingFueling.FuelingAt).toLocaleDateString(
+											"pt-BR",
+										)
 									: "-"}
 							</span>
 						</div>
@@ -75,11 +68,7 @@ export function ModalDeleteFueling({
 					<DialogClose asChild>
 						<Button variant="outline">{t("cancel")}</Button>
 					</DialogClose>
-					<Button
-						variant="destructive"
-						type="button"
-						onClick={handleDelete}
-					>
+					<Button variant="destructive" type="button" onClick={handleDelete}>
 						{t("delete")}
 					</Button>
 				</DialogFooter>
