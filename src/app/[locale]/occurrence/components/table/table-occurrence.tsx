@@ -250,12 +250,6 @@ export default function TableOccurrence() {
 						/>
 					</div>
 					<div className="flex items-center gap-2">
-						<DataTableUpdate handleUpdate={handleUpdate} />
-						<DataTableExport />
-						<Separator
-							orientation="vertical"
-							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-						/>
 						<Button
 							onClick={() => {
 								setEditingOccurrence(undefined);
