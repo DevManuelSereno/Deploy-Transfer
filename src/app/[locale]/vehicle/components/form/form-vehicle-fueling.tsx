@@ -32,7 +32,7 @@ import { DataTableProvider } from "@/providers/data-table-provider";
 
 export function FormFueling() {
 	const t = useTranslations("VehiclePage.Fueling");
-	const tColumns = useTranslations("VehiclePage.Fueling.columns");
+	const tColumns = useTranslations("FuelingPage.Table.Columns");
 	const { setEditingFueling } = useFuelingFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 
