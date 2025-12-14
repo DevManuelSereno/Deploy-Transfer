@@ -1,20 +1,19 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
+import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
+import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
 import { Button } from "@/components/ui/button";
 import type { GasStationType, GasType } from "@/types/models";
-import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 
-export interface GasSupplyColumnActions {
-	onEdit: (document: GasSupplyData) => void;
-	onDelete: (document: GasSupplyData) => void;
+export interface FuelingColumnActions {
+	onEdit: (document: FuelingData) => void;
+	onDelete: (document: FuelingData) => void;
 }
-export const getGasSupplyColumns = (
-	actions: GasSupplyColumnActions,
+export const getFuelingColumns = (
+	actions: FuelingColumnActions,
 	t: (key: string) => string,
-): ColumnDef<GasSupplyData>[] => [
+): ColumnDef<FuelingData>[] => [
 	{
 		accessorKey: "supplyAt",
 		cell: ({ cell }) => {

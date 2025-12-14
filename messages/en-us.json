@@ -37,6 +37,9 @@
 		"cancel": "Cancel",
 		"register": "Register"
 	},
+	"Api": {
+		"genericErrorMessage": "Error communicating with the server (unknown error)"
+	},
 	"HomePage": {
 		"title": "Dashboard"
 	},
@@ -45,7 +48,7 @@
 		"Tabs": {
 			"generalData": "General data",
 			"documentation": "Documentation",
-			"gasSupply": "Fuel supply",
+			"fueling": "Fueling",
 			"occurrence": "Occurrence",
 			"addDataFirstMessage": "Add the vehicle's general data before continuing."
 		},
@@ -86,7 +89,7 @@
 				"successUpdate": "Document updated successfully"
 			}
 		},
-		"GasSupply": {
+		"Fueling": {
 			"addButton": "Add fuel supply",
 			"delete": {
 				"title": "Are you sure?",
@@ -325,6 +328,7 @@
 			"location": "Location",
 			"driver": "Driver",
 			"notes": "Notes",
+			"receipt": "Receipt",
 			"selectVehicle": "Select a vehicle",
 			"selectFuelType": "Select fuel type",
 			"cancel": "Cancel",

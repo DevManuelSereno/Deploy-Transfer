@@ -4,7 +4,7 @@ import { createOptionsMapper } from "@/app/[locale]/vehicle/hooks/use-vehicle-fo
 import { getData } from "@/lib/functions.api";
 import type { GasStationType, GasType } from "@/types/models";
 
-export function useGasSupplyFormOptions() {
+export function useFuelingFormOptions() {
 	const queryConfig = {
 		refetchOnWindowFocus: false,
 		refetchOnMount: false,

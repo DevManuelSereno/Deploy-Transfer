@@ -37,6 +37,9 @@
 		"cancel": "Cancelar",
 		"register": "Registrar"
 	},
+	"Api": {
+		"genericErrorMessage": "Error al comunicarse con el servidor (error desconocido)"
+	},
 	"HomePage": {
 		"title": "Panel de Control"
 	},
@@ -45,7 +48,7 @@
 		"Tabs": {
 			"generalData": "Datos generales",
 			"documentation": "Documentación",
-			"gasSupply": "Abastecimiento",
+			"fueling": "Abastecimiento",
 			"occurrence": "Ocurrencia",
 			"addDataFirstMessage": "Añada los datos generales del vehículo antes de continuar."
 		},
@@ -86,7 +89,7 @@
 				"successUpdate": "Documento actualizado exitosamente"
 			}
 		},
-		"GasSupply": {
+		"Fueling": {
 			"addButton": "Añadir abastecimiento",
 			"delete": {
 				"title": "¿Está seguro?",
@@ -322,6 +325,7 @@
 			"odometer": "Odómetro",
 			"fuelType": "Tipo de combustible",
 			"station": "Estación",
+			"receipt": "Recibo",
 			"location": "Ubicación",
 			"driver": "Conductor",
 			"notes": "Notas",

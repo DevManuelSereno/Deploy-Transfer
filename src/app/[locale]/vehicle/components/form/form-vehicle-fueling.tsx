@@ -1,19 +1,4 @@
 "use client";
-import {
-	type GasSupplyColumnActions,
-	getGasSupplyColumns,
-} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-fueling";
-import { ModalDeleteGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-fueling";
-import { ModalFormGasSupply } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-fueling";
-import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
-import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
-import type { GasSupplyData } from "@/app/[locale]/vehicle/types/types-vehicle-fueling";
-import { DataTable } from "@/components/data-table";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getData } from "@/lib/functions.api";
-import { DataTableProvider } from "@/providers/data-table-provider";
 import { useQuery } from "@tanstack/react-query";
 import {
 	type ColumnFiltersState,
@@ -30,11 +15,26 @@ import {
 } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
+import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
+import {
+	type FuelingColumnActions,
+	getFuelingColumns,
+} from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-fueling";
+import { ModalDeleteFueling } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-fueling";
+import { ModalFormFueling } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-fueling";
+import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
+import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
+import { useFuelingFormContext } from "@/app/[locale]/vehicle/context/vehicle-fueling-context";
+import { DataTable } from "@/components/data-table";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getData } from "@/lib/functions.api";
+import { DataTableProvider } from "@/providers/data-table-provider";
 
-export function FormGasSupply() {
-	const t = useTranslations("VehiclePage.GasSupply");
-	const tColumns = useTranslations("VehiclePage.GasSupply.columns");
-	const { setEditingGasSupply } = useGasSupplyFormContext();
+export function FormFueling() {
+	const t = useTranslations("VehiclePage.Fueling");
+	const tColumns = useTranslations("VehiclePage.Fueling.columns");
+	const { setEditingFueling } = useFuelingFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 
 	const { setTabPanel } = useModalContext();
@@ -54,11 +54,11 @@ export function FormGasSupply() {
 
 	const vehicleId = editingVehicle?.IDV;
 
-	const { data: dataGasSupply, isLoading } = useQuery({
-		queryKey: ["gas-supply-get", vehicleId],
+	const { data: dataFueling, isLoading } = useQuery({
+		queryKey: ["fueling-get", vehicleId],
 		queryFn: ({ signal }) =>
-			getData<GasSupplyData[]>({
-				url: "/gasSupply",
+			getData<FuelingData[]>({
+				url: "/fueling",
 				signal,
 				query:
 					`where.vehicleId=${vehicleId}&&include.file=true&&` +
@@ -68,22 +68,22 @@ export function FormGasSupply() {
 	});
 
 	const openEditModal = useCallback(
-		(gasSupply: GasSupplyData) => {
-			setEditingGasSupply(gasSupply);
+		(fueling: FuelingData) => {
+			setEditingFueling(fueling);
 			setIsModalFormOpen(true);
 		},
-		[setEditingGasSupply],
+		[setEditingFueling],
 	);
 
 	const handleOpenDeleteModal = useCallback(
-		(gasSupply?: GasSupplyData) => {
-			setEditingGasSupply(gasSupply);
+		(fueling?: FuelingData) => {
+			setEditingFueling(fueling);
 			setIsModalDeleteOpen(true);
 		},
-		[setEditingGasSupply],
+		[setEditingFueling],
 	);
 
-	const actions: GasSupplyColumnActions = useMemo(
+	const actions: FuelingColumnActions = useMemo(
 		() => ({
 			onEdit: openEditModal,
 			onDelete: handleOpenDeleteModal,
@@ -92,13 +92,13 @@ export function FormGasSupply() {
 	);
 
 	const columns = useMemo(
-		() => getGasSupplyColumns(actions, tColumns as any),
+		() => getFuelingColumns(actions, tColumns as any),
 		[actions, tColumns],
 	);
 
 	const tableData = useMemo(
-		() => (isLoading ? Array(5).fill({}) : (dataGasSupply ?? [])),
-		[isLoading, dataGasSupply],
+		() => (isLoading ? Array(5).fill({}) : (dataFueling ?? [])),
+		[isLoading, dataFueling],
 	);
 	const tableColumns = useMemo(
 		() =>
@@ -111,7 +111,7 @@ export function FormGasSupply() {
 		[isLoading, columns],
 	);
 
-	const table = useReactTable<GasSupplyData>({
+	const table = useReactTable<FuelingData>({
 		data: tableData,
 		columns: tableColumns,
 		getCoreRowModel: getCoreRowModel(),
@@ -142,16 +142,16 @@ export function FormGasSupply() {
 			<Button
 				type="button"
 				onClick={() => {
-					setEditingGasSupply(undefined);
+					setEditingFueling(undefined);
 					setIsModalFormOpen(true);
 				}}
 			>
 				{t("addButton")}
 			</Button>
 
-			<ModalFormGasSupply open={isModalFormOpen} setOpen={setIsModalFormOpen} />
+			<ModalFormFueling open={isModalFormOpen} setOpen={setIsModalFormOpen} />
 
-			<ModalDeleteGasSupply
+			<ModalDeleteFueling
 				open={isModalDeleteOpen}
 				setOpen={setIsModalDeleteOpen}
 			/>

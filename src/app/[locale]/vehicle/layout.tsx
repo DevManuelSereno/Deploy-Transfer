@@ -1,7 +1,7 @@
 import { ModalTableVehicleProvider } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { VehicleFormProvider } from "@/app/[locale]/vehicle/context/vehicle-context";
 import { DocumentationFormProvider } from "@/app/[locale]/vehicle/context/vehicle-documentation-context";
-import { GasSupplyFormProvider } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
+import { FuelingFormProvider } from "@/app/[locale]/vehicle/context/vehicle-fueling-context";
 import { OccurrenceFormProvider } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
 
 export default async function Layout({
@@ -12,11 +12,11 @@ export default async function Layout({
 	return (
 		<VehicleFormProvider>
 			<DocumentationFormProvider>
-				<GasSupplyFormProvider>
+				<FuelingFormProvider>
 					<OccurrenceFormProvider>
 						<ModalTableVehicleProvider>{children}</ModalTableVehicleProvider>
 					</OccurrenceFormProvider>
-				</GasSupplyFormProvider>
+				</FuelingFormProvider>
 			</DocumentationFormProvider>
 		</VehicleFormProvider>
 	);

@@ -37,6 +37,9 @@
 		"cancel": "Cancelar",
 		"register": "Registrar"
 	},
+	"Api": {
+		"genericErrorMessage": "Erro ao comunicar-se com o servidor (erro desconhecido)"
+	},
 	"HomePage": {
 		"title": "Dashboard"
 	},
@@ -45,7 +48,7 @@
 		"Tabs": {
 			"generalData": "Dados gerais",
 			"documentation": "Documentação",
-			"gasSupply": "Abastecimento",
+			"fueling": "Abastecimento",
 			"occurrence": "Ocorrência",
 			"addDataFirstMessage": "Adicione os dados gerais do veículo antes de continuar."
 		},
@@ -86,7 +89,7 @@
 				"successUpdate": "Documento atualizado com sucesso"
 			}
 		},
-		"GasSupply": {
+		"Fueling": {
 			"addButton": "Adicionar abastecimento",
 			"delete": {
 				"title": "Tem certeza",

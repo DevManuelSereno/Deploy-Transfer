@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import { useGasSupplyFormContext } from "@/app/[locale]/vehicle/context/vehicle-gas-supply-context";
+import { useFuelingFormContext } from "@/app/[locale]/vehicle/context/vehicle-fueling-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -15,41 +15,41 @@ import {
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { deleteData, toastErrorsApi } from "@/lib/functions.api";
-import type { DeleteData, GasSupplyType } from "@/types/models";
+import type { DeleteData, FuelingType } from "@/types/models";
 
 type ModalFormProps = {
 	open: boolean;
 	setOpen: (open: boolean) => void;
 };
 
-export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
-	const t = useTranslations("VehiclePage.GasSupply.delete");
-	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
+export function ModalDeleteFueling({ open, setOpen }: ModalFormProps) {
+	const t = useTranslations("VehiclePage.Fueling.delete");
+	const { editingFueling, setEditingFueling } = useFuelingFormContext();
 	const { editingVehicle } = useVehicleFormContext();
 	const queryClient = useQueryClient();
 
 	const {
-		mutateAsync: mutateDeleteGasSupply,
-		isPending: isLoadingDeleteGasSupply,
+		mutateAsync: mutateDeleteFueling,
+		isPending: isLoadingDeleteFueling,
 	} = useMutation({
-		mutationFn: (val: DeleteData) => deleteData<GasSupplyType>(val),
-		mutationKey: ["gas-supply-delete", editingGasSupply?.id],
+		mutationFn: (val: DeleteData) => deleteData<FuelingType>(val),
+		mutationKey: ["fueling-delete", editingFueling?.id],
 	});
 
-	const handleDeleteGasSupply = async () => {
-		if (!editingGasSupply?.id) return;
+	const handleDeleteFueling = async () => {
+		if (!editingFueling?.id) return;
 		try {
-			await mutateDeleteGasSupply({
-				url: "/gasSupply",
-				id: editingGasSupply?.id,
+			await mutateDeleteFueling({
+				url: "/fueling",
+				id: editingFueling?.id,
 			});
 
 			if (editingVehicle)
 				await queryClient.invalidateQueries({
-					queryKey: ["gas-supply-get", editingVehicle?.IDV],
+					queryKey: ["fueling-get", editingVehicle?.IDV],
 				});
 
-			setEditingGasSupply(undefined);
+			setEditingFueling(undefined);
 			toast.success(t("successMessage"));
 			setOpen(false);
 		} catch (error: any) {
@@ -77,8 +77,8 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("supplyDate")}</p>
 							<span className="text-foreground">
-								{editingGasSupply
-									? new Date(editingGasSupply?.supplyAt).toLocaleDateString(
+								{editingFueling
+									? new Date(editingFueling?.supplyAt).toLocaleDateString(
 											"pt-BR",
 											{
 												day: "2-digit",
@@ -92,13 +92,13 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("station")}</p>
 							<span className="text-foreground">
-								{editingGasSupply?.gasStation?.name || "-"}
+								{editingFueling?.gasStation?.name || "-"}
 							</span>
 						</div>
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("fuel")}</p>
 							<span className="text-foreground">
-								{editingGasSupply?.gas?.type || "-"}
+								{editingFueling?.gas?.type || "-"}
 							</span>
 						</div>
 					</div>
@@ -107,13 +107,13 @@ export function ModalDeleteGasSupply({ open, setOpen }: ModalFormProps) {
 					<DialogClose asChild>
 						<Button variant="outline">{t("cancel")}</Button>
 					</DialogClose>
-					{isLoadingDeleteGasSupply ? (
+					{isLoadingDeleteFueling ? (
 						<Skeleton className="rounded-md w-full h-8" />
 					) : (
 						<Button
 							variant="destructive"
 							type="button"
-							onClick={handleDeleteGasSupply}
+							onClick={handleDeleteFueling}
 						>
 							{t("delete")}
 						</Button>

@@ -4,7 +4,7 @@ import { FileText, Fuel, Info, TriangleAlert } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FormVehicleData } from "@/app/[locale]/vehicle/components/form/form-vehicle-data";
 import { FormDocumentation } from "@/app/[locale]/vehicle/components/form/form-vehicle-documentation";
-import { FormGasSupply } from "@/app/[locale]/vehicle/components/form/form-vehicle-fueling";
+import { FormFueling } from "@/app/[locale]/vehicle/components/form/form-vehicle-fueling";
 import { FormOccurrence } from "@/app/[locale]/vehicle/components/form/form-vehicle-occurrence";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -59,14 +59,14 @@ export default function TabsVehicle() {
 					{t("documentation")}
 				</TabsTrigger>
 				<TabsTrigger
-					value="tab-gas-supply"
+					value="tab-fueling"
 					className={cn(
 						"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
 						"after:-mb-1.5 after:h-[3px] after:rounded-t",
 					)}
 				>
 					<Fuel />
-					{t("gasSupply")}
+					{t("fueling")}
 				</TabsTrigger>
 				<TabsTrigger
 					value="tab-occurrence"
@@ -86,8 +86,8 @@ export default function TabsVehicle() {
 				<TabsContent id="tab-documentation" value="tab-documentation">
 					<FormDocumentation />
 				</TabsContent>
-				<TabsContent id="tab-gas-supply" value="tab-gas-supply">
-					<FormGasSupply />
+				<TabsContent id="tab-fueling" value="tab-fueling">
+					<FormFueling />
 				</TabsContent>
 				<TabsContent id="tab-occurrence" value="tab-occurrence">
 					<FormOccurrence />
