@@ -295,6 +295,67 @@
 		"description": "Use o assistente de IA para gerar relatórios diretamente do seu painel.",
 		"footer": "Desenvolvido por PASS — © 2025"
 	},
+	"FuelingPage": {
+		"title": "Abastecimento",
+		"Modal": {
+			"title": "Novo abastecimento",
+			"description": "Preencha os campos abaixo para cadastrar um novo abastecimento."
+		},
+		"Delete": {
+			"title": "Tem certeza",
+			"description": "Essa ação não pode ser desfeita. Isso excluirá permanentemente o registro de abastecimento de nossos servidores.",
+			"fuelingInfo": "Informações do abastecimento:",
+			"vehiclePlate": "Placa do veículo",
+			"date": "Data",
+			"cancel": "Cancelar",
+			"delete": "Excluir",
+			"successMessage": "Abastecimento deletado com sucesso"
+		},
+		"Form": {
+			"title": "Novo abastecimento",
+			"description": "Preencha os campos abaixo para cadastrar um novo abastecimento.",
+			"vehicle": "Veículo",
+			"date": "Data",
+			"liters": "Litros",
+			"pricePerLiter": "Preço por litro",
+			"totalCost": "Custo total",
+			"odometer": "Odômetro",
+			"fuelType": "Tipo de combustível",
+			"station": "Posto",
+			"location": "Local",
+			"driver": "Motorista",
+			"notes": "Observações",
+			"receipt": "Nota fiscal",
+			"selectVehicle": "Selecione um veículo",
+			"selectFuelType": "Selecione o tipo de combustível",
+			"cancel": "Cancelar",
+			"save": "Salvar",
+			"errorMessage": "Por favor, corrija os erros no formulário.",
+			"successCreate": "Abastecimento cadastrado com sucesso",
+			"successUpdate": "Abastecimento atualizado com sucesso"
+		},
+		"Table": {
+			"Filters": {
+				"fuelType": "Tipo de combustível",
+				"vehicle": "Veículo"
+			},
+			"Columns": {
+				"id": "ID",
+				"vehiclePlate": "Placa",
+				"date": "Data",
+				"liters": "Litros",
+				"pricePerLiter": "Preço/Litro",
+				"totalCost": "Custo Total",
+				"odometer": "Odômetro",
+				"fuelType": "Combustível",
+				"station": "Posto",
+				"location": "Local",
+				"driver": "Motorista",
+				"createdAt": "Criado em",
+				"updatedAt": "Última atualização"
+			}
+		}
+	},
 	"BrandPage": {
 		"title": "Marcas",
 		"Modal": {

@@ -54,6 +54,7 @@ type ModalFormProps = {
 
 export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 	const t = useTranslations("VehiclePage.GasSupply.modal");
+	const tForm = useTranslations("Form");
 	const { editingGasSupply, setEditingGasSupply } = useGasSupplyFormContext();
 
 	const { editingVehicle } = useVehicleFormContext();
@@ -229,6 +230,7 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 					autoComplete="off"
 					onSubmit={handleSubmit(onSubmit, onErrors)}
 					className="flex w-full flex-col gap-4 p-6 overflow-hidden flex-1 overflow-y-auto"
+					id="fueling-form"
 				>
 					<Controller
 						name="gasStationId"
@@ -478,17 +480,14 @@ export function ModalFormGasSupply({ open, setOpen }: ModalFormProps) {
 							);
 						}}
 					/>
-					<DialogFooter className="flex gap-2 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl py-4">
-						<DialogClose asChild>
-							<Button variant="outline">{t("cancel")}</Button>
-						</DialogClose>
-						{loading ? (
-							<Skeleton className="rounded-md w-full h-8" />
-						) : (
-							<Button type="submit">{t("save")}</Button>
-						)}
-					</DialogFooter>
 				</form>
+				<DialogFooter className="flex gap-4 sm:flex-row sm:justify-end flex-row justify-between! border-t rounded-b-xl px-6 pt-6 pb-4">
+					<DialogClose asChild>
+						<Button variant="outline">{tForm("cancel")}</Button>
+					</DialogClose>
+
+					<Button type="submit" form="fueling-form">{tForm("register")}</Button>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	);
