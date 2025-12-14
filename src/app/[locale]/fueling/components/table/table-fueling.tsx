@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -32,8 +32,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { FuelingColumnActions } from "../columns/columns-table-fueling";
@@ -42,7 +40,7 @@ export default function TableFueling() {
 	const tFilters = useTranslations("FuelingPage.Table.Filters");
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("FuelingPage.Table.Columns");
-	const { setEditingFueling } = useFuelingFormContext();
+	const { setEditingFueling, editingFueling } = useFuelingFormContext();
 	const queryClient = useQueryClient();
 
 	const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -341,7 +339,7 @@ export default function TableFueling() {
 					<DataTablePagination />
 				</DataTableProvider>
 				<ModalTableFueling open={isModalEditOpen} setOpen={setIsModalEditOpen}>
-					<FormFuelingData />
+					<FormFuelingData editingFueling={editingFueling} />
 				</ModalTableFueling>
 				<ModalDeleteFueling
 					open={isModalDeleteOpen}

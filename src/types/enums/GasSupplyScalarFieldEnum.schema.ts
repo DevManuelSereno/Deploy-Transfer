@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const GasSupplyScalarFieldEnumSchema = z.enum([
+export const FuelingScalarFieldEnumSchema = z.enum([
 	"id",
 	"kmToReview",
 	"kmToStop",
@@ -14,6 +14,6 @@ export const GasSupplyScalarFieldEnumSchema = z.enum([
 	"updatedAt",
 ]);
 
-export type GasSupplyScalarFieldEnum = z.infer<
-	typeof GasSupplyScalarFieldEnumSchema
+export type FuelingScalarFieldEnum = z.infer<
+	typeof FuelingScalarFieldEnumSchema
 >;

@@ -1,33 +1,38 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { Controller, useForm } from "react-hook-form";
 import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import type {
 	FuelingData,
 	FuelingForm,
-	FuelingPayload,
 } from "@/app/[locale]/fueling/types/types-fueling";
 import { FuelingFormSchema } from "@/app/[locale]/fueling/validation/validation-fueling";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
 import { FormFieldText } from "@/components/form/form-field-text";
-import { Form, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FilePreviewList } from "@/components/ui/file-preview-list";
+import {
+	Form,
+	FormControl,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { FormDatePicker } from "@/components/ui/form-date-picker";
+import { InputFile } from "@/components/ui/input-file";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { InputFile } from "@/components/ui/input-file";
-import { FilePreviewList } from "@/components/ui/file-preview-list";
 import { toast } from "@/components/ui/sonner";
-import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
-import type { PostData, PutData } from "@/types/models";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { toastErrorsApi } from "@/lib/functions.api";
 
-export function FormFuelingData() {
+interface FormFuelingProps {
+	editingFueling?: FuelingData;
+}
+
+export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 	const t = useTranslations("FuelingPage.Form");
-	const { editingFueling, setEditingFueling } = useFuelingFormContext();
 
 	const buildDefaultValues = (fueling?: FuelingData): FuelingForm => {
 		if (!fueling) {
@@ -67,10 +72,6 @@ export function FormFuelingData() {
 		resolver: zodResolver(FuelingFormSchema),
 		defaultValues: buildDefaultValues(editingFueling),
 	});
-
-	useEffect(() => {
-		form.reset(buildDefaultValues(editingFueling));
-	}, [editingFueling]);
 
 	const loading = false;
 
@@ -164,8 +165,12 @@ export function FormFuelingData() {
 											<FormControl>
 												<FormDatePicker
 													id={field.name}
-													value={field.value ? new Date(field.value) : undefined}
-													onChange={(date) => field.onChange(date?.toISOString().split("T")[0])}
+													value={
+														field.value ? new Date(field.value) : undefined
+													}
+													onChange={(date) =>
+														field.onChange(date?.toISOString().split("T")[0])
+													}
 													onBlur={field.onBlur}
 													aria-invalid={fieldState.invalid}
 													placeholder="15/12/2024"
@@ -361,7 +366,11 @@ export function FormFuelingData() {
 								name="file"
 								control={form.control}
 								render={({ field, fieldState }) => {
-									const files = Array.isArray(field.value) ? field.value : field.value ? [field.value] : [];
+									const files = Array.isArray(field.value)
+										? field.value
+										: field.value
+											? [field.value]
+											: [];
 									return loading ? (
 										<Skeleton className="rounded-md w-full h-20" />
 									) : (
@@ -374,7 +383,11 @@ export function FormFuelingData() {
 														name={field.name}
 														value={files.filter((f) => f)}
 														onChange={(val) => {
-															const next = Array.isArray(val) ? val : val ? [val] : [];
+															const next = Array.isArray(val)
+																? val
+																: val
+																	? [val]
+																	: [];
 															field.onChange(next);
 														}}
 														ref={field.ref}
@@ -385,8 +398,14 @@ export function FormFuelingData() {
 													<FilePreviewList
 														files={files.filter((f) => f)}
 														onRemove={(id) => {
-															const current = Array.isArray(field.value) ? field.value : field.value ? [field.value] : [];
-															const next = current.filter((f: any) => f.id !== id);
+															const current = Array.isArray(field.value)
+																? field.value
+																: field.value
+																	? [field.value]
+																	: [];
+															const next = current.filter(
+																(f: any) => f.id !== id,
+															);
 															field.onChange(next);
 														}}
 													/>
