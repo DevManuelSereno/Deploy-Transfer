@@ -3,7 +3,7 @@
 import { FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FormFuelingData } from "@/app/[locale]/fueling/components/form/form-fueling-data";
-import { useFuelingFormContext } from "@/app/[locale]/vehicle/context/vehicle-fueling-context";
+import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,

@@ -3,16 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { Controller, useForm } from "react-hook-form";
-import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import type {
 	FuelingData,
 	FuelingForm,
 } from "@/app/[locale]/fueling/types/types-fueling";
 import { FuelingFormSchema } from "@/app/[locale]/fueling/validation/validation-fueling";
+import { FormErrorMessage } from "@/components/form/form-error-message";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
-import { FormFieldText } from "@/components/form/form-field-text";
-import { FilePreviewList } from "@/components/ui/file-preview-list";
 import {
 	Form,
 	FormControl,
@@ -21,11 +19,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { FormDatePicker } from "@/components/ui/form-date-picker";
-import { InputFile } from "@/components/ui/input-file";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
 import { toastErrorsApi } from "@/lib/functions.api";
+import { cn } from "@/lib/utils";
 
 interface FormFuelingProps {
 	editingFueling?: FuelingData;
@@ -37,34 +35,26 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 	const buildDefaultValues = (fueling?: FuelingData): FuelingForm => {
 		if (!fueling) {
 			return {
-				VehicleId: "",
-				Date: new Date().toISOString().split("T")[0],
-				Liters: 0,
-				PricePerLiter: 0,
-				TotalCost: 0,
+				FuelingAt: new Date().toISOString(),
+				DriverId: "1",
+				VehicleId: "1",
+				ProviderId: "1",
+				MaintenanceDue: null,
 				Odometer: 0,
-				FuelType: "",
-				Station: "",
-				Location: "",
-				Driver: "",
-				Notes: "",
-				file: [],
+				Fuel: "Gasolina",
+				Total: 0,
 			};
 		}
 
 		return {
+			FuelingAt: fueling.FuelingAt,
+			DriverId: String(fueling.DriverId),
 			VehicleId: String(fueling.VehicleId),
-			Date: fueling.Date,
-			Liters: fueling.Liters,
-			PricePerLiter: fueling.PricePerLiter,
-			TotalCost: fueling.TotalCost,
+			ProviderId: String(fueling.ProviderId),
+			MaintenanceDue: fueling.MaintenanceDue ?? null,
 			Odometer: fueling.Odometer,
-			FuelType: fueling.FuelType,
-			Station: fueling.Station,
-			Location: fueling.Location,
-			Driver: fueling.Driver || "",
-			Notes: fueling.Notes || "",
-			file: [],
+			Fuel: fueling.Fuel,
+			Total: fueling.Total,
 		};
 	};
 
@@ -72,6 +62,7 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 		resolver: zodResolver(FuelingFormSchema),
 		defaultValues: buildDefaultValues(editingFueling),
 	});
+	const hasErrors = Object.keys(form.formState.errors)?.length > 0;
 
 	const loading = false;
 
@@ -81,7 +72,7 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 		{ label: "JKL3E55 - HB20", value: "3" },
 	];
 
-	const fuelTypeOptions = [
+	const fuelOptions = [
 		{ label: "Gasolina", value: "Gasolina" },
 		{ label: "Diesel", value: "Diesel" },
 		{ label: "Etanol", value: "Etanol" },
@@ -97,12 +88,16 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 		{ label: "Posto Ale", value: "Posto Ale" },
 	];
 
-	const onErrors = (error: any) => {
-		console.log(error);
-		toast.error({
-			title: t("errorMessage"),
-		});
-	};
+	const driverOptions = [
+		{ label: "João Silva", value: "João Silva" },
+		{ label: "Maria Oliveira", value: "Maria Oliveira" },
+		{ label: "Carlos Santos", value: "Carlos Santos" },
+		{ label: "Ana Pereira", value: "Ana Pereira" },
+		{ label: "Rafael Costa", value: "Rafael Costa" },
+		{ label: "Fernanda Lima", value: "Fernanda Lima" },
+		{ label: "Lucas Almeida", value: "Lucas Almeida" },
+		{ label: "Beatriz Rocha", value: "Beatriz Rocha" },
+	];
 
 	const onSubmit = async (data: FuelingForm) => {
 		try {
@@ -121,12 +116,11 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 			<Form {...form}>
 				<form
 					autoComplete="off"
-					onSubmit={form.handleSubmit(onSubmit, onErrors)}
-					className="overflow-hidden"
+					onSubmit={form.handleSubmit(onSubmit)}
+					className={cn("overflow-hidden", hasErrors && "h-[280px]")}
 					id="fueling-form"
 				>
 					<div className="flex flex-col gap-4 px-6 pb-6">
-						{/* Veículo */}
 						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
 								name="VehicleId"
@@ -142,7 +136,28 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 											aria-invalid={fieldState.invalid}
 											options={vehicleOptions}
 											placeholder={t("selectVehicle")}
-											className="w-full col-span-12"
+											className="w-full col-span-6"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="DriverId"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
+									) : (
+										<FormFieldSelect
+											label={t("driver")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={driverOptions}
+											placeholder={t("selectDriver")}
+											className="w-full col-span-6"
 											name={field.name}
 											control={form.control}
 										/>
@@ -150,11 +165,9 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 								}
 							/>
 						</div>
-
-						{/* Data e Odômetro */}
 						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
-								name="Date"
+								name="FuelingAt"
 								control={form.control}
 								render={({ field, fieldState }) =>
 									loading ? (
@@ -174,7 +187,7 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 													onBlur={field.onBlur}
 													aria-invalid={fieldState.invalid}
 													placeholder="15/12/2024"
-													className="w-full"
+													className="w-full col-span-6"
 													name={field.name}
 												/>
 											</FormControl>
@@ -183,122 +196,9 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 									)
 								}
 							/>
-							<Controller
-								name="Odometer"
-								control={form.control}
-								render={({ field, fieldState }) =>
-									loading ? (
-										<Skeleton className="rounded-md w-full h-8" />
-									) : (
-										<FormFieldNumber
-											{...field}
-											label={t("odometer")}
-											control={form.control}
-											aria-invalid={fieldState.invalid}
-											placeholder="0"
-											formItemClassName="col-span-6"
-											formatOptions={{ useGrouping: false }}
-										/>
-									)
-								}
-							/>
-						</div>
 
-						{/* Tipo de combustível e Litros */}
-						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
-								name="FuelType"
-								control={form.control}
-								render={({ field, fieldState }) =>
-									loading ? (
-										<Skeleton className="rounded-md w-full h-10" />
-									) : (
-										<FormFieldSelect
-											label={t("fuelType")}
-											value={field.value ?? ""}
-											onValueChange={field.onChange}
-											aria-invalid={fieldState.invalid}
-											options={fuelTypeOptions}
-											placeholder={t("selectFuelType")}
-											className="w-full col-span-6"
-											name={field.name}
-											control={form.control}
-										/>
-									)
-								}
-							/>
-							<Controller
-								name="Liters"
-								control={form.control}
-								render={({ field, fieldState }) =>
-									loading ? (
-										<Skeleton className="rounded-md w-full h-8" />
-									) : (
-										<FormFieldNumber
-											{...field}
-											label={t("liters")}
-											control={form.control}
-											aria-invalid={fieldState.invalid}
-											placeholder="0"
-											formItemClassName="col-span-6"
-										/>
-									)
-								}
-							/>
-						</div>
-
-						{/* Preço por litro e Custo total */}
-						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
-							<Controller
-								name="PricePerLiter"
-								control={form.control}
-								render={({ field, fieldState }) =>
-									loading ? (
-										<Skeleton className="rounded-md w-full h-8" />
-									) : (
-										<FormFieldNumber
-											{...field}
-											label={t("pricePerLiter")}
-											control={form.control}
-											aria-invalid={fieldState.invalid}
-											placeholder="0"
-											formItemClassName="col-span-6"
-											formatOptions={{
-												style: "currency",
-												currency: "BRL",
-											}}
-										/>
-									)
-								}
-							/>
-							<Controller
-								name="TotalCost"
-								control={form.control}
-								render={({ field, fieldState }) =>
-									loading ? (
-										<Skeleton className="rounded-md w-full h-8" />
-									) : (
-										<FormFieldNumber
-											{...field}
-											label={t("totalCost")}
-											control={form.control}
-											aria-invalid={fieldState.invalid}
-											placeholder="0"
-											formItemClassName="col-span-6"
-											formatOptions={{
-												style: "currency",
-												currency: "BRL",
-											}}
-										/>
-									)
-								}
-							/>
-						</div>
-
-						{/* Posto e Localização */}
-						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
-							<Controller
-								name="Station"
+								name="ProviderId"
 								control={form.control}
 								render={({ field, fieldState }) =>
 									loading ? (
@@ -318,106 +218,106 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 									)
 								}
 							/>
+						</div>
+
+						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
-								name="Location"
+								name="Fuel"
+								control={form.control}
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-10" />
+									) : (
+										<FormFieldSelect
+											label={t("fuel")}
+											value={field.value ?? ""}
+											onValueChange={field.onChange}
+											aria-invalid={fieldState.invalid}
+											options={fuelOptions}
+											placeholder={t("selectFuel")}
+											className="w-full col-span-3"
+											name={field.name}
+											control={form.control}
+										/>
+									)
+								}
+							/>
+							<Controller
+								name="MaintenanceDue"
 								control={form.control}
 								render={({ field, fieldState }) =>
 									loading ? (
 										<Skeleton className="rounded-md w-full h-8" />
 									) : (
-										<FormFieldText
+										<FormFieldNumber
 											{...field}
-											label={t("location")}
+											label={t("maintenanceDue")}
 											control={form.control}
 											aria-invalid={fieldState.invalid}
-											placeholder="São Paulo - SP"
-											className="col-span-6"
+											placeholder="0"
+											value={field.value ?? 0}
+											formItemClassName="col-span-3"
+											formatOptions={{
+												style: "unit",
+												unit: "kilometer",
+												unitDisplay: "short",
+											}}
 										/>
 									)
 								}
 							/>
-						</div>
-
-						{/* Motorista */}
-						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
-								name="Driver"
+								name="Odometer"
 								control={form.control}
 								render={({ field, fieldState }) =>
 									loading ? (
 										<Skeleton className="rounded-md w-full h-8" />
 									) : (
-										<FormFieldText
+										<FormFieldNumber
 											{...field}
-											label={t("driver")}
+											label={t("odometer")}
 											control={form.control}
 											aria-invalid={fieldState.invalid}
-											placeholder="João Silva"
-											className="col-span-12"
+											placeholder="0"
+											formItemClassName="col-span-3"
+											formatOptions={{
+												style: "unit",
+												unit: "kilometer",
+												unitDisplay: "short",
+											}}
 										/>
 									)
 								}
 							/>
-						</div>
-
-						{/* Nota Fiscal */}
-						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
-								name="file"
+								name="Total"
 								control={form.control}
-								render={({ field, fieldState }) => {
-									const files = Array.isArray(field.value)
-										? field.value
-										: field.value
-											? [field.value]
-											: [];
-									return loading ? (
-										<Skeleton className="rounded-md w-full h-20" />
+								render={({ field, fieldState }) =>
+									loading ? (
+										<Skeleton className="rounded-md w-full h-8" />
 									) : (
-										<FormItem className="col-span-12">
-											<FormLabel>{t("receipt")}</FormLabel>
-											<FormControl>
-												<div className="space-y-3">
-													<InputFile
-														id={field.name}
-														name={field.name}
-														value={files.filter((f) => f)}
-														onChange={(val) => {
-															const next = Array.isArray(val)
-																? val
-																: val
-																	? [val]
-																	: [];
-															field.onChange(next);
-														}}
-														ref={field.ref}
-														accept="image/*,application/pdf"
-														maxFiles={1}
-														disabled={files.length >= 1}
-													/>
-													<FilePreviewList
-														files={files.filter((f) => f)}
-														onRemove={(id) => {
-															const current = Array.isArray(field.value)
-																? field.value
-																: field.value
-																	? [field.value]
-																	: [];
-															const next = current.filter(
-																(f: any) => f.id !== id,
-															);
-															field.onChange(next);
-														}}
-													/>
-												</div>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
-									);
-								}}
+										<FormFieldNumber
+											{...field}
+											label={t("total")}
+											control={form.control}
+											aria-invalid={fieldState.invalid}
+											placeholder="0"
+											formItemClassName="col-span-3"
+											formatOptions={{
+												style: "currency",
+												currency: "BRL",
+											}}
+										/>
+									)
+								}
 							/>
 						</div>
 					</div>
+					{hasErrors && (
+						<FormErrorMessage
+							message={"Por favor, preencha os campos obrigatórios."}
+						/>
+					)}
 				</form>
 			</Form>
 		</ScrollArea>

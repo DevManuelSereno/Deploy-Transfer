@@ -64,7 +64,7 @@ export const getFuelingColumns = (
 		size: 70,
 	},
 	{
-		accessorKey: "Date",
+		accessorKey: "FuelingAt",
 		cell: ({ cell }) => {
 			if (!cell.getValue()) return "-";
 			if (typeof cell.getValue() === "string")
@@ -96,7 +96,7 @@ export const getFuelingColumns = (
 		},
 	},
 	{
-		accessorKey: "Liters",
+		accessorKey: "Odometer",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -105,7 +105,7 @@ export const getFuelingColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("liters")}
+						{t("odometer")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -123,7 +123,7 @@ export const getFuelingColumns = (
 		},
 	},
 	{
-		accessorKey: "TotalCost",
+		accessorKey: "Total",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -132,7 +132,7 @@ export const getFuelingColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("totalCost")}
+						{t("total")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -153,7 +153,7 @@ export const getFuelingColumns = (
 		},
 	},
 	{
-		accessorKey: "FuelType",
+		accessorKey: "Fuel",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -162,7 +162,7 @@ export const getFuelingColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("fuelType")}
+						{t("fuel")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
@@ -170,29 +170,6 @@ export const getFuelingColumns = (
 		},
 		enableColumnFilter: true,
 		size: 130,
-		meta: {
-			cellClassName: "grow",
-			headerClassName: "grow",
-		},
-	},
-	{
-		accessorKey: "Station",
-		header: ({ column }) => {
-			return (
-				<div className="flex items-center h-full">
-					<Button
-						variant="ghost"
-						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-					>
-						{t("station")}
-						<ChevronsUpDown className="size-3" />
-					</Button>
-				</div>
-			);
-		},
-		enableColumnFilter: true,
-		size: 200,
 		meta: {
 			cellClassName: "grow",
 			headerClassName: "grow",

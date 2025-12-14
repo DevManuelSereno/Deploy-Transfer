@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import TableFueling from "@/app/[locale]/fueling/components/table/table-fueling";
 
-export async function generateMetadata() {
+export async function generateMetadata(): Promise<Metadata> {
 	const t = await getTranslations("Sidebar");
 
 	return {

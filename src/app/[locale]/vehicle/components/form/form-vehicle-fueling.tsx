@@ -15,16 +15,15 @@ import {
 } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
+import { ModalDeleteFueling } from "@/app/[locale]/fueling/components/modal/modal-delete-fueling";
+import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
 import {
 	type FuelingColumnActions,
 	getFuelingColumns,
 } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-fueling";
-import { ModalDeleteFueling } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-fueling";
 import { ModalFormFueling } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-fueling";
-import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import { useFuelingFormContext } from "@/app/[locale]/vehicle/context/vehicle-fueling-context";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -36,8 +35,6 @@ export function FormFueling() {
 	const tColumns = useTranslations("VehiclePage.Fueling.columns");
 	const { setEditingFueling } = useFuelingFormContext();
 	const { editingVehicle } = useVehicleFormContext();
-
-	const { setTabPanel } = useModalContext();
 
 	const [globalFilter, setGlobalFilter] = useState("");
 	const [sorting, setSorting] = useState<SortingState>([]);
