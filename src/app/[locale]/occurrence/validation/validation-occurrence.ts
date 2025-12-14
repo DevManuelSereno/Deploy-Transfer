@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { OccurrenceSchema } from "@/types/models";
-import { FileSchema } from "@/types/models/File.schema";
 
 const OccurrenceBaseSchema = OccurrenceSchema.omit({
 	IDO: true,
@@ -8,14 +7,12 @@ const OccurrenceBaseSchema = OccurrenceSchema.omit({
 	UpdatedAt: true,
 });
 
-export const FileValueSchema = FileSchema;
-
 export const OccurrencePayloadSchema = OccurrenceBaseSchema.extend({
-	OccurrenceAt: z.iso.datetime(),
-	registerDate: z.iso.datetime(),
+	// OccurrenceAt: z.iso.datetime(),
 });
 
 export const OccurrenceFormSchema = OccurrenceBaseSchema.extend({
-	description: z.string().optional(),
-	days: z.array(z.string()).optional(),
+	Classification: z.string().min(1),
+	Severity: z.string().min(1),
+	OccurrenceAt: z.iso.datetime(),
 });

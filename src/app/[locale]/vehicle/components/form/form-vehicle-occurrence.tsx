@@ -15,15 +15,15 @@ import {
 } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
+import { ModalDeleteOccurrence } from "@/app/[locale]/occurrence/components/modal/modal-delete-occurrence";
+import { useOccurrenceFormContext } from "@/app/[locale]/occurrence/context/occurrence-context";
+import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occurrence";
 import {
 	getOccurrenceColumns,
 	type OccurrenceColumnActions,
 } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle-occurrence";
-import { ModalDeleteOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-delete-vehicle-occurrence";
 import { ModalFormOccurrence } from "@/app/[locale]/vehicle/components/modal/modal-form-vehicle-occurrence";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
-import { useOccurrenceFormContext } from "@/app/[locale]/vehicle/context/vehicle-occurrence-context";
-import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -59,7 +59,7 @@ export function FormOccurrence() {
 				signal,
 				query:
 					`where.vehicleId=${vehicleId}&&include.file=true&&` +
-					"include.classification&&include.severity=true",
+					"include.classification&&include.seriousness=true",
 			}),
 		enabled: !!vehicleId,
 	});

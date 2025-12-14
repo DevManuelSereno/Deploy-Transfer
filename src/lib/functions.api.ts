@@ -93,7 +93,6 @@ export const toastErrorsApi = (
 	error: AxiosError<{ error: string; message: string; statusCode: number }>,
 	message?: string,
 ) => {
-	console.error(error);
 	if (error?.response) {
 		if (message) return toast.error({ title: message });
 		if (error.response?.data?.message)

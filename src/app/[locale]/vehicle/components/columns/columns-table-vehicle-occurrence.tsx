@@ -3,9 +3,8 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { OccurrenceData } from "@/app/[locale]/vehicle/types/types-vehicle-occurrence";
+import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occurrence";
 import { Button } from "@/components/ui/button";
-import type { ClassificationType, SeriousnessType } from "@/types/models";
 
 export interface OccurrenceColumnActions {
 	onEdit: (occurrence: OccurrenceData) => void;

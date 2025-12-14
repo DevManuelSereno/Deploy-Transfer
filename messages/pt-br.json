@@ -12,7 +12,7 @@
 			"schedule": "Agenda",
 			"vehicles": "Veículos",
 			"refueling": "Abastecimento",
-			"incidents": "Ocorrências",
+			"occurrence": "Ocorrências",
 			"expenses": "Despesas",
 			"maintenance": "Manutenções",
 			"brands": "Marcas",
@@ -27,7 +27,7 @@
 		"schedule": "Agenda",
 		"vehicles": "Veículos",
 		"refueling": "Abastecimento",
-		"incidents": "Ocorrências",
+		"occurrence": "Ocorrências",
 		"expenses": "Despesas",
 		"maintenance": "Manutenções",
 		"brands": "Marcas",
@@ -318,19 +318,21 @@
 			"title": "Novo abastecimento",
 			"description": "Preencha os campos abaixo para cadastrar um novo abastecimento.",
 			"vehicle": "Veículo",
+			"maintenanceDue": "Próxima manutenção",
 			"date": "Data",
 			"liters": "Litros",
 			"pricePerLiter": "Preço por litro",
-			"totalCost": "Custo total",
+			"total": "Custo total",
 			"odometer": "Odômetro",
-			"fuelType": "Tipo de combustível",
+			"fuel": "Tipo de combustível",
 			"station": "Posto",
 			"location": "Local",
 			"driver": "Motorista",
 			"notes": "Observações",
 			"receipt": "Nota fiscal",
 			"selectVehicle": "Selecione um veículo",
-			"selectFuelType": "Selecione o tipo de combustível",
+			"selectDriver": "Selecione um motorista",
+			"selectFuel": "Selecione o tipo de combustível",
 			"cancel": "Cancelar",
 			"save": "Salvar",
 			"errorMessage": "Por favor, corrija os erros no formulário.",
@@ -339,7 +341,7 @@
 		},
 		"Table": {
 			"Filters": {
-				"fuelType": "Tipo de combustível",
+				"fuel": "Tipo de combustível",
 				"vehicle": "Veículo"
 			},
 			"Columns": {
@@ -348,9 +350,9 @@
 				"date": "Data",
 				"liters": "Litros",
 				"pricePerLiter": "Preço/Litro",
-				"totalCost": "Custo Total",
+				"total": "Custo Total",
 				"odometer": "Odômetro",
-				"fuelType": "Combustível",
+				"fuel": "Combustível",
 				"station": "Posto",
 				"location": "Local",
 				"driver": "Motorista",
@@ -359,36 +361,51 @@
 			}
 		}
 	},
-	"BrandPage": {
-		"title": "Marcas",
+	"OccurrencePage": {
+		"title": "Ocorrência",
 		"Modal": {
-			"title": "Nova marca",
-			"description": "Preencha os campos abaixo para cadastrar uma nova marca."
+			"title": "Nova ocorrência",
+			"description": "Preencha os campos abaixo para registrar uma nova ocorrência."
 		},
 		"Delete": {
-			"title": "Tem certeza",
-			"description": "Essa ação não pode ser desfeita. Isso excluirá permanentemente a marca de nossos servidores.",
-			"brandInfo": "Informações da marca:",
-			"name": "Nome",
+			"title": "Tem certeza?",
+			"description": "Esta ação não pode ser desfeita. Isso excluirá permanentemente a ocorrência de nossos servidores.",
+			"infoTitle": "Informações da ocorrência:",
+			"occurrenceAt": "Data da ocorrência",
+			"classification": "Classificação",
+			"severity": "Gravidade",
 			"cancel": "Cancelar",
 			"delete": "Excluir",
-			"successMessage": "Marca deletada com sucesso"
+			"successMessage": "Ocorrência excluída com sucesso"
 		},
 		"Form": {
-			"title": "Nova marca",
-			"description": "Preencha os campos abaixo para cadastrar uma nova marca.",
-			"name": "Nome",
-			"namePlaceholder": "Scania",
+			"title": "Adicionar ocorrência",
+			"description": "Preencha os campos abaixo para registrar uma nova ocorrência.",
+			"severityLabel": "Gravidade",
+			"classificationLabel": "Classificação",
+			"caseNumberLabel": "Número do caso",
+			"occurrenceAtLabel": "Data da ocorrência",
+			"registrationDateLabel": "Registro da ocorrência",
+			"descriptionLabel": "Descrição",
+			"attachmentLabel": "Anexo",
+			"dragDropText": "Arraste e solte os arquivos aqui, ou",
+			"selectFilesButton": "Selecionar arquivos",
+			"selectClassification": "Selecione uma classificação",
+			"selectSeverity": "Selecione uma gravidade",
+			"filesCount": "0/1 arquivos",
+			"allowedTypes": "Tipos permitidos: .jpg, .jpeg, .png, .gif, .bmp, .webp, .svg, .pdf, .doc, .docx, .txt",
 			"cancel": "Cancelar",
 			"save": "Salvar",
-			"errorMessage": "Por favor, corrija os erros no formulário.",
-			"successCreate": "Marca cadastrada com sucesso",
-			"successUpdate": "Marca atualizada com sucesso"
+			"errorMessage": "Por favor, corrija os erros do formulário.",
+			"successCreate": "Ocorrência criada com sucesso",
+			"successUpdate": "Ocorrência atualizada com sucesso"
 		},
 		"Table": {
 			"Columns": {
-				"name": "Nome",
-				"id": "ID"
+				"occurrenceAt": "Data da ocorrência",
+				"classification": "Classificação",
+				"severity": "Gravidade",
+				"caseNumber": "Número do caso"
 			}
 		}
 	}

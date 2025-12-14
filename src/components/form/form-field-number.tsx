@@ -5,7 +5,6 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import NumberInputStepper from "../ui/number-input-stepper";
@@ -27,6 +26,7 @@ export function FormFieldNumber<T extends FieldValues>({
 	formItemClassName,
 	...props
 }: FormFieldNumberProps<T>) {
+	const hasError = control.getFieldState(name).error;
 	return (
 		<FormField
 			control={control}
@@ -38,8 +38,15 @@ export function FormFieldNumber<T extends FieldValues>({
 						<NumberInputStepper
 							value={field.value}
 							onChange={field.onChange}
+							className={cn(
+								hasError && "border-destructive dark:border-destructive",
+							)}
 							inputProps={{
 								...props.inputProps,
+								className: cn(
+									props.inputProps?.className,
+									hasError && "border-destructive dark:border-destructive",
+								),
 								onBlur: (e) => {
 									const parsed = Number(e.target.value);
 									if (!Number.isNaN(parsed)) {

@@ -12,7 +12,7 @@
 			"schedule": "Agenda",
 			"vehicles": "Vehículos",
 			"refueling": "Repostaje",
-			"incidents": "Incidencias",
+			"occurrence": "Incidencias",
 			"expenses": "Gastos",
 			"maintenance": "Mantenimiento",
 			"brands": "Marcas",
@@ -27,7 +27,7 @@
 		"schedule": "Agenda",
 		"vehicles": "Vehículos",
 		"refueling": "Repostaje",
-		"incidents": "Incidencias",
+		"occurrence": "Incidencias",
 		"expenses": "Gastos",
 		"maintenance": "Mantenimiento",
 		"brands": "Marcas",
@@ -318,19 +318,21 @@
 			"title": "Nuevo repostaje",
 			"description": "Complete los campos a continuación para registrar un nuevo repostaje.",
 			"vehicle": "Vehículo",
+			"maintenanceDue": "Próximo mantenimiento",
 			"date": "Fecha",
 			"liters": "Litros",
 			"pricePerLiter": "Precio por litro",
-			"totalCost": "Costo total",
+			"total": "Costo total",
 			"odometer": "Odómetro",
-			"fuelType": "Tipo de combustible",
+			"fuel": "Tipo de combustible",
 			"station": "Estación",
 			"receipt": "Recibo",
 			"location": "Ubicación",
 			"driver": "Conductor",
 			"notes": "Notas",
 			"selectVehicle": "Seleccione un vehículo",
-			"selectFuelType": "Seleccione tipo de combustible",
+			"selectDriver": "Seleccione un controlador",
+			"selectFuel": "Seleccione tipo de combustible",
 			"cancel": "Cancelar",
 			"save": "Guardar",
 			"errorMessage": "Por favor, corrija los errores en el formulario.",
@@ -339,7 +341,7 @@
 		},
 		"Table": {
 			"Filters": {
-				"fuelType": "Tipo de combustible",
+				"fuel": "Tipo de combustible",
 				"vehicle": "Vehículo"
 			},
 			"Columns": {
@@ -348,9 +350,9 @@
 				"date": "Fecha",
 				"liters": "Litros",
 				"pricePerLiter": "Precio/Litro",
-				"totalCost": "Costo Total",
+				"total": "Costo Total",
 				"odometer": "Odómetro",
-				"fuelType": "Combustible",
+				"fuel": "Combustible",
 				"station": "Estación",
 				"location": "Ubicación",
 				"driver": "Conductor",
@@ -359,36 +361,51 @@
 			}
 		}
 	},
-	"BrandPage": {
-		"title": "Marcas",
+	"OccurrencePage": {
+		"title": "Ocurrencia",
 		"Modal": {
-			"title": "Nueva marca",
-			"description": "Complete los campos a continuación para registrar una nueva marca."
+			"title": "Nueva ocurrencia",
+			"description": "Complete los campos a continuación para registrar una nueva ocurrencia."
 		},
 		"Delete": {
-			"title": "¿Está seguro?",
-			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente la marca de nuestros servidores.",
-			"brandInfo": "Información de la marca:",
-			"name": "Nombre",
+			"title": "¿Estás seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente la ocurrencia de nuestros servidores.",
+			"infoTitle": "Información de la ocurrencia:",
+			"occurrenceAt": "Fecha de la ocurrencia",
+			"classification": "Clasificación",
+			"severity": "Gravedad",
 			"cancel": "Cancelar",
 			"delete": "Eliminar",
-			"successMessage": "Marca eliminada exitosamente"
+			"successMessage": "Ocurrencia eliminada con éxito"
 		},
 		"Form": {
-			"title": "Nueva marca",
-			"description": "Complete los campos a continuación para registrar una nueva marca.",
-			"name": "Nombre",
-			"namePlaceholder": "Scania",
+			"title": "Agregar ocurrencia",
+			"description": "Complete los campos a continuación para registrar una nueva ocurrencia.",
+			"severityLabel": "Gravedad",
+			"classificationLabel": "Clasificación",
+			"caseNumberLabel": "Número de caso",
+			"occurrenceAtLabel": "Fecha de la ocurrencia",
+			"registrationDateLabel": "Registro de la ocurrencia",
+			"descriptionLabel": "Descripción",
+			"attachmentLabel": "Adjunto",
+			"dragDropText": "Arrastra y suelta archivos aquí, o",
+			"selectFilesButton": "Seleccionar archivos",
+			"selectClassification": "Selecciona una clasificación",
+			"selectSeverity": "Selecciona una gravedad",
+			"filesCount": "0/1 archivos",
+			"allowedTypes": "Tipos permitidos: .jpg, .jpeg, .png, .gif, .bmp, .webp, .svg, .pdf, .doc, .docx, .txt",
 			"cancel": "Cancelar",
 			"save": "Guardar",
-			"errorMessage": "Por favor, corrija los errores en el formulario.",
-			"successCreate": "Marca creada exitosamente",
-			"successUpdate": "Marca actualizada exitosamente"
+			"errorMessage": "Por favor corrige los errores del formulario.",
+			"successCreate": "Ocurrencia creada con éxito",
+			"successUpdate": "Ocurrencia actualizada con éxito"
 		},
 		"Table": {
 			"Columns": {
-				"name": "Nombre",
-				"id": "ID"
+				"occurrenceAt": "Fecha de la ocurrencia",
+				"classification": "Clasificación",
+				"severity": "Gravedad",
+				"caseNumber": "Número de caso"
 			}
 		}
 	}

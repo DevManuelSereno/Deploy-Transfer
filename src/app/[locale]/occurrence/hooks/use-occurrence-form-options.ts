@@ -11,14 +11,13 @@ export function useOccurrenceFormOptions() {
 		refetchOnReconnect: false,
 	} as QueryClientConfig;
 
-	const { data: severityOptions, isLoading: isLoadingSeriousness } =
-		useQuery({
-			queryKey: ["severity-get"],
-			queryFn: ({ signal }) =>
-				getData<SeriousnessType[]>({ url: "severity", signal }),
-			select: createOptionsMapper("id", "level"),
-			...queryConfig,
-		});
+	const { data: severityOptions, isLoading: isLoadingSeriousness } = useQuery({
+		queryKey: ["severity-get"],
+		queryFn: ({ signal }) =>
+			getData<SeriousnessType[]>({ url: "severity", signal }),
+		select: createOptionsMapper("id", "level"),
+		...queryConfig,
+	});
 
 	const { data: classificationOptions, isLoading: isLoadingClassification } =
 		useQuery({

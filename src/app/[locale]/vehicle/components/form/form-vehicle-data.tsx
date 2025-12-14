@@ -13,6 +13,7 @@ import type {
 	VehiclePayload,
 } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { VehicleFormSchema } from "@/app/[locale]/vehicle/validation/validation-vehicle";
+import { FormErrorMessage } from "@/components/form/form-error-message";
 import { FormFieldMultiSelect } from "@/components/form/form-field-multi-select";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
@@ -24,6 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
 import { postData, putData, toastErrorsApi } from "@/lib/functions.api";
+import { cn } from "@/lib/utils";
 import type { PostData, PutData, VehicleType } from "@/types/models";
 
 export function FormVehicleData() {
@@ -81,6 +83,7 @@ export function FormVehicleData() {
 		resolver: zodResolver(VehicleFormSchema),
 		defaultValues: buildDefaultValues(editingVehicle),
 	});
+	const hasErrors = Object.keys(form.formState.errors)?.length > 0;
 
 	// const { mutateAsync: mutatePostVehicle, isPending: isLoadingPostVehicle } =
 	// 	useMutation({
@@ -143,13 +146,6 @@ export function FormVehicleData() {
 	// 	isLoadingPostVehicle || isLoadingPutVehicle || isLoadingOptions;
 	const loading = false;
 
-	const onErrors = (error: any) => {
-		console.log(error);
-		toast.error({
-			title: t("errorMessage"),
-		});
-	};
-
 	const onSubmit = async (data: VehicleForm) => {
 		try {
 			let savedVehicle: VehicleType;
@@ -192,13 +188,14 @@ export function FormVehicleData() {
 			toastErrorsApi(error);
 		}
 	};
+
 	return (
 		<ScrollArea className="flex flex-col">
 			<Form {...form}>
 				<form
 					autoComplete="off"
-					onSubmit={form.handleSubmit(onSubmit, onErrors)}
-					className="overflow-hidden"
+					onSubmit={form.handleSubmit(onSubmit)}
+					className={cn("overflow-hidden", hasErrors && "h-[520px]")}
 					id="vehicle-form"
 				>
 					<div className="flex flex-col gap-4 px-6 pb-6">
@@ -530,6 +527,11 @@ export function FormVehicleData() {
 							/>
 						</div>
 					</div>
+					{hasErrors && (
+						<FormErrorMessage
+							message={"Por favor, preencha os campos obrigatórios."}
+						/>
+					)}
 				</form>
 			</Form>
 		</ScrollArea>

@@ -5,6 +5,7 @@ import {
 	BusFront,
 	Calendar,
 	Command,
+	FileText,
 	Fuel,
 	Home,
 	LayoutDashboard,
@@ -65,8 +66,8 @@ export const navbarItems = {
 			icon: Fuel,
 		},
 		{
-			key: "incidents",
-			url: "#",
+			key: "occurrence",
+			url: "/occurrence",
 			icon: AlertTriangle,
 		},
 		{
@@ -78,11 +79,6 @@ export const navbarItems = {
 			key: "maintenance",
 			url: "#",
 			icon: Wrench,
-		},
-		{
-			key: "brands",
-			url: "/brand",
-			icon: Building2,
 		},
 	],
 	organization: [

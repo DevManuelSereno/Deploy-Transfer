@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type {
 	OccurrenceFormSchema,
 	OccurrencePayloadSchema,
-} from "@/app/[locale]/vehicle/validation/validation-vehicle-occurrence";
+} from "@/app/[locale]/occurrence/validation/validation-occurrence";
 import type { OccurrenceType } from "@/types/models";
 
 export type OccurrencePayload = z.infer<typeof OccurrencePayloadSchema>;

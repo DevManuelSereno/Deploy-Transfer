@@ -12,7 +12,7 @@
 			"schedule": "Schedule",
 			"vehicles": "Vehicles",
 			"refueling": "Refueling",
-			"incidents": "Incidents",
+			"occurrence": "Occurrences",
 			"expenses": "Expenses",
 			"maintenance": "Maintenance",
 			"brands": "Brands",
@@ -27,7 +27,7 @@
 		"schedule": "Schedule",
 		"vehicles": "Vehicles",
 		"refueling": "Refueling",
-		"incidents": "Incidents",
+		"occurrence": "Occurrences",
 		"expenses": "Expenses",
 		"maintenance": "Maintenance",
 		"brands": "Brands",
@@ -318,19 +318,21 @@
 			"title": "New fueling",
 			"description": "Fill in the fields below to register a new fueling.",
 			"vehicle": "Vehicle",
+			"maintenanceDue": "Next maintenance",
 			"date": "Date",
 			"liters": "Liters",
 			"pricePerLiter": "Price per liter",
-			"totalCost": "Total cost",
+			"total": "Total cost",
 			"odometer": "Odometer",
-			"fuelType": "Fuel type",
+			"fuel": "Fuel type",
 			"station": "Station",
 			"location": "Location",
 			"driver": "Driver",
 			"notes": "Notes",
 			"receipt": "Receipt",
 			"selectVehicle": "Select a vehicle",
-			"selectFuelType": "Select fuel type",
+			"selectDriver": "Select a driver",
+			"selectFuel": "Select fuel type",
 			"cancel": "Cancel",
 			"save": "Save",
 			"errorMessage": "Please correct the errors in the form.",
@@ -339,7 +341,7 @@
 		},
 		"Table": {
 			"Filters": {
-				"fuelType": "Fuel type",
+				"fuel": "Fuel type",
 				"vehicle": "Vehicle"
 			},
 			"Columns": {
@@ -348,9 +350,9 @@
 				"date": "Date",
 				"liters": "Liters",
 				"pricePerLiter": "Price/Liter",
-				"totalCost": "Total Cost",
+				"total": "Total Cost",
 				"odometer": "Odometer",
-				"fuelType": "Fuel",
+				"fuel": "Fuel",
 				"station": "Station",
 				"location": "Location",
 				"driver": "Driver",
@@ -359,36 +361,51 @@
 			}
 		}
 	},
-	"BrandPage": {
-		"title": "Brands",
+	"OccurrencePage": {
+		"title": "Occurrence",
 		"Modal": {
-			"title": "New brand",
-			"description": "Fill in the fields below to register a new brand."
+			"title": "New occurrence",
+			"description": "Fill in the fields below to register a new occurrence."
 		},
 		"Delete": {
 			"title": "Are you sure?",
-			"description": "This action cannot be undone. This will permanently delete the brand from our servers.",
-			"brandInfo": "Brand information:",
-			"name": "Name",
+			"description": "This action cannot be undone. This will permanently delete the occurrence from our servers.",
+			"infoTitle": "Occurrence information:",
+			"occurrenceAt": "Occurrence date",
+			"classification": "Classification",
+			"severity": "Seriousness",
 			"cancel": "Cancel",
 			"delete": "Delete",
-			"successMessage": "Brand deleted successfully"
+			"successMessage": "Occurrence deleted successfully"
 		},
 		"Form": {
-			"title": "New brand",
-			"description": "Fill in the fields below to register a new brand.",
-			"name": "Name",
-			"namePlaceholder": "Scania",
+			"title": "Add occurrence",
+			"description": "Fill in the fields below to register a new occurrence.",
+			"severityLabel": "Seriousness",
+			"classificationLabel": "Classification",
+			"caseNumberLabel": "Case number",
+			"occurrenceAtLabel": "Occurrence Date",
+			"registrationDateLabel": "Occurrence Record",
+			"descriptionLabel": "Description",
+			"attachmentLabel": "Attachment",
+			"dragDropText": "Drag and drop files here, or",
+			"selectFilesButton": "Select files",
+			"selectClassification": "Select a classification",
+			"selectSeverity": "Select a severity",
+			"filesCount": "0/1 files",
+			"allowedTypes": "Allowed types: .jpg, .jpeg, .png, .gif, .bmp, .webp, .svg, .pdf, .doc, .docx, .txt",
 			"cancel": "Cancel",
 			"save": "Save",
 			"errorMessage": "Please correct the errors in the form.",
-			"successCreate": "Brand created successfully",
-			"successUpdate": "Brand updated successfully"
+			"successCreate": "Occurrence created successfully",
+			"successUpdate": "Occurrence updated successfully"
 		},
 		"Table": {
 			"Columns": {
-				"name": "Name",
-				"id": "ID"
+				"occurrenceAt": "Occurrence date",
+				"classification": "Classification",
+				"severity": "Seriousness",
+				"caseNumber": "Case number"
 			}
 		}
 	}
