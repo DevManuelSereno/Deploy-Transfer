@@ -3,7 +3,7 @@
 import { addDays, format, isEqual, startOfDay, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type {
 	Control,
 	FieldValues,
@@ -18,7 +18,6 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
 } from "@/components/ui/form";
 import {
 	Popover,
@@ -52,30 +51,41 @@ export function FormFieldDate<T extends FieldValues>({
 	const today = new Date();
 	const [month, setMonth] = useState(today);
 	const formValue = form.watch(name);
-	const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
-	// Presets adaptados para data única
-	const presets = [
-		{ label: "Hoje", date: today },
-		{ label: "Ontem", date: subDays(today, 1) },
-		{ label: "Amanhã", date: addDays(today, 1) },
-		{ label: "Daqui a 7 dias", date: addDays(today, 7) },
-	];
+	const hasError = control?.getFieldState(name).error;
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: "off"
-	useEffect(() => {
-		if (!formValue) {
-			setSelectedPreset(null);
-			return;
-		}
+	// Presets adaptados para data única
+	const presets = useMemo(() => {
+		const today = new Date();
+
+		return [
+			{ label: "Hoje", date: today },
+			{ label: "Ontem", date: subDays(today, 1) },
+			{ label: "Amanhã", date: addDays(today, 1) },
+			{ label: "Daqui a 7 dias", date: addDays(today, 7) },
+		];
+	}, []);
+
+	const toDate = useCallback((value: unknown): Date | null => {
+		if (!value) return null;
+
+		const date = new Date(value as string);
+		return Number.isNaN(date.getTime()) ? null : date;
+	}, []);
+
+	const selectedPreset = useMemo(() => {
+		const parsedDate = toDate(formValue);
+		if (!parsedDate) return null;
+
+		const formDate = startOfDay(parsedDate);
 
 		const matched = presets.find((preset) =>
-			isEqual(startOfDay(preset.date), startOfDay(new Date(formValue))),
+			isEqual(startOfDay(preset.date), formDate),
 		);
 
-		setSelectedPreset(matched?.label || null);
-	}, [formValue]);
+		return matched?.label ?? null;
+	}, [formValue, presets, toDate]);
 
 	const handleSelect = (date: Date | undefined) => {
 		if (date) {
@@ -103,6 +113,7 @@ export function FormFieldDate<T extends FieldValues>({
 										variant="outline"
 										className={cn(
 											"h-10 group justify-start font-normal w-full transition-none dark:bg-background dark:hover:bg-background",
+											hasError && "border-destructive dark:border-destructive",
 											className,
 										)}
 										disabled={disabled}
@@ -133,7 +144,6 @@ export function FormFieldDate<T extends FieldValues>({
 													shouldValidate: true,
 													shouldDirty: true,
 												});
-												setSelectedPreset(null);
 											}}
 										>
 											<X />
@@ -180,7 +190,6 @@ export function FormFieldDate<T extends FieldValues>({
 							</PopoverContent>
 						</Popover>
 					</FormControl>
-					<FormMessage />
 				</FormItem>
 			)}
 		/>

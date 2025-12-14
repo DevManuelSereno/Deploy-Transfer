@@ -5,7 +5,7 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
+	
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
 import NumberInputStepper from "../ui/number-input-stepper";
@@ -51,7 +51,6 @@ export function FormFieldNumber<T extends FieldValues>({
 							{...props}
 						/>
 					</FormControl>
-					<FormMessage />
 				</FormItem>
 			)}
 		/>

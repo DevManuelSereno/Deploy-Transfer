@@ -14,7 +14,7 @@ import {
 } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
 	Control,
 	FieldValues,
@@ -29,7 +29,6 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	FormMessage,
 } from "@/components/ui/form";
 import {
 	Popover,
@@ -63,65 +62,72 @@ export function FormFieldDateRange<T extends FieldValues>({
 	const today = new Date();
 	const [month, setMonth] = useState(today);
 	const formValue = form.watch(name);
-	const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+	const hasError = control?.getFieldState(name).error;
 
-	const presets = [
-		{ label: "Hoje", range: { from: today, to: today } },
-		{
-			label: "Ontem",
-			range: { from: subDays(today, 1), to: subDays(today, 1) },
-		},
-		{ label: "Últimos 7 dias", range: { from: subDays(today, 6), to: today } },
-		{
-			label: "Últimos 30 dias",
-			range: { from: subDays(today, 29), to: today },
-		},
-		{
-			label: "Do mês até a data",
-			range: { from: startOfMonth(today), to: today },
-		},
-		{
-			label: "Mês passado",
-			range: {
-				from: startOfMonth(subMonths(today, 1)),
-				to: endOfMonth(subMonths(today, 1)),
+	const toDate = useCallback((value: unknown): Date | null => {
+		if (!value) return null;
+
+		const date = new Date(value as string);
+		return Number.isNaN(date.getTime()) ? null : date;
+	}, []);
+
+	const presets = useMemo(() => {
+		const today = new Date();
+
+		return [
+			{ label: "Hoje", range: { from: today, to: today } },
+			{
+				label: "Ontem",
+				range: { from: subDays(today, 1), to: subDays(today, 1) },
 			},
-		},
-		{
-			label: "Do ano até a data",
-			range: { from: startOfYear(today), to: today },
-		},
-		{
-			label: "Ano passado",
-			range: {
-				from: startOfYear(subYears(today, 1)),
-				to: endOfYear(subYears(today, 1)),
+			{
+				label: "Últimos 7 dias",
+				range: { from: subDays(today, 6), to: today },
 			},
-		},
-	];
+			{
+				label: "Últimos 30 dias",
+				range: { from: subDays(today, 29), to: today },
+			},
+			{
+				label: "Do mês até a data",
+				range: { from: startOfMonth(today), to: today },
+			},
+			{
+				label: "Mês passado",
+				range: {
+					from: startOfMonth(subMonths(today, 1)),
+					to: endOfMonth(subMonths(today, 1)),
+				},
+			},
+			{
+				label: "Do ano até a data",
+				range: { from: startOfYear(today), to: today },
+			},
+			{
+				label: "Ano passado",
+				range: {
+					from: startOfYear(subYears(today, 1)),
+					to: endOfYear(subYears(today, 1)),
+				},
+			},
+		];
+	}, []);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: "off"
-	useEffect(() => {
-		if (!formValue?.from || !formValue?.to) {
-			setSelectedPreset(null);
-			return;
-		}
+	const selectedPreset = useMemo(() => {
+		const from = toDate(formValue?.from);
+		const to = toDate(formValue?.to);
 
-		const matched = presets.find(
-			(preset) =>
-				isEqual(
-					startOfDay(preset.range.from),
-					startOfDay(new Date(formValue.from)),
-				) &&
-				isEqual(
-					startOfDay(preset.range.to),
-					startOfDay(new Date(formValue.to)),
-				),
+		if (!from || !to) return null;
+
+		return (
+			presets.find(
+				(preset) =>
+					isEqual(startOfDay(preset.range.from), startOfDay(from)) &&
+					isEqual(startOfDay(preset.range.to), startOfDay(to)),
+			)?.label ?? null
 		);
-
-		setSelectedPreset(matched?.label || null);
-	}, [formValue]);
+	}, [formValue?.from, formValue?.to, presets, toDate]);
 
 	return (
 		<FormField
@@ -139,6 +145,7 @@ export function FormFieldDateRange<T extends FieldValues>({
 										variant="outline"
 										className={cn(
 											"h-10 group justify-start font-normal w-full transition-none dark:bg-background dark:hover:bg-background",
+											hasError && "border-destructive dark:border-destructive",
 											className,
 										)}
 										disabled={disabled}
@@ -213,7 +220,6 @@ export function FormFieldDateRange<T extends FieldValues>({
 																{ shouldValidate: true, shouldDirty: true },
 															);
 															setMonth(from || today);
-															setSelectedPreset(preset.label);
 														}}
 													>
 														{preset.label}
@@ -252,7 +258,6 @@ export function FormFieldDateRange<T extends FieldValues>({
 							</PopoverContent>
 						</Popover>
 					</FormControl>
-					<FormMessage />
 				</FormItem>
 			)}
 		/>
