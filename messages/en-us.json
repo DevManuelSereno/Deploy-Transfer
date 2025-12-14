@@ -295,6 +295,66 @@
 		"description": "Use the AI assistant to generate reports directly from your dashboard.",
 		"footer": "Powered by PASS — © 2025"
 	},
+	"FuelingPage": {
+		"title": "Fueling",
+		"Modal": {
+			"title": "New fueling",
+			"description": "Fill in the fields below to register a new fueling."
+		},
+		"Delete": {
+			"title": "Are you sure?",
+			"description": "This action cannot be undone. This will permanently delete the fueling record from our servers.",
+			"fuelingInfo": "Fueling information:",
+			"vehiclePlate": "Vehicle plate",
+			"date": "Date",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"successMessage": "Fueling deleted successfully"
+		},
+		"Form": {
+			"title": "New fueling",
+			"description": "Fill in the fields below to register a new fueling.",
+			"vehicle": "Vehicle",
+			"date": "Date",
+			"liters": "Liters",
+			"pricePerLiter": "Price per liter",
+			"totalCost": "Total cost",
+			"odometer": "Odometer",
+			"fuelType": "Fuel type",
+			"station": "Station",
+			"location": "Location",
+			"driver": "Driver",
+			"notes": "Notes",
+			"selectVehicle": "Select a vehicle",
+			"selectFuelType": "Select fuel type",
+			"cancel": "Cancel",
+			"save": "Save",
+			"errorMessage": "Please correct the errors in the form.",
+			"successCreate": "Fueling created successfully",
+			"successUpdate": "Fueling updated successfully"
+		},
+		"Table": {
+			"Filters": {
+				"fuelType": "Fuel type",
+				"vehicle": "Vehicle"
+			},
+			"Columns": {
+				"id": "ID",
+				"vehiclePlate": "Plate",
+				"date": "Date",
+				"liters": "Liters",
+				"pricePerLiter": "Price/Liter",
+				"totalCost": "Total Cost",
+				"odometer": "Odometer",
+				"fuelType": "Fuel",
+				"station": "Station",
+				"location": "Location",
+				"driver": "Driver",
+				"createdAt": "Created at",
+				"updatedAt": "Last update"
+			}
+		}
+	},
 	"BrandPage": {
 		"title": "Brands",
 		"Modal": {

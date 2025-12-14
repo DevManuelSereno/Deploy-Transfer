@@ -61,7 +61,7 @@ export const navbarItems = {
 		},
 		{
 			key: "refueling",
-			url: "#",
+			url: "/fueling",
 			icon: Fuel,
 		},
 		{

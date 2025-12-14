@@ -295,6 +295,66 @@
 		"description": "Use el asistente de IA para generar informes directamente desde su panel.",
 		"footer": "Desarrollado por PASS — © 2025"
 	},
+	"FuelingPage": {
+		"title": "Repostaje",
+		"Modal": {
+			"title": "Nuevo repostaje",
+			"description": "Complete los campos a continuación para registrar un nuevo repostaje."
+		},
+		"Delete": {
+			"title": "¿Está seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente el registro de repostaje de nuestros servidores.",
+			"fuelingInfo": "Información del repostaje:",
+			"vehiclePlate": "Placa del vehículo",
+			"date": "Fecha",
+			"cancel": "Cancelar",
+			"delete": "Eliminar",
+			"successMessage": "Repostaje eliminado con éxito"
+		},
+		"Form": {
+			"title": "Nuevo repostaje",
+			"description": "Complete los campos a continuación para registrar un nuevo repostaje.",
+			"vehicle": "Vehículo",
+			"date": "Fecha",
+			"liters": "Litros",
+			"pricePerLiter": "Precio por litro",
+			"totalCost": "Costo total",
+			"odometer": "Odómetro",
+			"fuelType": "Tipo de combustible",
+			"station": "Estación",
+			"location": "Ubicación",
+			"driver": "Conductor",
+			"notes": "Notas",
+			"selectVehicle": "Seleccione un vehículo",
+			"selectFuelType": "Seleccione tipo de combustible",
+			"cancel": "Cancelar",
+			"save": "Guardar",
+			"errorMessage": "Por favor, corrija los errores en el formulario.",
+			"successCreate": "Repostaje creado con éxito",
+			"successUpdate": "Repostaje actualizado con éxito"
+		},
+		"Table": {
+			"Filters": {
+				"fuelType": "Tipo de combustible",
+				"vehicle": "Vehículo"
+			},
+			"Columns": {
+				"id": "ID",
+				"vehiclePlate": "Placa",
+				"date": "Fecha",
+				"liters": "Litros",
+				"pricePerLiter": "Precio/Litro",
+				"totalCost": "Costo Total",
+				"odometer": "Odómetro",
+				"fuelType": "Combustible",
+				"station": "Estación",
+				"location": "Ubicación",
+				"driver": "Conductor",
+				"createdAt": "Creado en",
+				"updatedAt": "Última actualización"
+			}
+		}
+	},
 	"BrandPage": {
 		"title": "Marcas",
 		"Modal": {
