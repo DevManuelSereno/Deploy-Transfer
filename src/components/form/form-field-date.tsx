@@ -1,17 +1,6 @@
 "use client";
 
-import {
-	endOfMonth,
-	endOfYear,
-	format,
-	isEqual,
-	startOfDay,
-	startOfMonth,
-	startOfYear,
-	subDays,
-	subMonths,
-	subYears,
-} from "date-fns";
+import { addDays, format, isEqual, startOfDay, subDays } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CalendarIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -38,7 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-interface FormFieldDateRangeProps<T extends FieldValues> {
+interface FormFieldDateProps<T extends FieldValues> {
 	form: UseFormReturn<T>;
 	control: Control<T>;
 	name: Path<T>;
@@ -51,77 +40,52 @@ interface FormFieldDateRangeProps<T extends FieldValues> {
 export const formatDate = (date: string | Date | undefined) =>
 	date ? format(new Date(date), "dd/MM/yyyy") : "";
 
-export function FormFieldDateRange<T extends FieldValues>({
+export function FormFieldDate<T extends FieldValues>({
 	form,
 	control,
 	name,
 	label,
-	placeholder = "Selecione o período",
+	placeholder = "Selecione uma data",
 	className,
 	disabled,
-}: FormFieldDateRangeProps<T>) {
+}: FormFieldDateProps<T>) {
 	const today = new Date();
 	const [month, setMonth] = useState(today);
 	const formValue = form.watch(name);
 	const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
+	// Presets adaptados para data única
 	const presets = [
-		{ label: "Hoje", range: { from: today, to: today } },
-		{
-			label: "Ontem",
-			range: { from: subDays(today, 1), to: subDays(today, 1) },
-		},
-		{ label: "Últimos 7 dias", range: { from: subDays(today, 6), to: today } },
-		{
-			label: "Últimos 30 dias",
-			range: { from: subDays(today, 29), to: today },
-		},
-		{
-			label: "Do mês até a data",
-			range: { from: startOfMonth(today), to: today },
-		},
-		{
-			label: "Mês passado",
-			range: {
-				from: startOfMonth(subMonths(today, 1)),
-				to: endOfMonth(subMonths(today, 1)),
-			},
-		},
-		{
-			label: "Do ano até a data",
-			range: { from: startOfYear(today), to: today },
-		},
-		{
-			label: "Ano passado",
-			range: {
-				from: startOfYear(subYears(today, 1)),
-				to: endOfYear(subYears(today, 1)),
-			},
-		},
+		{ label: "Hoje", date: today },
+		{ label: "Ontem", date: subDays(today, 1) },
+		{ label: "Amanhã", date: addDays(today, 1) },
+		{ label: "Daqui a 7 dias", date: addDays(today, 7) },
 	];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: "off"
 	useEffect(() => {
-		if (!formValue?.from || !formValue?.to) {
+		if (!formValue) {
 			setSelectedPreset(null);
 			return;
 		}
 
-		const matched = presets.find(
-			(preset) =>
-				isEqual(
-					startOfDay(preset.range.from),
-					startOfDay(new Date(formValue.from)),
-				) &&
-				isEqual(
-					startOfDay(preset.range.to),
-					startOfDay(new Date(formValue.to)),
-				),
+		const matched = presets.find((preset) =>
+			isEqual(startOfDay(preset.date), startOfDay(new Date(formValue))),
 		);
 
 		setSelectedPreset(matched?.label || null);
 	}, [formValue]);
+
+	const handleSelect = (date: Date | undefined) => {
+		if (date) {
+			form.setValue(name, date.toISOString() as PathValue<T, Path<T>>, {
+				shouldValidate: true,
+				shouldDirty: true,
+			});
+			setIsPopoverOpen(false); // Fecha o popover ao selecionar
+		}
+	};
 
 	return (
 		<FormField
@@ -151,35 +115,25 @@ export function FormFieldDateRange<T extends FieldValues>({
 										<span
 											className={cn(
 												"truncate",
-												!formValue?.from && "text-muted-foreground",
+												!field.value && "text-muted-foreground",
 											)}
 										>
-											{formValue?.from ? (
-												formValue?.to ? (
-													<>
-														{formatDate(formValue.from)} –{" "}
-														{formatDate(formValue.to)}
-													</>
-												) : (
-													formatDate(formValue.from)
-												)
-											) : (
-												placeholder
-											)}
+											{field.value ? formatDate(field.value) : placeholder}
 										</span>
 									</Button>
-									{field.value?.from && (
+									{field.value && (
 										<Button
 											size="icon"
 											variant="ghost"
 											className="size-6 rounded-[calc(var(--radius)-5px)] absolute top-1/2 end-2 -translate-y-1/2"
 											onClick={(e) => {
 												e.preventDefault();
-												form.setValue(
-													name,
-													{ from: "", to: "" } as PathValue<T, Path<T>>,
-													{ shouldValidate: true, shouldDirty: true },
-												);
+												e.stopPropagation();
+												form.setValue(name, "" as PathValue<T, Path<T>>, {
+													shouldValidate: true,
+													shouldDirty: true,
+												});
+												setSelectedPreset(null);
 											}}
 										>
 											<X />
@@ -203,17 +157,8 @@ export function FormFieldDateRange<T extends FieldValues>({
 															selectedPreset === preset.label && "bg-accent",
 														)}
 														onClick={() => {
-															const { from, to } = preset.range;
-															form.setValue(
-																name,
-																{
-																	from: from.toISOString(),
-																	to: to.toISOString(),
-																} as PathValue<T, Path<T>>,
-																{ shouldValidate: true, shouldDirty: true },
-															);
-															setMonth(from || today);
-															setSelectedPreset(preset.label);
+															handleSelect(preset.date);
+															setMonth(preset.date);
 														}}
 													>
 														{preset.label}
@@ -223,30 +168,13 @@ export function FormFieldDateRange<T extends FieldValues>({
 										</div>
 									</div>
 									<Calendar
-										mode="range"
+										mode="single"
 										month={month}
 										onMonthChange={setMonth}
-										selected={
-											formValue?.from && formValue?.to
-												? {
-														from: new Date(formValue.from),
-														to: new Date(formValue.to),
-													}
-												: undefined
-										}
-										onSelect={(range) =>
-											form.setValue(
-												name,
-												{
-													from: range?.from?.toISOString() || "",
-													to: range?.to?.toISOString() || "",
-												} as PathValue<T, Path<T>>,
-												{ shouldValidate: true, shouldDirty: true },
-											)
-										}
+										selected={field.value ? new Date(field.value) : undefined}
+										onSelect={handleSelect}
 										locale={ptBR}
-										numberOfMonths={2}
-										autoFocus
+										// numberOfMonths={1} // Geralmente 1 mês é suficiente para data única
 									/>
 								</div>
 							</PopoverContent>
