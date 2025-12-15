@@ -50,7 +50,10 @@ interface CarouselCardInsightProps {
 
 export function CarouselCardInsight({ cardData }: CarouselCardInsightProps) {
 	return (
-		<Carousel opts={{ dragFree: true }} className="-mb-3.5">
+		<Carousel
+			opts={{ dragFree: true }}
+			className="-mb-3.5 cursor-grab active:cursor-grabbing"
+		>
 			<CarouselContent className="mx-px mb-3.5 mt-px gap-4">
 				{cardData.map((stat) => (
 					<CarouselItem className="basis-auto pl-0" key={stat.title}>
