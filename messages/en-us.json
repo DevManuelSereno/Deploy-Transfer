@@ -31,7 +31,8 @@
 		"expenses": "Expenses",
 		"maintenance": "Maintenance",
 		"brands": "Brands",
-		"user": "User"
+		"user": "User",
+		"toggleTheme": "Toggle theme"
 	},
 	"Form": {
 		"cancel": "Cancel",

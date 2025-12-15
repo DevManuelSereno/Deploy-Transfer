@@ -1,6 +1,7 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,7 @@ import { useThemeToggle } from "@/hooks/use-theme-toggle";
 
 export function ThemeToggle() {
 	const { toggleTheme, isDark } = useThemeToggle();
+	const t = useTranslations("Navbar");
 	const [mounted, setMounted] = React.useState(false);
 
 	React.useEffect(() => {
@@ -27,7 +29,7 @@ export function ThemeToggle() {
 				disabled
 			>
 				<Moon className="h-[1.2rem] w-[1.2rem]" />
-				<span className="sr-only">Alternar tema</span>
+				<span className="sr-only">{t("toggleTheme")}</span>
 			</Button>
 		);
 	}
@@ -47,11 +49,11 @@ export function ThemeToggle() {
 						<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 transition-all dark:-rotate-90" />
 					)}
 
-					<span className="sr-only">Alternar tema</span>
+					<span className="sr-only">{t("toggleTheme")}</span>
 				</Button>
 			</TooltipTrigger>
 			<TooltipContent className="font-normal text-sm">
-				Alternar tema
+				{t("toggleTheme")}
 			</TooltipContent>
 		</Tooltip>
 	);

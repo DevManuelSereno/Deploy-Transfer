@@ -31,7 +31,8 @@
 		"expenses": "Gastos",
 		"maintenance": "Mantenimiento",
 		"brands": "Marcas",
-		"user": "Usuario"
+		"user": "Usuario",
+		"toggleTheme": "Cambiar tema"
 	},
 	"Form": {
 		"cancel": "Cancelar",
