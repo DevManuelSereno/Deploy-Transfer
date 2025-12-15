@@ -32,6 +32,7 @@ interface FormFieldDateProps<T extends FieldValues> {
 	name: Path<T>;
 	label?: string;
 	placeholder?: string;
+	formItemClassName?: string;
 	className?: string;
 	disabled?: boolean;
 }
@@ -46,6 +47,7 @@ export function FormFieldDate<T extends FieldValues>({
 	label,
 	placeholder = "Selecione uma data",
 	className,
+	formItemClassName,
 	disabled,
 }: FormFieldDateProps<T>) {
 	const today = new Date();
@@ -102,7 +104,7 @@ export function FormFieldDate<T extends FieldValues>({
 			control={control}
 			name={name}
 			render={({ field }) => (
-				<FormItem className={cn("w-full", className)}>
+				<FormItem className={cn("w-full", formItemClassName)}>
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
 						<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>

@@ -9,6 +9,8 @@ import type {
 } from "@/app/[locale]/fueling/types/types-fueling";
 import { FuelingFormSchema } from "@/app/[locale]/fueling/validation/validation-fueling";
 import { FormErrorMessage } from "@/components/form/form-error-message";
+import { FormFieldDate } from "@/components/form/form-field-date";
+import { FormFieldDateRange } from "@/components/form/form-field-date-range";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
 import {
@@ -18,7 +20,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { FormDatePicker } from "@/components/ui/form-date-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
@@ -173,26 +174,15 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 									loading ? (
 										<Skeleton className="rounded-md w-full h-10" />
 									) : (
-										<FormItem className="col-span-6">
-											<FormLabel>{t("date")}</FormLabel>
-											<FormControl>
-												<FormDatePicker
-													id={field.name}
-													value={
-														field.value ? new Date(field.value) : undefined
-													}
-													onChange={(date) =>
-														field.onChange(date?.toISOString().split("T")[0])
-													}
-													onBlur={field.onBlur}
-													aria-invalid={fieldState.invalid}
-													placeholder="15/12/2024"
-													className="w-full col-span-6"
-													name={field.name}
-												/>
-											</FormControl>
-											<FormMessage />
-										</FormItem>
+										<FormFieldDateRange
+											name={field.name}
+											form={form}
+											control={form.control}
+											label={t("date")}
+											aria-invalid={fieldState.invalid}
+											placeholder="15/12/2024"
+											formItemClassName="w-full col-span-6"
+										/>
 									)
 								}
 							/>
@@ -206,8 +196,6 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 									) : (
 										<FormFieldSelect
 											label={t("station")}
-											value={field.value ?? ""}
-											onValueChange={field.onChange}
 											aria-invalid={fieldState.invalid}
 											options={stationOptions}
 											placeholder="Selecione o posto..."

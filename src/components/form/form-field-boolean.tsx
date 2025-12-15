@@ -6,7 +6,6 @@ import {
 	FormField,
 	FormItem,
 	FormLabel,
-	
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
@@ -38,7 +37,7 @@ export function FormFieldBoolean<T extends FieldValues>({
 				<FormItem className={cn(className)}>
 					{label && <FormLabel className="truncate">{label}</FormLabel>}
 					<FormControl>
-						<div className="bg-muted dark:bg-input/50 inline-flex h-9 w-full rounded-lg p-[3px]">
+						<div className="bg-muted dark:bg-input/50 inline-flex h-10 w-full rounded-lg p-[3px]">
 							<RadioGroup
 								onValueChange={(val) => field.onChange(val === "true")}
 								value={
