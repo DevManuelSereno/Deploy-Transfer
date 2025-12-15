@@ -35,7 +35,7 @@ export function LanguageToggle() {
 
 	return (
 		<Select value={locale} onValueChange={handleLanguageChange}>
-			<SelectTrigger className="w-fit rounded-full border-none hover:bg-input/30 [&_svg]:text-foreground">
+			<SelectTrigger className="w-fit border-none hover:bg-input/30 [&_svg]:text-foreground">
 				<Globe />
 				{getLanguageLabel(locale)}
 			</SelectTrigger>
