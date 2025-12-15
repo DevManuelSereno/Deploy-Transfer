@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY package.json package-lock.json* ./
 
+# garante que exista a pasta public mesmo que vazia
+RUN mkdir -p /app/public
+
 RUN npm ci
 
 COPY . .
