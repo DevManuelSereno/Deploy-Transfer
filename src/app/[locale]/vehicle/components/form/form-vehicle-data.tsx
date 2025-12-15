@@ -419,7 +419,7 @@ export function FormVehicleData() {
 											control={form.control}
 											aria-invalid={fieldState.invalid}
 											placeholder="ABC1D23"
-											className="col-span-3"
+											className="col-span-4"
 										/>
 									)
 								}
@@ -456,7 +456,7 @@ export function FormVehicleData() {
 											aria-invalid={fieldState.invalid}
 											options={statusOptions}
 											placeholder={t("selectStatus")}
-											className="w-full col-span-7"
+											className="w-full col-span-6"
 											name={field.name}
 											control={form.control}
 										/>
