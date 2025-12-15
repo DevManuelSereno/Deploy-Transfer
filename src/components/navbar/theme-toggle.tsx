@@ -24,7 +24,7 @@ export function ThemeToggle() {
 		return (
 			<Button
 				variant="ghost"
-				className="rounded-full [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground disabled:opacity-100" // para não renderizar com opacity menor
+				className="rounded-full disabled:opacity-100" // para não renderizar com opacity menor
 				size="icon"
 				disabled
 			>
@@ -39,7 +39,7 @@ export function ThemeToggle() {
 			<TooltipTrigger asChild>
 				<Button
 					variant="ghost"
-					className="rounded-full [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground"
+					className="rounded-full"
 					size="icon"
 					onClick={toggleTheme}
 				>

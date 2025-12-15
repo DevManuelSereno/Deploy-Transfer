@@ -36,7 +36,7 @@ export function AppNavbar() {
 
 	return (
 		<div className="flex w-full items-center gap-1 px-4 lg:px-6">
-			<SidebarTrigger className="-ml-1 rounded-full size-9 [&>svg]:text-muted-foreground/80 hover:[&>svg]:text-foreground" />
+			<SidebarTrigger className="-ml-1 rounded-full size-9" />
 			<Separator orientation="vertical" />
 			<Breadcrumb>
 				<BreadcrumbList>
