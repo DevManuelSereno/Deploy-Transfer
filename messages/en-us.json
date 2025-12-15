@@ -137,9 +137,11 @@
 			"back": "Back",
 			"emptyState": "No records found",
 			"columns": {
+				"id": "ID",
 				"occurrenceAt": "Occurrence date",
 				"classification": "Classification",
-				"severity": "Seriousness"
+				"severity": "Seriousness",
+				"caseNumber": "Case number"
 			},
 			"modal": {
 				"title": "Add occurrence",

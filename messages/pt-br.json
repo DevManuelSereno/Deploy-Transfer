@@ -137,9 +137,11 @@
 			"back": "Voltar",
 			"emptyState": "Nenhum registro encontrado",
 			"columns": {
+				"id": "ID",
 				"occurrenceAt": "Data da ocorrência",
 				"classification": "Classificação",
-				"severity": "Seriedade"
+				"severity": "Gravidade",
+				"caseNumber": "Número do caso"
 			},
 			"modal": {
 				"title": "Adicionar ocorrência",

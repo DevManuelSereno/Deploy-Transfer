@@ -137,9 +137,11 @@
 			"back": "Volver",
 			"emptyState": "No se encontraron registros",
 			"columns": {
-				"occurrenceAt": "Fecha de ocurrencia",
+				"id": "ID",
+				"occurrenceAt": "Fecha de la ocurrencia",
 				"classification": "Clasificación",
-				"severity": "Gravedad"
+				"severity": "Gravedad",
+				"caseNumber": "Número de caso"
 			},
 			"modal": {
 				"title": "Añadir ocurrencia",
