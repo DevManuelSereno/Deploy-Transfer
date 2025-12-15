@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	type ColumnFiltersState,
 	type ColumnPinningState,
@@ -14,7 +14,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { LucidePlus } from "lucide-react";
+import { BusIcon, CarFrontIcon, LucidePlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getVehicleColumns } from "@/app/[locale]/vehicle/components/columns/columns-table-vehicle";
@@ -26,16 +26,14 @@ import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehi
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { DataTable } from "@/components/data-table";
-import { DataTableExport } from "@/components/data-table/data-table-export";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
-import { DataTableUpdate } from "@/components/data-table/data-table-update";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getData } from "@/lib/functions.api";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { VehicleColumnActions } from "../columns/columns-table-vehicle";
@@ -379,13 +377,39 @@ export default function TableVehicle() {
 		},
 	});
 
-	const handleUpdate = () =>
-		queryClient.invalidateQueries({
-			queryKey: ["vehicle-get"],
-		});
+	const cardVehicleData = useMemo(
+		() => [
+			{
+				title: "Total de veículos",
+				value: <AnimatedCounter value={23} />,
+				Icon: BusIcon,
+				description: "Total de veículos cadastrados",
+			},
+			{
+				title: "Veículos no mês",
+				value: <AnimatedCounter value={17} />,
+				Icon: BusIcon,
+				description: "Total de veículos cadastrados neste mês",
+			},
+			{
+				title: "Veículos ativos",
+				value: <AnimatedCounter value={12} />,
+				Icon: BusIcon,
+				description: "Total de veículos ativos",
+			},
+			{
+				title: "Veículos em manutenção",
+				value: <AnimatedCounter value={3} />,
+				Icon: CarFrontIcon,
+				description: "Total de veículos em manutenção",
+			},
+		],
+		[],
+	);
 
 	return (
 		<div className="flex flex-1 flex-col gap-6">
+			<CarouselCardInsight cardData={cardVehicleData} />
 			<Card
 				className={cn(
 					"border-0 gap-0 p-0 shadow-custom! bg-[linear-gradient(to_bottom,#ffffff_0%,#fcfcfc_50%,#fafafa_100%)]",
