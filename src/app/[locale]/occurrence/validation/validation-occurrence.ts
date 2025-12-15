@@ -14,5 +14,5 @@ export const OccurrencePayloadSchema = OccurrenceBaseSchema.extend({
 export const OccurrenceFormSchema = OccurrenceBaseSchema.extend({
 	Classification: z.string().min(1),
 	Severity: z.string().min(1),
-	OccurrenceAt: z.iso.datetime(),
+	OccurrenceAt: z.string().datetime(),
 });
