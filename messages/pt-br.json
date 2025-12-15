@@ -402,6 +402,7 @@
 		},
 		"Table": {
 			"Columns": {
+				"id": "ID",
 				"occurrenceAt": "Data da ocorrência",
 				"classification": "Classificação",
 				"severity": "Gravidade",

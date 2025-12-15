@@ -402,6 +402,7 @@
 		},
 		"Table": {
 			"Columns": {
+				"id": "ID",
 				"occurrenceAt": "Occurrence date",
 				"classification": "Classification",
 				"severity": "Seriousness",

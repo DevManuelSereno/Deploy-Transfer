@@ -5,6 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
 import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occurrence";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export interface OccurrenceColumnActions {
 	onEdit: (occurrence: OccurrenceData) => void;
@@ -14,6 +15,50 @@ export const getOccurrenceColumns = (
 	actions: OccurrenceColumnActions,
 	t: (key: string) => string,
 ): ColumnDef<OccurrenceData>[] => [
+	{
+		id: "select",
+		header: ({ table }) => (
+			<Checkbox
+				checked={
+					table.getIsAllPageRowsSelected() ||
+					(table.getIsSomePageRowsSelected() && "indeterminate")
+				}
+				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+				aria-label="Select all"
+				className="dark:bg-background size-4.5 [&_svg]:size-3"
+			/>
+		),
+		cell: ({ row }) => (
+			<Checkbox
+				checked={row.getIsSelected()}
+				onCheckedChange={(value) => row.toggleSelected(!!value)}
+				aria-label="Select row"
+				className="dark:bg-background size-4.5 [&_svg]:size-3"
+			/>
+		),
+		enableSorting: false,
+		enableHiding: false,
+		size: 40,
+	},
+	{
+		accessorKey: "IDO",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("id")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		enableColumnFilter: true,
+		size: 65,
+	},
 	{
 		accessorKey: "OccurrenceAt",
 		header: ({ column }) => {
