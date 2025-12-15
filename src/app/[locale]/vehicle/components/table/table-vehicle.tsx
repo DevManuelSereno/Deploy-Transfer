@@ -26,6 +26,7 @@ import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehi
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { DataTable } from "@/components/data-table";
+import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
@@ -113,7 +114,6 @@ export default function TableVehicle() {
 	// 			brand: vehicle.brand.name,
 	// 		})),
 	// });
-
 	const dataVehicle = [
 		{
 			IDV: 1,
@@ -134,6 +134,8 @@ export default function TableVehicle() {
 			InspectionInterval: 10000,
 			CompanyId: 12,
 			BrandId: 4,
+			brand: "Toyota",
+			company: "Alpha Rent a Car",
 			CreatedAt: "2024-01-10T10:20:00Z",
 			UpdatedAt: "2024-09-15T12:40:00Z",
 		},
@@ -156,6 +158,8 @@ export default function TableVehicle() {
 			InspectionInterval: 15000,
 			CompanyId: 3,
 			BrandId: 7,
+			brand: "Mercedes-Benz",
+			company: "Rio Vans Transportes",
 			CreatedAt: "2023-05-22T09:10:00Z",
 			UpdatedAt: "2024-03-11T14:30:00Z",
 		},
@@ -178,6 +182,8 @@ export default function TableVehicle() {
 			InspectionInterval: 12000,
 			CompanyId: 8,
 			BrandId: 10,
+			brand: "Toyota",
+			company: "Paraná Locadora",
 			CreatedAt: "2022-08-01T11:00:00Z",
 			UpdatedAt: "2024-04-09T17:25:00Z",
 		},
@@ -200,6 +206,8 @@ export default function TableVehicle() {
 			InspectionInterval: 20000,
 			CompanyId: 2,
 			BrandId: 4,
+			brand: "Toyota",
+			company: "Paraná Locadora",
 			CreatedAt: "2023-11-30T10:15:00Z",
 			UpdatedAt: "2024-01-18T15:10:00Z",
 		},
@@ -222,6 +230,8 @@ export default function TableVehicle() {
 			InspectionInterval: 10000,
 			CompanyId: 11,
 			BrandId: 6,
+			brand: "Tesla",
+			company: "Nordeste Auto Rent",
 			CreatedAt: "2024-02-01T09:30:00Z",
 			UpdatedAt: "2024-06-20T18:40:00Z",
 		},
@@ -244,6 +254,8 @@ export default function TableVehicle() {
 			InspectionInterval: 15000,
 			CompanyId: 14,
 			BrandId: 12,
+			brand: "Jeep",
+			company: "Paraná Locadora",
 			CreatedAt: "2023-07-10T08:00:00Z",
 			UpdatedAt: "2024-05-10T16:30:00Z",
 		},
@@ -266,6 +278,8 @@ export default function TableVehicle() {
 			InspectionInterval: 10000,
 			CompanyId: 5,
 			BrandId: 9,
+			brand: "Jeep",
+			company: "Paraná Locadora",
 			CreatedAt: "2021-10-11T12:40:00Z",
 			UpdatedAt: "2024-03-01T13:55:00Z",
 		},
@@ -288,6 +302,8 @@ export default function TableVehicle() {
 			InspectionInterval: 20000,
 			CompanyId: 6,
 			BrandId: 13,
+			brand: "Fiat",
+			company: "Bahia Transportes",
 			CreatedAt: "2020-01-02T11:20:00Z",
 			UpdatedAt: "2024-07-12T10:10:00Z",
 		},
@@ -310,6 +326,8 @@ export default function TableVehicle() {
 			InspectionInterval: 30000,
 			CompanyId: 22,
 			BrandId: 15,
+			brand: "Tesla",
+			company: "Nordeste Auto Rent",
 			CreatedAt: "2024-05-01T11:20:00Z",
 			UpdatedAt: "2024-08-01T10:00:00Z",
 		},
@@ -332,6 +350,8 @@ export default function TableVehicle() {
 			InspectionInterval: 12000,
 			CompanyId: 9,
 			BrandId: 12,
+			brand: "Jeep",
+			company: "Nordeste Auto Rent",
 			CreatedAt: "2022-02-15T07:50:00Z",
 			UpdatedAt: "2024-06-18T12:00:00Z",
 		},
@@ -376,6 +396,27 @@ export default function TableVehicle() {
 			globalFilter,
 		},
 	});
+
+	const companyColumn = table.getColumn("company");
+
+	const companyColumnOptions = useMemo(() => {
+		const uniqueCompanies = [...new Set(dataVehicle?.map((v) => v.company))];
+
+		return uniqueCompanies.map((company) => ({
+			label: company,
+			value: company,
+		}));
+	}, []);
+	const brandColumn = table.getColumn("brand");
+
+	const brandColumnOptions = useMemo(() => {
+		const uniqueCompanies = [...new Set(dataVehicle?.map((v) => v.brand))];
+
+		return uniqueCompanies.map((brand) => ({
+			label: brand,
+			value: brand,
+		}));
+	}, []);
 
 	const cardVehicleData = useMemo(
 		() => [
@@ -427,6 +468,16 @@ export default function TableVehicle() {
 						<DataTableSearchInput
 							value={globalFilter}
 							onChangeValue={(filter) => setGlobalFilter(filter)}
+						/>
+						<DataTableFacetedFilter
+							options={brandColumnOptions}
+							column={brandColumn}
+							title={tFilters("brand")}
+						/>
+						<DataTableFacetedFilter
+							options={companyColumnOptions}
+							column={companyColumn}
+							title={tFilters("company")}
 						/>
 					</div>
 					<div className="flex items-center gap-2">

@@ -7,6 +7,7 @@ import type { useTranslations } from "next-intl";
 import type { VehicleData } from "@/app/[locale]/vehicle/types/types-vehicle";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import type { CompanyType } from "@/types/models";
 
 export interface VehicleColumnActions {
 	onEdit: (vehicle: VehicleData) => void;
@@ -86,29 +87,38 @@ export const getVehicleColumns = (
 			headerClassName: "grow",
 		},
 	},
-	// {
-	// 	accessorKey: "BrandId",
-	// 	header: ({ column }) => {
-	// 		return (
-	// 			<div className="flex items-center h-full">
-	// 				<Button
-	// 					variant="ghost"
-	// 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-	// 					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-	// 				>
-	// 					{t("brand")}
-	// 					<ChevronsUpDown className="size-3" />
-	// 				</Button>
-	// 			</div>
-	// 		);
-	// 	},
-	// 	enableColumnFilter: true,
-	// 	size: 160,
-	// 	meta: {
-	// 		cellClassName: "grow",
-	// 		headerClassName: "grow",
-	// 	},
-	// },
+	{
+		accessorKey: "brand",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("brand")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		cell: ({ cell }) => cell.getValue(),
+		filterFn: (row, columnId, filterValue: unknown) => {
+			if (!filterValue) return true;
+			const values = Array.isArray(filterValue)
+				? filterValue
+				: [String(filterValue)];
+			const rowValue = String(row.getValue(columnId) ?? "");
+			return values.includes(rowValue);
+		},
+		enableColumnFilter: true,
+		size: 160,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
+	},
 	{
 		accessorKey: "Seats",
 		header: ({ column }) => {
@@ -154,37 +164,38 @@ export const getVehicleColumns = (
 			headerClassName: "grow",
 		},
 	},
-	// {
-	// 	accessorKey: "CompanyId",
-	// 	header: ({ column }) => {
-	// 		return (
-	// 			<div className="flex items-center h-full">
-	// 				<Button
-	// 					variant="ghost"
-	// 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-	// 					className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
-	// 				>
-	// 					{t("company")}
-	// 					<ChevronsUpDown className="size-3" />
-	// 				</Button>
-	// 			</div>
-	// 		);
-	// 	},
-	// 	enableColumnFilter: true,
-	// 	filterFn: (row, columnId, filterValue: unknown) => {
-	// 		if (!filterValue) return true;
-	// 		const values = Array.isArray(filterValue)
-	// 			? filterValue
-	// 			: [String(filterValue)];
-	// 		const rowValue = String(row.getValue(columnId) ?? "");
-	// 		return values.includes(rowValue);
-	// 	},
-	// 	size: 230,
-	// 	meta: {
-	// 		cellClassName: "grow",
-	// 		headerClassName: "grow",
-	// 	},
-	// },
+	{
+		accessorKey: "company",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("company")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		cell: ({ cell }) => cell.getValue(),
+		enableColumnFilter: true,
+		filterFn: (row, columnId, filterValue: unknown) => {
+			if (!filterValue) return true;
+			const values = Array.isArray(filterValue)
+				? filterValue
+				: [String(filterValue)];
+			const rowValue = String(row.getValue(columnId) ?? "");
+			return values.includes(rowValue);
+		},
+		size: 230,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
+	},
 	{
 		accessorKey: "CreatedAt",
 		cell: ({ cell }) => {

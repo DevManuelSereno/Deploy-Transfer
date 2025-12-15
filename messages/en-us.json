@@ -239,6 +239,7 @@
 		},
 		"Table": {
 			"Filters": {
+				"brand": "Brand",
 				"status": "Status",
 				"company": "Company"
 			},
