@@ -232,7 +232,7 @@ export function FormVehicleData() {
 											aria-invalid={fieldState.invalid}
 											options={brandOptions}
 											placeholder={t("selectBrand")}
-											className="w-full col-span-4"
+											className="w-full sm:col-span-4 col-span-6"
 											name={field.name}
 											control={form.control}
 										/>
@@ -253,7 +253,7 @@ export function FormVehicleData() {
 											aria-invalid={fieldState.invalid}
 											placeholder="41"
 											formatOptions={{ useGrouping: false }}
-											formItemClassName="col-span-2"
+											formItemClassName="col-span-6 sm:col-span-2"
 										/>
 									)
 								}
