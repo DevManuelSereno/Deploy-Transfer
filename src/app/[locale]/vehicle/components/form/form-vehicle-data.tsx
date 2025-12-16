@@ -198,7 +198,7 @@ export function FormVehicleData() {
 					className={cn("overflow-hidden", hasErrors && "h-[520px]")}
 					id="vehicle-form"
 				>
-					<div className="flex flex-col gap-4 px-6 pb-6">
+					<div className="flex flex-col gap-4 px-6 py-6">
 						<div className="grid items-start gap-x-4 gap-y-4 sm:grid-cols-12">
 							<Controller
 								name="Model"

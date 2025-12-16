@@ -28,57 +28,63 @@ export default function TabsVehicle() {
 	return (
 		<Tabs
 			defaultValue="tab-general-data"
-			className="flex flex-col flex-1 overflow-hidden"
+			className="flex flex-col flex-1 overflow-y-hidden"
 			value={tabPanel as any}
 			onValueChange={handleTabChange as any}
 		>
-			<TabsList
-				className={cn(
-					"inline-flex w-fit items-center justify-center p-[3px] text-foreground",
-					"h-auto gap-2 rounded-none bg-transparent px-6 py-1 flex-shrink-0",
-				)}
-			>
-				<TabsTrigger
-					value="tab-general-data"
+			<div className="border-b overflow-x-auto min-h-10">
+				<TabsList
 					className={cn(
-						"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
-						"after:-mb-1.5 after:h-[3px] after:rounded-t",
+						"inline-flex w-fit items-center justify-center text-foreground",
+						"h-auto gap-2 rounded-none bg-transparent px-6 py-1",
 					)}
 				>
-					<Info />
-					{t("generalData")}
-				</TabsTrigger>
-				<TabsTrigger
-					value="tab-documentation"
-					className={cn(
-						"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
-						"after:-mb-1.5 after:h-[3px] after:rounded-t",
-					)}
-				>
-					<FileText />
-					{t("documentation")}
-				</TabsTrigger>
-				<TabsTrigger
-					value="tab-fueling"
-					className={cn(
-						"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
-						"after:-mb-1.5 after:h-[3px] after:rounded-t",
-					)}
-				>
-					<Fuel />
-					{t("fueling")}
-				</TabsTrigger>
-				<TabsTrigger
-					value="tab-occurrence"
-					className={cn(
-						"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
-						"after:-mb-1.5 after:h-[3px] after:rounded-t",
-					)}
-				>
-					<TriangleAlert />
-					{t("occurrence")}
-				</TabsTrigger>
-			</TabsList>
+					<TabsTrigger
+						value="tab-general-data"
+						className={cn(
+							"shrink-0",
+							"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
+							"after:-mb-1.5 after:h-0.75 after:rounded-t",
+						)}
+					>
+						<Info />
+						{t("generalData")}
+					</TabsTrigger>
+					<TabsTrigger
+						value="tab-documentation"
+						className={cn(
+							"shrink-0",
+							"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
+							"after:-mb-1.5 after:h-0.75 after:rounded-t",
+						)}
+					>
+						<FileText />
+						{t("documentation")}
+					</TabsTrigger>
+					<TabsTrigger
+						value="tab-fueling"
+						className={cn(
+							"shrink-0",
+							"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
+							"after:-mb-1.5 after:h-0.75 after:rounded-t",
+						)}
+					>
+						<Fuel />
+						{t("fueling")}
+					</TabsTrigger>
+					<TabsTrigger
+						value="tab-occurrence"
+						className={cn(
+							"shrink-0",
+							"data-[state=active]:after:bg-primary after:absolute after:inset-x-0 after:bottom-0",
+							"after:-mb-1.5 after:h-0.75 after:rounded-t",
+						)}
+					>
+						<TriangleAlert />
+						{t("occurrence")}
+					</TabsTrigger>
+				</TabsList>
+			</div>
 			<TabsContents className="flex-1 overflow-y-auto">
 				<TabsContent value="tab-general-data" id="tab-general-data">
 					<FormVehicleData />
