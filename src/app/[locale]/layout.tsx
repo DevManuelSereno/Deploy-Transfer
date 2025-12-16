@@ -70,7 +70,9 @@ export default async function LocaleLayout({
 									>
 										<AppNavbar />
 									</header>
-									<div className="flex flex-1 flex-col">{children}</div>
+									<div className="flex flex-1 flex-col p-2 sm:p-4 md:p-6">
+										{children}
+									</div>
 								</div>
 							</SidebarInset>
 						</SidebarProvider>

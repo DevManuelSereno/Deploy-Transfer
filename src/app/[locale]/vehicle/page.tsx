@@ -12,7 +12,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function VehiclePage() {
 	return (
-		<div className="flex flex-col p-6">
+		<div className="flex flex-col">
 			<TableVehicle />
 		</div>
 	);
