@@ -113,7 +113,7 @@ export const getFuelingColumns = (
 		},
 		cell: ({ cell }) => {
 			const value = cell.getValue() as number;
-			return `${value.toFixed(2)} L`;
+			return `${value?.toFixed(2)} L`;
 		},
 		enableColumnFilter: true,
 		size: 110,
