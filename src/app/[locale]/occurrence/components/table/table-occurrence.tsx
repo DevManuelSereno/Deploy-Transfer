@@ -14,7 +14,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { LucidePlus } from "lucide-react";
+import { BusIcon, CarFrontIcon, LucidePlus, TriangleAlertIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getOccurrenceColumns } from "@/app/[locale]/occurrence/components/columns/columns-table-occurrence";
@@ -24,10 +24,8 @@ import { ModalTableOccurrence } from "@/app/[locale]/occurrence/components/modal
 import { useOccurrenceFormContext } from "@/app/[locale]/occurrence/context/occurrence-context";
 import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occurrence";
 import { DataTable } from "@/components/data-table";
-import { DataTableExport } from "@/components/data-table/data-table-export";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
-import { DataTableUpdate } from "@/components/data-table/data-table-update";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
@@ -35,6 +33,8 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { OccurrenceColumnActions } from "../columns/columns-table-occurrence";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
+import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 
 export default function TableOccurrence() {
 	const tTable = useTranslations("DataTable");
@@ -228,8 +228,45 @@ export default function TableOccurrence() {
 			queryKey: ["occurrence-get"],
 		});
 
+		const cardOccurrenceData = useMemo(
+		() => [
+			{
+				title: "Total de ocorrências",
+				value: <AnimatedCounter value={23} />,
+				Icon: TriangleAlertIcon,
+				description: "Total de ocorrências registradas",
+			},
+			{
+				title: "Ocorrências no mês",
+				value: <AnimatedCounter value={17} />,
+				Icon: TriangleAlertIcon,
+				description: "Total de ocorrências registradas neste mês",
+			},
+			{
+				title: "Ocorrências em aberto",
+				value: <AnimatedCounter value={12} />,
+				Icon: TriangleAlertIcon,
+				description: "Total de ocorrências em aberto",
+			},
+			{
+				title: "Principal motivo de abertura",
+				value: "Acidente",
+				Icon: TriangleAlertIcon,
+				description: "Principal motivo de abertura de ocorrências",
+			},
+			{
+				title: "Principal grau de gravidade",
+				value: "Média",
+				Icon: TriangleAlertIcon,
+				description: "Principal grau de gravidade das ocorrências",
+			},
+		],
+		[],
+	);
+
 	return (
 		<div className="flex flex-1 flex-col gap-6">
+			<CarouselCardInsight cardData={cardOccurrenceData} />
 			<Card
 				className={cn(
 					"border-0 gap-0 p-0 shadow-custom! bg-[linear-gradient(to_bottom,#ffffff_0%,#fcfcfc_50%,#fafafa_100%)]",

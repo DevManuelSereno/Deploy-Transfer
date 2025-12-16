@@ -14,7 +14,7 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { LucidePlus } from "lucide-react";
+import { BusIcon, CarFrontIcon, LucidePlus, Fuel, FuelIcon, DollarSignIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getFuelingColumns } from "@/app/[locale]/fueling/components/columns/columns-table-fueling";
@@ -24,21 +24,23 @@ import { ModalTableFueling } from "@/app/[locale]/fueling/components/modal/modal
 import { useFuelingFormContext } from "@/app/[locale]/fueling/context/fueling-context";
 import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
 import { DataTable } from "@/components/data-table";
-import { DataTableExport } from "@/components/data-table/data-table-export";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
-import { DataTableUpdate } from "@/components/data-table/data-table-update";
+// import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { FuelingColumnActions } from "../columns/columns-table-fueling";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 
 export default function TableFueling() {
 	const tTable = useTranslations("DataTable");
 	const tColumns = useTranslations("FuelingPage.Table.Columns");
+	// const tFilters = useTranslations("FuelingPage.Table.Filters");
 	const { setEditingFueling, editingFueling } = useFuelingFormContext();
 	const queryClient = useQueryClient();
 
@@ -263,8 +265,39 @@ export default function TableFueling() {
 			queryKey: ["fueling-get"],
 		});
 
+		const cardFuelingData = useMemo(
+		() => [
+			{
+				title: "Total de abastecimentos",
+				value: <AnimatedCounter value={23} />,
+				Icon: FuelIcon,
+				description: "Total de abastecimentos registrados",
+			},
+			{
+				title: "Abastecimentos no mês",
+				value: <AnimatedCounter value={13} />,
+				Icon: FuelIcon,
+				description: "Total de veículos cadastrados neste mês",
+			},
+			{
+				title: "Total gasto no mês",
+				value: <AnimatedCounter value={12650} />,
+				Icon: DollarSignIcon,
+				description: "Total gasto com abastecimento no mês",
+			},
+			{
+				title: "Combustível mais escolhido",
+				value: "Diesel",
+				Icon: CarFrontIcon,
+				description: "Combustível com mais abastecimentos",
+			},
+		],
+		[],
+	);
+
 	return (
 		<div className="flex flex-1 flex-col gap-6">
+			<CarouselCardInsight cardData={cardFuelingData} />
 			<Card
 				className={cn(
 					"border-0 gap-0 p-0 shadow-custom! bg-[linear-gradient(to_bottom,#ffffff_0%,#fcfcfc_50%,#fafafa_100%)]",
@@ -283,6 +316,11 @@ export default function TableFueling() {
 							value={globalFilter}
 							onChangeValue={(filter) => setGlobalFilter(filter)}
 						/>
+						{/* <DataTableFacetedFilter
+							options={brandColumnOptions}
+							column={brandColumn}
+							title={tFilters("brand")}
+						/> */}
 					</div>
 					<div className="flex items-center gap-2">
 						<Button
