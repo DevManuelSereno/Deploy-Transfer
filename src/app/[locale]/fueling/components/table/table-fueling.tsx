@@ -14,7 +14,14 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { BusIcon, CarFrontIcon, LucidePlus, Fuel, FuelIcon, DollarSignIcon } from "lucide-react";
+import {
+	BusIcon,
+	CarFrontIcon,
+	DollarSignIcon,
+	Fuel,
+	FuelIcon,
+	LucidePlus,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getFuelingColumns } from "@/app/[locale]/fueling/components/columns/columns-table-fueling";
@@ -26,16 +33,17 @@ import type { FuelingData } from "@/app/[locale]/fueling/types/types-fueling";
 import { DataTable } from "@/components/data-table";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 // import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { FuelingColumnActions } from "../columns/columns-table-fueling";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
 
 export default function TableFueling() {
 	const tTable = useTranslations("DataTable");
@@ -265,7 +273,7 @@ export default function TableFueling() {
 			queryKey: ["fueling-get"],
 		});
 
-		const cardFuelingData = useMemo(
+	const cardFuelingData = useMemo(
 		() => [
 			{
 				title: "Total de abastecimentos",
@@ -305,35 +313,37 @@ export default function TableFueling() {
 					"dark:border-[#262626] overflow-hidden",
 				)}
 			>
-				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
-					<div className="flex items-center gap-2">
-						<OpenAiToolbar />
-						<Separator
-							orientation="vertical"
-							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-						/>
-						<DataTableSearchInput
-							value={globalFilter}
-							onChangeValue={(filter) => setGlobalFilter(filter)}
-						/>
-						{/* <DataTableFacetedFilter
+				<ScrollArea>
+					<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
+						<div className="flex items-center gap-2">
+							<OpenAiToolbar />
+							<Separator
+								orientation="vertical"
+								className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+							/>
+							<DataTableSearchInput
+								value={globalFilter}
+								onChangeValue={(filter) => setGlobalFilter(filter)}
+							/>
+							{/* <DataTableFacetedFilter
 							options={brandColumnOptions}
 							column={brandColumn}
 							title={tFilters("brand")}
 						/> */}
+						</div>
+						<div className="flex items-center gap-2">
+							<Button
+								onClick={() => {
+									setEditingFueling(undefined);
+									setIsModalEditOpen(true);
+								}}
+							>
+								<LucidePlus />
+								{tTable("addButton")}
+							</Button>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<Button
-							onClick={() => {
-								setEditingFueling(undefined);
-								setIsModalEditOpen(true);
-							}}
-						>
-							<LucidePlus />
-							{tTable("addButton")}
-						</Button>
-					</div>
-				</div>
+				</ScrollArea>
 				<DataTableProvider
 					recordCount={tableData.length}
 					table={table}

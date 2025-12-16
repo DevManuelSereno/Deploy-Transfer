@@ -14,7 +14,12 @@ import {
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
-import { BusIcon, CarFrontIcon, LucidePlus, TriangleAlertIcon } from "lucide-react";
+import {
+	BusIcon,
+	CarFrontIcon,
+	LucidePlus,
+	TriangleAlertIcon,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 import { getOccurrenceColumns } from "@/app/[locale]/occurrence/components/columns/columns-table-occurrence";
@@ -26,15 +31,16 @@ import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occur
 import { DataTable } from "@/components/data-table";
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { DataTableSearchInput } from "@/components/data-table/data-table-search-input";
+import { AnimatedCounter } from "@/components/ui/animated-counter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
 import type { OccurrenceColumnActions } from "../columns/columns-table-occurrence";
-import { AnimatedCounter } from "@/components/ui/animated-counter";
-import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 
 export default function TableOccurrence() {
 	const tTable = useTranslations("DataTable");
@@ -228,7 +234,7 @@ export default function TableOccurrence() {
 			queryKey: ["occurrence-get"],
 		});
 
-		const cardOccurrenceData = useMemo(
+	const cardOccurrenceData = useMemo(
 		() => [
 			{
 				title: "Total de ocorrências",
@@ -274,30 +280,32 @@ export default function TableOccurrence() {
 					"dark:border-[#262626] overflow-hidden",
 				)}
 			>
-				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
-					<div className="flex items-center gap-2">
-						<OpenAiToolbar />
-						<Separator
-							orientation="vertical"
-							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-						/>
-						<DataTableSearchInput
-							value={globalFilter}
-							onChangeValue={(filter) => setGlobalFilter(filter)}
-						/>
+				<ScrollArea>
+					<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
+						<div className="flex items-center gap-2">
+							<OpenAiToolbar />
+							<Separator
+								orientation="vertical"
+								className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+							/>
+							<DataTableSearchInput
+								value={globalFilter}
+								onChangeValue={(filter) => setGlobalFilter(filter)}
+							/>
+						</div>
+						<div className="flex items-center gap-2">
+							<Button
+								onClick={() => {
+									setEditingOccurrence(undefined);
+									setIsModalEditOpen(true);
+								}}
+							>
+								<LucidePlus />
+								{tTable("addButton")}
+							</Button>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<Button
-							onClick={() => {
-								setEditingOccurrence(undefined);
-								setIsModalEditOpen(true);
-							}}
-						>
-							<LucidePlus />
-							{tTable("addButton")}
-						</Button>
-					</div>
-				</div>
+				</ScrollArea>
 				<DataTableProvider
 					recordCount={tableData.length}
 					table={table}

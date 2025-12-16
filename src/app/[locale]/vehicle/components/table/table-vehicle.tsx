@@ -34,6 +34,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CarouselCardInsight } from "@/components/ui/carousel-card-insight";
 import { OpenAiToolbar } from "@/components/ui/open-ai-toolbar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { DataTableProvider } from "@/providers/data-table-provider";
@@ -458,35 +459,53 @@ export default function TableVehicle() {
 					"dark:border-[#262626] overflow-hidden",
 				)}
 			>
-				<div className="flex h-full border-b items-center py-4 justify-between gap-4 px-5">
-					<div className="flex items-center gap-2">
-						<OpenAiToolbar />
-						<Separator
-							orientation="vertical"
-							className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
-						/>
-						<DataTableSearchInput
-							value={globalFilter}
-							onChangeValue={(filter) => setGlobalFilter(filter)}
-						/>
-						<DataTableFacetedFilter
-							options={brandColumnOptions}
-							column={brandColumn}
-							title={tFilters("brand")}
-						/>
-						<DataTableFacetedFilter
-							options={companyColumnOptions}
-							column={companyColumn}
-							title={tFilters("company")}
-						/>
+				<ScrollArea>
+					<div className="flex-col border-b py-4 px-5">
+						<div className="flex h-full items-center justify-between pb-4 gap-4">
+							<div className="flex items-center gap-2">
+								<OpenAiToolbar />
+								<Separator
+									orientation="vertical"
+									className="data-[orientation=vertical]:w-px data-[orientation=vertical]:h-4 mx-0.5"
+								/>
+								<DataTableSearchInput
+									value={globalFilter}
+									onChangeValue={(filter) => setGlobalFilter(filter)}
+								/>
+								<div className="hidden @4xl:flex @4xl:items-center @4xl:gap-2 overflow-hidden mr-2">
+									<DataTableFacetedFilter
+										options={brandColumnOptions}
+										column={brandColumn}
+										title={tFilters("brand")}
+									/>
+									<DataTableFacetedFilter
+										options={companyColumnOptions}
+										column={companyColumn}
+										title={tFilters("company")}
+									/>
+								</div>
+							</div>
+							<div className="flex items-center gap-2">
+								<Button onClick={() => setIsModalEditOpen(true)}>
+									<LucidePlus />
+									{tTable("addButton")}
+								</Button>
+							</div>
+						</div>
+						<div className="@4xl:hidden gap-4 flex items-center">
+							<DataTableFacetedFilter
+								options={brandColumnOptions}
+								column={brandColumn}
+								title={tFilters("brand")}
+							/>
+							<DataTableFacetedFilter
+								options={companyColumnOptions}
+								column={companyColumn}
+								title={tFilters("company")}
+							/>
+						</div>
 					</div>
-					<div className="flex items-center gap-2">
-						<Button onClick={() => setIsModalEditOpen(true)}>
-							<LucidePlus />
-							{tTable("addButton")}
-						</Button>
-					</div>
-				</div>
+				</ScrollArea>
 				<DataTableProvider
 					recordCount={tableData.length}
 					table={table}
