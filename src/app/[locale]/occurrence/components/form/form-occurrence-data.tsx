@@ -177,7 +177,7 @@ export function FormOccurrenceData({
 											label={t("occurrenceAtLabel")}
 											aria-invalid={fieldState.invalid}
 											placeholder="Buss Vissta 340"
-											className="col-span-6"
+											formItemClassName="col-span-6"
 											form={form}
 											control={form.control}
 										/>

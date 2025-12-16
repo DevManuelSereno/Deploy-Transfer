@@ -10,16 +10,9 @@ import type {
 import { FuelingFormSchema } from "@/app/[locale]/fueling/validation/validation-fueling";
 import { FormErrorMessage } from "@/components/form/form-error-message";
 import { FormFieldDate } from "@/components/form/form-field-date";
-import { FormFieldDateRange } from "@/components/form/form-field-date-range";
 import { FormFieldNumber } from "@/components/form/form-field-number";
 import { FormFieldSelect } from "@/components/form/form-field-select";
-import {
-	Form,
-	FormControl,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "@/components/ui/sonner";
@@ -37,9 +30,9 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 		if (!fueling) {
 			return {
 				FuelingAt: new Date().toISOString(),
-				DriverId: "1",
+				DriverId: "Maria Oliveira",
 				VehicleId: "1",
-				ProviderId: "1",
+				ProviderId: "Posto BR",
 				MaintenanceDue: null,
 				Odometer: 0,
 				Fuel: "Gasolina",
@@ -174,7 +167,7 @@ export function FormFuelingData({ editingFueling }: FormFuelingProps) {
 									loading ? (
 										<Skeleton className="rounded-md w-full h-10" />
 									) : (
-										<FormFieldDateRange
+										<FormFieldDate
 											name={field.name}
 											form={form}
 											control={form.control}
