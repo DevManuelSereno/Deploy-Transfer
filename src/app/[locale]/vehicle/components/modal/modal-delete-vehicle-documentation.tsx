@@ -66,7 +66,7 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 					"flex flex-col max-h-[90vh]"
 				}
 			>
-				<div className="flex items-center gap-3 flex-shrink-0 px-6 pt-6">
+				<div className="flex items-center gap-3 shrink-0 px-6 pt-6">
 					<DialogHeader>
 						<DialogTitle>{t("title")}</DialogTitle>
 						<DialogDescription>{t("description")}</DialogDescription>

@@ -232,7 +232,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 				className="p-0 rounded-xl overflow-hidden gap-0 focus-visible:outline-none sm:max-w-5xl
         flex flex-col max-h-[90vh]"
 			>
-				<div className="flex items-center gap-3 p-6 flex-shrink-0">
+				<div className="flex items-center gap-3 p-6 shrink-0">
 					<div className="flex size-11 shrink-0 items-center justify-center rounded-full border">
 						<FileText />
 					</div>
