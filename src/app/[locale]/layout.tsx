@@ -61,7 +61,7 @@ export default async function LocaleLayout({
 						<SidebarProvider defaultOpen={defaultOpen}>
 							<AppSidebar variant="inset" />
 							<SidebarInset>
-								<div className="@container/main min-[56rem]:overflow-y-auto">
+								<div className="@container/main overflow-y-auto">
 									<header
 										className={cn(
 											"sticky top-0 z-50 flex h-(--header-height) shrink-0 items-center gap-2",
