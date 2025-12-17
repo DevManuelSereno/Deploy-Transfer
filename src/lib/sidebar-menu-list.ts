@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import {
 	AlertTriangle,
 	AudioWaveform,
@@ -59,6 +60,11 @@ export const sidebarItems = {
 			key: "vehicles",
 			url: "/vehicle",
 			icon: BusFront,
+		},
+		{
+			key: "documentation",
+			url: "/documentation",
+			icon: FileText,
 		},
 		{
 			key: "refueling",

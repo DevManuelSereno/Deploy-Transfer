@@ -11,6 +11,7 @@
 			"trips": "Trips",
 			"schedule": "Schedule",
 			"vehicles": "Vehicles",
+			"documentation": "Documentation",
 			"refueling": "Refueling",
 			"occurrence": "Occurrences",
 			"expenses": "Expenses",
@@ -27,6 +28,7 @@
 		"trips": "Trips",
 		"schedule": "Schedule",
 		"vehicles": "Vehicles",
+		"documentation": "Documentation",
 		"refueling": "Refueling",
 		"occurrence": "Occurrences",
 		"expenses": "Expenses",
@@ -464,6 +466,42 @@
 				"email": "Email",
 				"phone": "Phone",
 				"location": "Location"
+			}
+		}
+	},
+	"DocumentationPage": {
+		"title": "Documentation",
+		"Modal": {
+			"title": "New documentation",
+			"description": "Fill in the fields below to register a new documentation."
+		},
+		"Delete": {
+			"title": "Are you sure?",
+			"description": "This action cannot be undone. This will permanently delete the documentation from our servers.",
+			"documentationInfo": "Documentation information:",
+			"type": "Type",
+			"expiryDate": "Expiry date",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"successMessage": "Documentation deleted successfully"
+		},
+		"Form": {
+			"vehicle": "Vehicle",
+			"selectVehicle": "Select a vehicle",
+			"type": "Type",
+			"selectType": "Select a type",
+			"expiryDate": "Expiry date",
+			"document": "Document",
+			"errorMessage": "Please fill in the required fields.",
+			"successCreate": "Documentation created successfully",
+			"successUpdate": "Documentation updated successfully"
+		},
+		"Table": {
+			"Columns": {
+				"id": "ID",
+				"type": "Type",
+				"expiryDate": "Expiry date",
+				"createdAt": "Created at"
 			}
 		}
 	}

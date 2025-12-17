@@ -11,6 +11,7 @@
 			"trips": "Viagens",
 			"schedule": "Agenda",
 			"vehicles": "Veículos",
+			"documentation": "Documentação",
 			"refueling": "Abastecimento",
 			"occurrence": "Ocorrências",
 			"expenses": "Despesas",
@@ -27,6 +28,7 @@
 		"trips": "Viagens",
 		"schedule": "Agenda",
 		"vehicles": "Veículos",
+		"documentation":"Documentação",
 		"refueling": "Abastecimento",
 		"occurrence": "Ocorrências",
 		"expenses": "Despesas",
@@ -464,6 +466,42 @@
 				"email": "E-mail",
 				"phone": "Telefone",
 				"location": "Localização"
+			}
+		}
+	},
+	"DocumentationPage": {
+		"title": "Documentação",
+		"Modal": {
+			"title": "Nova documentação",
+			"description": "Preencha os campos abaixo para cadastrar uma nova documentação."
+		},
+		"Delete": {
+			"title": "Tem certeza?",
+			"description": "Esta ação não pode ser desfeita. Isso irá excluir permanentemente a documentação dos nossos servidores.",
+			"documentationInfo": "Informações da documentação:",
+			"type": "Tipo",
+			"expiryDate": "Data de vencimento",
+			"cancel": "Cancelar",
+			"delete": "Excluir",
+			"successMessage": "Documentação excluída com sucesso"
+		},
+		"Form": {
+			"vehicle": "Veículo",
+			"selectVehicle": "Selecione um veículo",
+			"type": "Tipo",
+			"selectType": "Selecione um tipo",
+			"expiryDate": "Data de vencimento",
+			"document": "Documento",
+			"errorMessage": "Por favor, preencha os campos obrigatórios.",
+			"successCreate": "Documentação cadastrada com sucesso",
+			"successUpdate": "Documentação atualizada com sucesso"
+		},
+		"Table": {
+			"Columns": {
+				"id": "ID",
+				"type": "Tipo",
+				"expiryDate": "Data de vencimento",
+				"createdAt": "Criado em"
 			}
 		}
 	}
