@@ -7,7 +7,7 @@ import {
 	SidebarContent,
 	SidebarHeader,
 } from "@/components/ui/sidebar";
-import { navbarItems, teamsItems } from "@/lib/sidebar-menu-list";
+import { sidebarItems, teamsItems } from "@/lib/sidebar-menu-list";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
@@ -16,9 +16,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				<TeamSwitcher teams={teamsItems} />
 			</SidebarHeader>
 			<SidebarContent>
-				<NavItems data={navbarItems.principal} groupKey="principal" />
-				<NavItems data={navbarItems.frota} groupKey="frota" />
-				<NavItems data={navbarItems.organization} groupKey="organization" />
+				<NavItems data={sidebarItems.principal} groupKey="principal" />
+				<NavItems data={sidebarItems.frota} groupKey="frota" />
+				<NavItems data={sidebarItems.organization} groupKey="organization" />
 			</SidebarContent>
 		</Sidebar>
 	);

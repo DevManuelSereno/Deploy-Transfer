@@ -3,18 +3,22 @@
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { ChevronsUpDown, Pencil, Trash } from "lucide-react";
-import type { OccurrenceData } from "@/app/[locale]/occurrence/types/types-occurrence";
+import type { useTranslations } from "next-intl";
+import type { DriverData } from "@/app/[locale]/driver/types/types-driver";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export interface OccurrenceColumnActions {
-	onEdit: (occurrence: OccurrenceData) => void;
-	onDelete: (occurrence: OccurrenceData) => void;
+export interface DriverColumnActions {
+	onEdit: (driver: DriverData) => void;
+	onDelete: (driver: DriverData) => void;
 }
-export const getOccurrenceColumns = (
-	actions: OccurrenceColumnActions,
-	t: (key: string) => string,
-): ColumnDef<OccurrenceData>[] => [
+
+type TFunction = ReturnType<typeof useTranslations>;
+
+export const getDriverColumns = (
+	actions: DriverColumnActions,
+	t: TFunction,
+): ColumnDef<DriverData>[] => [
 	{
 		id: "select",
 		header: ({ table }) => (
@@ -41,7 +45,7 @@ export const getOccurrenceColumns = (
 		size: 40,
 	},
 	{
-		accessorKey: "IDO",
+		accessorKey: "IDD",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -57,10 +61,10 @@ export const getOccurrenceColumns = (
 			);
 		},
 		enableColumnFilter: true,
-		size: 65,
+		size: 70,
 	},
 	{
-		accessorKey: "OccurrenceAt",
+		accessorKey: "Category",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -69,30 +73,45 @@ export const getOccurrenceColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("occurrenceAt")}
+						{t("category")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
 		enableColumnFilter: true,
-		cell: ({ cell }) => {
-			if (!cell.getValue()) return "-";
-			if (typeof cell.getValue() === "string")
-				return new Date(cell.getValue() as string).toLocaleDateString("pt-BR", {
-					day: "2-digit",
-					month: "2-digit",
-					year: "numeric",
-				});
+		size: 100,
+	},
+	{
+		accessorKey: "FirstName",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("name")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
 		},
-		size: 260,
+		cell: ({ row }) => (
+			<div className="flex items-center h-full">
+				{`${row.original.FirstName} ${row.original.LastName}`}
+			</div>
+		),
+		enableColumnFilter: true,
+		size: 110,
 		meta: {
 			cellClassName: "grow",
 			headerClassName: "grow",
 		},
 	},
 	{
-		accessorKey: "Classification",
+		accessorKey: "Email",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -101,21 +120,21 @@ export const getOccurrenceColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("classification")}
+						{t("email")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
 		enableColumnFilter: true,
-		size: 180,
+		size: 110,
 		meta: {
 			cellClassName: "grow",
 			headerClassName: "grow",
 		},
 	},
 	{
-		accessorKey: "Severity",
+		accessorKey: "Phone",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -124,14 +143,42 @@ export const getOccurrenceColumns = (
 						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
 						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
 					>
-						{t("severity")}
+						{t("phone")}
 						<ChevronsUpDown className="size-3" />
 					</Button>
 				</div>
 			);
 		},
 		enableColumnFilter: true,
-		size: 180,
+		size: 140,
+		meta: {
+			cellClassName: "grow",
+			headerClassName: "grow",
+		},
+	},
+	{
+		accessorKey: "City",
+		header: ({ column }) => {
+			return (
+				<div className="flex items-center h-full">
+					<Button
+						variant="ghost"
+						onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+						className="text-secondary-foreground/80 rounded-sm -ms-3 px-2 h-8 hover:text-foreground"
+					>
+						{t("location")}
+						<ChevronsUpDown className="size-3" />
+					</Button>
+				</div>
+			);
+		},
+		cell: ({ row }) => (
+			<div className="flex items-center h-full">
+				{row.original.City} - {row.original.State}
+			</div>
+		),
+		enableColumnFilter: true,
+		size: 140,
 		meta: {
 			cellClassName: "grow",
 			headerClassName: "grow",
@@ -146,7 +193,7 @@ export const getOccurrenceColumns = (
 			cellClassName: "data-pinned:-ml-[96px]",
 		},
 		cell: ({ row }) => {
-			const occurrence = row.original;
+			const driver = row.original;
 
 			return (
 				<div className="md:opacity-0 md:group-hover/table:opacity-100 transition-opacity backdrop-blur-xs p-0 h-[calc(100%-2px)]">
@@ -155,7 +202,7 @@ export const getOccurrenceColumns = (
 							variant="ghost"
 							size="icon"
 							onClick={() => {
-								actions.onEdit(occurrence);
+								actions.onEdit(driver);
 							}}
 						>
 							<Pencil />
@@ -163,7 +210,7 @@ export const getOccurrenceColumns = (
 						<Button
 							variant="ghost"
 							size="icon"
-							onClick={() => actions.onDelete(occurrence)}
+							onClick={() => actions.onDelete(driver)}
 						>
 							<Trash className="text-destructive" />
 						</Button>

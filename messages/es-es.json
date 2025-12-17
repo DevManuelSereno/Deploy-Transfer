@@ -16,6 +16,7 @@
 			"expenses": "Gastos",
 			"maintenance": "Mantenimiento",
 			"brands": "Marcas",
+			"driver": "Conductor",
 			"user": "Usuario"
 		}
 	},
@@ -31,6 +32,7 @@
 		"expenses": "Gastos",
 		"maintenance": "Mantenimiento",
 		"brands": "Marcas",
+		"driver": "Conductor",
 		"user": "Usuario",
 		"toggleTheme": "Cambiar tema"
 	},
@@ -383,7 +385,7 @@
 			"successMessage": "Ocurrencia eliminada con éxito"
 		},
 		"Form": {
-			"title": "Agregar ocurrencia",
+			"title": "Nueva ocurrencia",
 			"description": "Complete los campos a continuación para registrar una nueva ocurrencia.",
 			"severityLabel": "Gravedad",
 			"classificationLabel": "Clasificación",
@@ -411,6 +413,57 @@
 				"classification": "Clasificación",
 				"severity": "Gravedad",
 				"caseNumber": "Número de caso"
+			}
+		}
+	},
+	"DriverPage": {
+		"title": "Conductor",
+		"Modal": {
+			"title": "Nuevo conductor",
+			"description": "Complete los campos a continuación para registrar un nuevo conductor."
+		},
+		"Delete": {
+			"title": "¿Estás seguro?",
+			"description": "Esta acción no se puede deshacer. Esto eliminará permanentemente al conductor de nuestros servidores.",
+			"infoTitle": "Información del conductor:",
+			"name": "Nombre",
+			"email": "Correo electrónico",
+			"cancel": "Cancelar",
+			"delete": "Eliminar",
+			"successMessage": "Conductor eliminado exitosamente"
+		},
+		"Form": {
+			"title": "Nuevo conductor",
+			"description": "Complete los campos a continuación para registrar un nuevo conductor.",
+			"categoryLabel": "Categoría",
+			"firstNameLabel": "Nombre",
+			"lastNameLabel": "Apellido",
+			"emailLabel": "Correo electrónico",
+			"birthDateLabel": "Fecha de nacimiento",
+			"phoneLabel": "Teléfono",
+			"countryLabel": "País",
+			"postalCodeLabel": "Código postal",
+			"streetLabel": "Calle",
+			"numberLabel": "Número",
+			"districtLabel": "Distrito",
+			"cityLabel": "Ciudad",
+			"stateLabel": "Estado",
+			"observationLabel": "Observación",
+			"selectCategory": "Selecciona una categoría",
+			"cancel": "Cancelar",
+			"save": "Guardar",
+			"errorMessage": "Por favor, complete los campos obligatorios.",
+			"successCreate": "Conductor creado exitosamente",
+			"successUpdate": "Conductor actualizado exitosamente"
+		},
+		"Table": {
+			"Columns": {
+				"id": "ID",
+				"category": "Categoría",
+				"name": "Nombre",
+				"email": "Correo electrónico",
+				"phone": "Teléfono",
+				"location": "Ubicación"
 			}
 		}
 	}

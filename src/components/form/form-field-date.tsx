@@ -35,6 +35,7 @@ interface FormFieldDateProps<T extends FieldValues> {
 	formItemClassName?: string;
 	className?: string;
 	disabled?: boolean;
+	presets?: { label: string; date: Date }[];
 }
 
 export const formatDate = (date: string | Date | undefined) =>
@@ -49,6 +50,7 @@ export function FormFieldDate<T extends FieldValues>({
 	className,
 	formItemClassName,
 	disabled,
+	presets,
 }: FormFieldDateProps<T>) {
 	const today = new Date();
 	const [month, setMonth] = useState(today);
@@ -57,8 +59,8 @@ export function FormFieldDate<T extends FieldValues>({
 
 	const hasError = control?.getFieldState(name).error;
 
-	// Presets adaptados para data única
-	const presets = useMemo(() => {
+	const presetsMemo = useMemo(() => {
+		if (presets) return presets;
 		const today = new Date();
 
 		return [
@@ -67,7 +69,7 @@ export function FormFieldDate<T extends FieldValues>({
 			{ label: "Amanhã", date: addDays(today, 1) },
 			{ label: "Daqui a 7 dias", date: addDays(today, 7) },
 		];
-	}, []);
+	}, [presets]);
 
 	const toDate = useCallback((value: unknown): Date | null => {
 		if (!value) return null;
@@ -82,12 +84,12 @@ export function FormFieldDate<T extends FieldValues>({
 
 		const formDate = startOfDay(parsedDate);
 
-		const matched = presets.find((preset) =>
+		const matched = presetsMemo.find((preset) =>
 			isEqual(startOfDay(preset.date), formDate),
 		);
 
 		return matched?.label ?? null;
-	}, [formValue, presets, toDate]);
+	}, [formValue, presetsMemo, toDate]);
 
 	const handleSelect = (date: Date | undefined) => {
 		if (date) {
@@ -158,7 +160,7 @@ export function FormFieldDate<T extends FieldValues>({
 									<div className="relative border-border max-sm:order-1 max-sm:border-t sm:w-fit">
 										<div className="h-full border-border sm:border-e py-2">
 											<div className="flex flex-col px-2 gap-[2px]">
-												{presets.map((preset, index) => (
+												{presetsMemo.map((preset, index) => (
 													<Button
 														key={index}
 														size="sm"

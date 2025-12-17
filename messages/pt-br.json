@@ -16,6 +16,7 @@
 			"expenses": "Despesas",
 			"maintenance": "Manutenções",
 			"brands": "Marcas",
+			"driver": "Motorista",
 			"user": "Usuário"
 		}
 	},
@@ -31,6 +32,7 @@
 		"expenses": "Despesas",
 		"maintenance": "Manutenções",
 		"brands": "Marcas",
+		"driver": "Motorista",
 		"user": "Usuário",
 		"toggleTheme": "Alternar tema"
 	},
@@ -383,7 +385,7 @@
 			"successMessage": "Ocorrência excluída com sucesso"
 		},
 		"Form": {
-			"title": "Adicionar ocorrência",
+			"title": "Nova ocorrência",
 			"description": "Preencha os campos abaixo para registrar uma nova ocorrência.",
 			"severityLabel": "Gravidade",
 			"classificationLabel": "Classificação",
@@ -411,6 +413,57 @@
 				"classification": "Classificação",
 				"severity": "Gravidade",
 				"caseNumber": "Número do caso"
+			}
+		}
+	},
+	"DriverPage": {
+		"title": "Motorista",
+		"Modal": {
+			"title": "Novo motorista",
+			"description": "Preencha os campos abaixo para cadastrar um novo motorista."
+		},
+		"Delete": {
+			"title": "Tem certeza?",
+			"description": "Esta ação não pode ser desfeita. Isso irá excluir permanentemente o motorista dos nossos servidores.",
+			"infoTitle": "Informações do motorista:",
+			"name": "Nome",
+			"email": "E-mail",
+			"cancel": "Cancelar",
+			"delete": "Excluir",
+			"successMessage": "Motorista excluído com sucesso"
+		},
+		"Form": {
+			"title": "Novo motorista",
+			"description": "Preencha os campos abaixo para cadastrar um novo motorista.",
+			"categoryLabel": "Categoria",
+			"firstNameLabel": "Nome",
+			"lastNameLabel": "Sobrenome",
+			"emailLabel": "E-mail",
+			"birthDateLabel": "Data de nascimento",
+			"phoneLabel": "Telefone",
+			"countryLabel": "País",
+			"postalCodeLabel": "CEP",
+			"streetLabel": "Rua",
+			"numberLabel": "Número",
+			"districtLabel": "Bairro",
+			"cityLabel": "Cidade",
+			"stateLabel": "Estado",
+			"observationLabel": "Observação",
+			"selectCategory": "Selecione uma categoria",
+			"cancel": "Cancelar",
+			"save": "Salvar",
+			"errorMessage": "Por favor, preencha os campos obrigatórios.",
+			"successCreate": "Motorista cadastrado com sucesso",
+			"successUpdate": "Motorista atualizado com sucesso"
+		},
+		"Table": {
+			"Columns": {
+				"id": "ID",
+				"category": "Categoria",
+				"name": "Nome",
+				"email": "E-mail",
+				"phone": "Telefone",
+				"location": "Localização"
 			}
 		}
 	}

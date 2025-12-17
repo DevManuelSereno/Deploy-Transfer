@@ -31,7 +31,7 @@ export const teamsItems = [
 	},
 ];
 
-export const navbarItems = {
+export const sidebarItems = {
 	principal: [
 		{
 			key: "dashboard",
@@ -79,6 +79,11 @@ export const navbarItems = {
 			key: "maintenance",
 			url: "#",
 			icon: Wrench,
+		},
+		{
+			key: "driver",
+			url: "/driver",
+			icon: User,
 		},
 	],
 	organization: [

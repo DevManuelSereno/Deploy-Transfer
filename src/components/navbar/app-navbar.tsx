@@ -13,7 +13,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { usePathname } from "@/i18n/navigation";
-import { navbarItems } from "@/lib/sidebar-menu-list";
+import { sidebarItems } from "@/lib/sidebar-menu-list";
 
 export function AppNavbar() {
 	const pathname = usePathname();
@@ -21,7 +21,7 @@ export function AppNavbar() {
 
 	function getLabelByPathname(pathname: string) {
 		let key: string | undefined;
-		const allItems = Object.values(navbarItems).flat();
+		const allItems = Object.values(sidebarItems).flat();
 
 		for (const category of allItems) {
 			if (category.url === pathname) {

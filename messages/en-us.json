@@ -16,6 +16,7 @@
 			"expenses": "Expenses",
 			"maintenance": "Maintenance",
 			"brands": "Brands",
+			"driver": "Driver",
 			"user": "User"
 		}
 	},
@@ -30,6 +31,7 @@
 		"occurrence": "Occurrences",
 		"expenses": "Expenses",
 		"maintenance": "Maintenance",
+		"driver": "Driver",
 		"brands": "Brands",
 		"user": "User",
 		"toggleTheme": "Toggle theme"
@@ -411,6 +413,57 @@
 				"classification": "Classification",
 				"severity": "Seriousness",
 				"caseNumber": "Case number"
+			}
+		}
+	},
+	"DriverPage": {
+		"title": "Driver",
+		"Modal": {
+			"title": "New driver",
+			"description": "Fill in the fields below to register a new driver."
+		},
+		"Delete": {
+			"title": "Are you sure?",
+			"description": "This action cannot be undone. This will permanently delete the driver from our servers.",
+			"infoTitle": "Driver information:",
+			"name": "Name",
+			"email": "Email",
+			"cancel": "Cancel",
+			"delete": "Delete",
+			"successMessage": "Driver deleted successfully"
+		},
+		"Form": {
+			"title": "Add driver",
+			"description": "Fill in the fields below to register a new driver.",
+			"categoryLabel": "Category",
+			"firstNameLabel": "First name",
+			"lastNameLabel": "Last name",
+			"emailLabel": "Email",
+			"birthDateLabel": "Date of birth",
+			"phoneLabel": "Phone",
+			"countryLabel": "Country",
+			"postalCodeLabel": "Postal code",
+			"streetLabel": "Street",
+			"numberLabel": "Number",
+			"districtLabel": "District",
+			"cityLabel": "City",
+			"stateLabel": "State",
+			"observationLabel": "Observation",
+			"selectCategory": "Select a category",
+			"cancel": "Cancel",
+			"save": "Save",
+			"errorMessage": "Please fill in the required fields.",
+			"successCreate": "Driver created successfully",
+			"successUpdate": "Driver updated successfully"
+		},
+		"Table": {
+			"Columns": {
+				"id": "ID",
+				"category": "Category",
+				"name": "Name",
+				"email": "Email",
+				"phone": "Phone",
+				"location": "Location"
 			}
 		}
 	}

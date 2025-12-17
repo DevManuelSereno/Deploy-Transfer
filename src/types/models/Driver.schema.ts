@@ -10,6 +10,12 @@ export const DriverSchema = z.object({
 	// Data de atualização do cadastro do motorista
 	UpdatedAt: z.string(),
 
+	// Nome do motorista
+	FirstName: z.string(),
+
+	// Sobrenome do motorista
+	LastName: z.string(),
+
 	// Senha de acesso ao sistema
 	Password: z.string().max(20),
 
