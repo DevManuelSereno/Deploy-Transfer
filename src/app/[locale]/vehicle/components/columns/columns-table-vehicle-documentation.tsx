@@ -41,7 +41,7 @@ export const getDocumentationColumns = (
 		},
 	},
 	{
-		accessorKey: "type",
+		accessorKey: "Type",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -64,7 +64,7 @@ export const getDocumentationColumns = (
 		},
 	},
 	{
-		accessorKey: "days",
+		accessorKey: "Days",
 		header: ({ column }) => {
 			return (
 				<div className="flex items-center h-full">
@@ -79,10 +79,10 @@ export const getDocumentationColumns = (
 				</div>
 			);
 		},
-		cell: ({ cell }) =>
-			(cell.getValue() as string[]).length >= 0
-				? (cell.getValue() as string[]).join(", ")
-				: "-",
+		cell: ({ cell }) => {
+			const days = cell.getValue() as string[] | undefined;
+			return days && days.length > 0 ? days.join(", ") : "-";
+		},
 		size: 100,
 		meta: {
 			cellClassName: "grow",

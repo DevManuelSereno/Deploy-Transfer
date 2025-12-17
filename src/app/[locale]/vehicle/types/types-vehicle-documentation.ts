@@ -19,7 +19,7 @@ export const documentationTypes = [
 	"Laudo de Aferição",
 ];
 
-export type DocumentationData = Omit<DocumentationType, "expiryAt"> & {
+export type DocumentationData = Omit<DocumentationType, "ExpiryAt"> & {
 	expiryAt: string;
 	file?: FileType | null;
 };

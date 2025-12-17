@@ -34,15 +34,15 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 		isPending: isLoadingDeleteDocumentation,
 	} = useMutation({
 		mutationFn: (val: DeleteData) => deleteData<DocumentationType>(val),
-		mutationKey: ["documentation-delete", editingDocumentation?.id],
+		mutationKey: ["documentation-delete", editingDocumentation?.IDD],
 	});
 
 	const handleDeleteDocumentation = async () => {
-		if (!editingDocumentation?.id) return;
+		if (!editingDocumentation?.IDD) return;
 		try {
 			await mutateDeleteDocumentation({
 				url: "/documentation",
-				id: editingDocumentation?.id,
+				id: editingDocumentation?.IDD,
 			});
 
 			if (editingVehicle)
@@ -78,7 +78,7 @@ export function ModalDeleteDocumentation({ open, setOpen }: ModalFormProps) {
 						<div className="truncate">
 							<p className="mb-0.5 text-muted-foreground">{t("type")}</p>
 							<span className="text-foreground">
-								{editingDocumentation?.type}
+								{editingDocumentation?.Type}
 							</span>
 						</div>
 						<div className="truncate">

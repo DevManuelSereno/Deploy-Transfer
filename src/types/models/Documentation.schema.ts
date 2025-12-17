@@ -6,6 +6,7 @@ export const DocumentationSchema = z.object({
 	ExpiryAt: z.string(),
 	VehicleId: z.number().int(),
 	FileId: z.number().int().optional(),
+	Days: z.array(z.string()).optional(),
 	CreatedAt: z.string(),
 	UpdatedAt: z.string(),
 });

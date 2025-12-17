@@ -2,10 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BookmarkIcon, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect } from "react";
-import { Controller, FieldValue, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useModalContext } from "@/app/[locale]/vehicle/context/modal-table-vehicle";
 import { useVehicleFormContext } from "@/app/[locale]/vehicle/context/vehicle-context";
@@ -38,7 +38,6 @@ import {
 	FieldLabel,
 } from "@/components/ui/field";
 import { FilePreviewList } from "@/components/ui/file-preview-list";
-import { FormBooleanButton } from "@/components/ui/form-boolean-button";
 import { FormDatePicker } from "@/components/ui/form-date-picker";
 import { FormSelect } from "@/components/ui/form-select";
 import { FormToggleGroup } from "@/components/ui/form-toggle-group";
@@ -69,25 +68,27 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 		(documentation?: DocumentationData): DocumentationForm => {
 			if (documentation) {
 				return {
-					days: documentation.days ?? [],
-					type: documentation.type ?? "",
-					anticipateRenewal: documentation.anticipateRenewal ?? false,
+					days: documentation.Days ?? [],
+					Type: documentation.Type ?? "",
+					// anticipateRenewal: documentation.anticipateRenewal ?? false,
 					file: documentation.file ? [documentation.file] : [],
-					expiryAt: documentation.expiryAt
+					ExpiryAt: documentation.expiryAt
 						? new Date(documentation.expiryAt)
 						: new Date(),
+					VehicleId: documentation.VehicleId ?? editingVehicle?.IDV ?? 0,
 					vehicleId: String(
-						documentation.vehicleId ?? editingVehicle?.IDV ?? "",
+						documentation.VehicleId ?? editingVehicle?.IDV ?? "",
 					),
 				};
 			}
 
-			return {
+		return {
 				days: ["seg", "qua"],
-				type: "Tacógrafo",
-				anticipateRenewal: false,
+				Type: "Tacógrafo",
+				// AnticipateRenewal: false,
 				file: [],
-				expiryAt: new Date(),
+				ExpiryAt: new Date(),
+				VehicleId: editingVehicle?.IDV ?? 0,
 				vehicleId: String(editingVehicle?.IDV ?? ""),
 			};
 		},
@@ -162,15 +163,16 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 				return;
 			}
 
-			let savedDocumentation: DocumentationData;
+		let savedDocumentation: DocumentationData;
 
-			const parseData = DocumentationPayloadSchema.parse({
-				...data,
-				expiryAt: data.expiryAt?.toISOString(),
-				vehicleId: editingVehicle?.IDV,
-				file: undefined,
-				// document: [],
-			});
+		const parseData = DocumentationPayloadSchema.parse({
+			...data,
+			Days: data.days,
+			ExpiryAt: data.ExpiryAt?.toISOString(),
+			VehicleId: editingVehicle?.IDV,
+			file: undefined,
+			// document: [],
+		});
 
 			if (!editingDocumentation) {
 				savedDocumentation = await mutatePostDocumentation({
@@ -180,7 +182,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 			} else {
 				savedDocumentation = await mutatePutDocumentation({
 					url: "/documentation",
-					id: Number(editingDocumentation.id),
+					id: Number(editingDocumentation.IDD),
 					data: parseData,
 				});
 			}
@@ -201,7 +203,7 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 				}
 
 				await mutateUploadDoc({
-					id: savedDocumentation.id,
+					id: savedDocumentation.IDD,
 					formData,
 				});
 			}
@@ -281,10 +283,10 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 								)
 							}
 						/>
-						<Controller
-							name="type"
-							control={control}
-							render={({ field, fieldState }) =>
+			<Controller
+				name="Type"
+				control={control}
+				render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
@@ -314,10 +316,10 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 								)
 							}
 						/>
-						<Controller
-							name="expiryAt"
-							control={control}
-							render={({ field, fieldState }) =>
+			<Controller
+				name="ExpiryAt"
+				control={control}
+				render={({ field, fieldState }) =>
 								loading ? (
 									<Skeleton className="rounded-md w-full h-10" />
 								) : (
@@ -342,45 +344,6 @@ export function ModalFormDocumentation({ open, setOpen }: ModalFormProps) {
 										{fieldState.invalid && (
 											<FieldError errors={[fieldState.error]} />
 										)}
-									</Field>
-								)
-							}
-						/>
-						<Controller
-							name="anticipateRenewal"
-							control={control}
-							render={({ field, fieldState }) =>
-								loading ? (
-									<Skeleton className="rounded-md w-full h-10" />
-								) : (
-									<Field
-										// orientation="horizontal"
-										data-invalid={fieldState.invalid}
-									>
-										<FieldLabel htmlFor={field.name}>
-											{t("anticipateLabel")}
-										</FieldLabel>
-										{fieldState.invalid && (
-											<FieldError errors={[fieldState.error]} />
-										)}
-										<FormBooleanButton
-											id={field.name}
-											value={field.value}
-											onChange={field.onChange}
-											onBlur={field.onBlur}
-											aria-invalid={fieldState.invalid}
-											className="w-full"
-										>
-											<BookmarkIcon />
-											Bookmark
-										</FormBooleanButton>
-										{/*<Switch*/}
-										{/*	id={field.name}*/}
-										{/*	name={field.name}*/}
-										{/*	checked={field.value}*/}
-										{/*	onCheckedChange={field.onChange}*/}
-										{/*	aria-invalid={fieldState.invalid}*/}
-										{/*/>*/}
 									</Field>
 								)
 							}
